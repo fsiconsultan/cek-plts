@@ -22,7 +22,10 @@
 <div class="step">2. Tagihan listrik per bulan</div>
 <input id="bill" type="number" min="0" placeholder="Contoh: 5000000">
 
-<div class="step">3. Target pengurangan tagihan</div>
+<div class="step">3. Tarif listrik per kWh</div>
+<input id="tariff" type="number" min="0" value="1800" placeholder="Contoh: 1800">
+
+<div class="step">4. Target pengurangan tagihan</div>
 <div class="reduces">
 <div class="reduce" onclick="reducePick(this,50)">50%</div>
 <div class="reduce" onclick="reducePick(this,60)">60%</div>
@@ -57,9 +60,10 @@
 const GOOGLE_SCRIPT_URL="https://script.google.com/macros/s/AKfycby5QLjc_oIPoXgdXt6pyQKYRV_UOhJT18qz9PZG5rqHWn01VVyYqwUCt_a1axpB9RaiFw/exec";
 
 // PARAMETER INTERNAL
-const TARIFF=1444.70;
-const KWH_PER_KWP_MONTH=120;
-const PANEL_WP=550;
+const DEFAULT_TARIFF=1800;
+const PSH=4.0;
+const SYSTEM_FACTOR=0.80;
+const PANEL_WP=650;
 const PRICE_PER_WP=14000;
 
 let jenis="Rumah", reduce=70, hasil={};
@@ -71,17 +75,30 @@ function num(n){return new Intl.NumberFormat("id-ID",{maximumFractionDigits:1}).
 
 function calculate(){
  const bill=Number(document.getElementById("bill").value)||0;
+ const tariff=Number(document.getElementById("tariff").value)||DEFAULT_TARIFF;
  if(bill<=0){alert("Silakan isi tagihan listrik per bulan.");return}
- const saving=bill*reduce/100, savingYear=saving*12;
- const kwpNeeded=(saving/TARIFF)/KWH_PER_KWP_MONTH;
+ if(tariff<=0){alert("Silakan isi tarif listrik per kWh.");return}
+ const usageMonth=bill/tariff;
+ const usageDay=usageMonth/30;
+ const targetKwhMonth=usageMonth*reduce/100;
+ const targetKwhDay=usageDay*reduce/100;
+ const kwpNeeded=targetKwhDay/(PSH*SYSTEM_FACTOR);
  const panels=Math.max(1,Math.ceil(kwpNeeded*1000/PANEL_WP));
  const actualKwp=panels*PANEL_WP/1000;
+ const saving=bill*reduce/100, savingYear=saving*12;
  const investment=actualKwp*1000*PRICE_PER_WP;
  const payback=savingYear?investment/savingYear:0;
- hasil={jenis,bill,reduce,saving,savingYear,actualKwp,panels,payback};
+ hasil={jenis,bill,tariff,usageMonth,usageDay,targetKwhMonth,targetKwhDay,reduce,saving,savingYear,actualKwp,panels,payback};
  document.getElementById("savingMonth").textContent=rupiah(saving)+"/bulan";
  document.getElementById("savingYear").textContent=rupiah(savingYear);
- document.getElementById("kwp").textContent=num(actualKwp)+" kWp ("+panels+" panel)";
+ document.getElementById("kwp").textContent=num(actualKwp)+" kWp ("+panels+" panel × 650 Wp)";
+ let usageBox=document.getElementById("usageBox");
+ if(!usageBox){
+   usageBox=document.createElement("div"); usageBox.id="usageBox";
+   usageBox.style.marginBottom="14px";
+   document.getElementById("result").insertBefore(usageBox,document.getElementById("savingMonth"));
+ }
+ usageBox.innerHTML="<b>Estimasi pemakaian listrik</b><br>±"+num(usageMonth)+" kWh/bulan • ±"+num(usageDay)+" kWh/hari<br><span style='font-size:12px;color:#71808c'>Target PLTS: ±"+num(targetKwhMonth)+" kWh/bulan ("+reduce+"%)</span>";
  document.getElementById("payback").textContent=num(payback)+" tahun";
  document.getElementById("result").classList.remove("hidden");
  document.getElementById("lead").classList.remove("hidden");
@@ -107,7 +124,7 @@ async function sendLead(){
  status.className="status";status.textContent="Mengirim...";
  document.getElementById("send").disabled=true;
 
- const data={timestamp:new Date().toISOString(),name,phone,jenis:hasil.jenis,bill:hasil.bill,reduce:hasil.reduce,saving:hasil.saving,savingYear:hasil.savingYear,kwp:hasil.actualKwp,panels:hasil.panels,payback:hasil.payback};
+ const data={timestamp:new Date().toISOString(),name,phone,jenis:hasil.jenis,bill:hasil.bill,tariff:hasil.tariff,usageMonth:hasil.usageMonth,usageDay:hasil.usageDay,targetKwhMonth:hasil.targetKwhMonth,reduce:hasil.reduce,saving:hasil.saving,savingYear:hasil.savingYear,kwp:hasil.actualKwp,panels:hasil.panels,payback:hasil.payback};
 
  try{
    await fetch(GOOGLE_SCRIPT_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(data)});
@@ -123,6 +140,8 @@ async function sendLead(){
      "WhatsApp Customer: "+phone+"\n"+
      "Jenis: "+hasil.jenis+"\n"+
      "Tagihan: "+rupiah(hasil.bill)+"/bulan\n"+
+     "Tarif: "+rupiah(hasil.tariff)+"/kWh\n"+
+     "Pemakaian: ±"+num(hasil.usageMonth)+" kWh/bulan\n"+
      "Target Reduce: "+hasil.reduce+"%\n"+
      "Potensi Hemat: "+rupiah(hasil.saving)+"/bulan\n"+
      "Estimasi kWp: "+num(hasil.actualKwp)+" kWp\n"+
