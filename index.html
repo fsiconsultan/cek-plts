@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kalkulator Potensi PLTS</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f4f7f9;font-family:Arial,sans-serif;color:#18232d}.wrap{max-width:680px;margin:25px auto;padding:15px}.card{background:#fff;border-radius:20px;padding:26px;box-shadow:0 8px 30px #0001}h1{margin:0 0 8px}.sub{color:#687581;line-height:1.5}.step{font-weight:bold;margin:20px 0 10px}.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px}.choice,.reduce{border:2px solid #e1e7ec;border-radius:12px;padding:14px;text-align:center;cursor:pointer;font-weight:bold}.active{border-color:#1685ff!important;background:#eef6ff}.reduces{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}input{width:100%;padding:14px;border:1px solid #d7dee5;border-radius:11px;font-size:17px}button{width:100%;border:0;border-radius:12px;padding:15px;background:#1685ff;color:white;font-size:16px;font-weight:bold;cursor:pointer;margin-top:22px}.hidden{display:none}.result{margin-top:22px;background:#f7fafc;border-radius:15px;padding:20px}.big{font-size:28px;font-weight:800;margin:6px 0 12px}.row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #e7edf1}.cta{background:#122b3b;color:white;margin-top:20px}.cta label{display:block;margin-top:12px;font-size:14px;font-weight:bold}.small{font-size:12px;color:#71808c;line-height:1.5;margin-top:12px}.status{text-align:center;font-weight:bold;margin-top:12px;min-height:20px}.success{color:#45d38d}.error{color:#ff9c9c}@media(max-width:500px){.reduces{grid-template-columns:repeat(3,1fr)}.card{padding:20px}}
+</style>
+</head>
+<body>
+<div class="wrap"><div class="card">
+<h1>☀️ Cek Potensi Hemat PLTS</h1>
+<div class="sub">Isi 3 data sederhana untuk melihat estimasi potensi penghematan listrik Anda.</div>
+
+<div class="step">1. PLTS untuk apa?</div>
+<div class="choices">
+<div class="choice active" data-type="Rumah" onclick="typePick(this)">🏠 Rumah</div>
+<div class="choice" data-type="Tempat Usaha" onclick="typePick(this)">🏢 Tempat Usaha</div>
+</div>
+
+<div class="step">2. Tagihan listrik per bulan</div>
+<input id="bill" type="number" min="0" placeholder="Contoh: 5000000">
+
+<div class="step">3. Target pengurangan tagihan</div>
+<div class="reduces">
+<div class="reduce" onclick="reducePick(this,50)">50%</div>
+<div class="reduce" onclick="reducePick(this,60)">60%</div>
+<div class="reduce active" onclick="reducePick(this,70)">70%</div>
+<div class="reduce" onclick="reducePick(this,80)">80%</div>
+<div class="reduce" onclick="reducePick(this,90)">90%</div>
+</div>
+
+<button onclick="calculate()">LIHAT POTENSI SAYA</button>
+
+<div id="result" class="result hidden">
+<div style="color:#687581">Potensi penghematan Anda</div>
+<div id="savingMonth" class="big">-</div>
+<div class="row"><span>Potensi hemat / tahun</span><b id="savingYear">-</b></div>
+<div class="row"><span>Estimasi kapasitas PLTS</span><b id="kwp">-</b></div>
+<div class="row"><span>Estimasi payback</span><b id="payback">-</b></div>
+<div class="small">Estimasi awal. Hasil final dapat berbeda berdasarkan tarif, profil beban, lokasi, atap, shading, dan desain sistem.</div>
+</div>
+
+<div id="lead" class="cta card hidden">
+<h2 style="margin-top:0">Mau simulasi PLTS lebih detail?</h2>
+<p>Masukkan nama dan WhatsApp agar tim kami dapat menghubungi Anda.</p>
+<label>Nama</label><input id="name" placeholder="Nama Anda">
+<label>WhatsApp</label><input id="phone" type="tel" placeholder="08xxxxxxxxxx">
+<button id="send" onclick="sendLead()">KIRIM & MINTA SIMULASI</button>
+<div id="status" class="status"></div>
+<div class="small" style="color:#b8c6cf">Data digunakan untuk menghubungi Anda terkait simulasi PLTS.</div>
+</div>
+</div></div>
+
+<script>
+const GOOGLE_SCRIPT_URL="https://script.google.com/macros/s/AKfycby5QLjc_oIPoXgdXt6pyQKYRV_UOhJT18qz9PZG5rqHWn01VVyYqwUCt_a1axpB9RaiFw/exec";
+
+// PARAMETER INTERNAL
+const TARIFF=1444.70;
+const KWH_PER_KWP_MONTH=120;
+const PANEL_WP=550;
+const PRICE_PER_WP=14000;
+
+let jenis="Rumah", reduce=70, hasil={};
+
+function typePick(el){document.querySelectorAll(".choice").forEach(x=>x.classList.remove("active"));el.classList.add("active");jenis=el.dataset.type}
+function reducePick(el,v){document.querySelectorAll(".reduce").forEach(x=>x.classList.remove("active"));el.classList.add("active");reduce=v}
+function rupiah(n){return new Intl.NumberFormat("id-ID",{style:"currency",currency:"IDR",maximumFractionDigits:0}).format(Math.round(n))}
+function num(n){return new Intl.NumberFormat("id-ID",{maximumFractionDigits:1}).format(n)}
+
+function calculate(){
+ const bill=Number(document.getElementById("bill").value)||0;
+ if(bill<=0){alert("Silakan isi tagihan listrik per bulan.");return}
+ const saving=bill*reduce/100, savingYear=saving*12;
+ const kwpNeeded=(saving/TARIFF)/KWH_PER_KWP_MONTH;
+ const panels=Math.max(1,Math.ceil(kwpNeeded*1000/PANEL_WP));
+ const actualKwp=panels*PANEL_WP/1000;
+ const investment=actualKwp*1000*PRICE_PER_WP;
+ const payback=savingYear?investment/savingYear:0;
+ hasil={jenis,bill,reduce,saving,savingYear,actualKwp,panels,payback};
+ document.getElementById("savingMonth").textContent=rupiah(saving)+"/bulan";
+ document.getElementById("savingYear").textContent=rupiah(savingYear);
+ document.getElementById("kwp").textContent=num(actualKwp)+" kWp ("+panels+" panel)";
+ document.getElementById("payback").textContent=num(payback)+" tahun";
+ document.getElementById("result").classList.remove("hidden");
+ document.getElementById("lead").classList.remove("hidden");
+ document.getElementById("lead").scrollIntoView({behavior:"smooth"});
+}
+
+function normalizePhone(p){
+ p=p.replace(/\D/g,"");
+ if(p.startsWith("0"))p="62"+p.slice(1);
+ else if(!p.startsWith("62"))p="62"+p;
+ return p;
+}
+
+async function sendLead(){
+ const name=document.getElementById("name").value.trim();
+ const raw=document.getElementById("phone").value.trim();
+ const phone=normalizePhone(raw);
+ const status=document.getElementById("status");
+ if(!name){status.className="status error";status.textContent="Silakan isi nama.";return}
+ if(phone.length<11){status.className="status error";status.textContent="Silakan isi nomor WhatsApp yang valid.";return}
+ if(!hasil.bill){status.className="status error";status.textContent="Hitung potensi terlebih dahulu.";return}
+
+ status.className="status";status.textContent="Mengirim...";
+ document.getElementById("send").disabled=true;
+
+ const data={timestamp:new Date().toISOString(),name,phone,jenis:hasil.jenis,bill:hasil.bill,reduce:hasil.reduce,saving:hasil.saving,savingYear:hasil.savingYear,kwp:hasil.actualKwp,panels:hasil.panels,payback:hasil.payback};
+
+ try{
+   await fetch(GOOGLE_SCRIPT_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(data)});
+   status.className="status success";
+   status.textContent="Data berhasil dikirim. Terima kasih!";
+   document.getElementById("send").textContent="DATA TERKIRIM";
+
+   // Buka WhatsApp sales dengan detail lead otomatis
+   const waSales="6281139410041";
+   const msg =
+     "🔔 LEAD BARU KALKULATOR PLTS\n\n"+
+     "Nama: "+name+"\n"+
+     "WhatsApp Customer: "+phone+"\n"+
+     "Jenis: "+hasil.jenis+"\n"+
+     "Tagihan: "+rupiah(hasil.bill)+"/bulan\n"+
+     "Target Reduce: "+hasil.reduce+"%\n"+
+     "Potensi Hemat: "+rupiah(hasil.saving)+"/bulan\n"+
+     "Estimasi kWp: "+num(hasil.actualKwp)+" kWp\n"+
+     "Estimasi Payback: "+num(hasil.payback)+" tahun\n\n"+
+     "Mohon follow up customer ini.";
+   window.open("https://wa.me/"+waSales+"?text="+encodeURIComponent(msg),"_blank");
+ }catch(e){
+   status.className="status error";
+   status.textContent="Gagal mengirim. Coba lagi.";
+   document.getElementById("send").disabled=false;
+ }
+}
+</script>
+</body>
+</html>
