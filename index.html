@@ -504,7 +504,7 @@ document.getElementById('btnKirim').addEventListener('click', function() {
   const nama = document.getElementById('nama').value.trim();
   const whatsapp = document.getElementById('whatsapp').value.trim();
   const jenisProperty = document.getElementById('jenis_property').value;
-  const tagihanVal = parseInt(document.getElementById('tagihan').value) || 0;
+  const tagihanVal = parseFloat(document.getElementById('tagihan').value) || 0;
   
   const tagihanFormatted = "Rp" + tagihanVal.toLocaleString('id-ID');
   const targetPenghematan = document.getElementById('penghematan').value;
@@ -551,6 +551,7 @@ Terima kasih 🙏`;
       whatsapp: whatsapp,
       jenis: jenisProperty,
       tagihan: tagihanFormatted,
+      tagihanAngka: tagihanVal,
       penghematan: targetPenghematan,
       panel: calculatedPanel,
       kwp: calculatedKwp
