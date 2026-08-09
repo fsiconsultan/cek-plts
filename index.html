@@ -111,10 +111,32 @@ button,input,select{font:inherit}
 .result-card.wide{grid-column:1/-1}.result-card.highlight{background:#eaf8f2;border-color:#bce7d2}.result-card.highlight strong{color:#0a9c5a}
 .whatsapp-result{margin-top:16px;width:100%;background:#15a762;color:#fff}
 
-/* SYSTEMS */
+/* SYSTEMS VIDEO BACKGROUND SECTION */
+.systems-video-section {
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+  border-radius: 20px;
+  padding: 64px 0;
+  margin: 40px auto;
+  width: min(1180px, 92%);
+}
+.systems-video-section video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(.42) saturate(1.05);
+  z-index: 1;
+}
+.systems-video-section .container {
+  position: relative;
+  z-index: 2;
+}
 .cards4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-.system-card{background:#fff;border:1px solid var(--line);border-radius:15px;overflow:hidden;box-shadow:0 8px 25px rgba(20,40,70,.06)}
-.system-card img{width:100%;height:170px;object-fit:cover;display:block}.system-body{padding:15px}.system-body h3{font-size:16px}.system-body p{font-size:13px;color:var(--muted);margin:6px 0 12px}.link{color:#087cff;font-size:13px;font-weight:800}
+.system-card{background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:15px;overflow:hidden;box-shadow:0 8px 25px rgba(20,40,70,.06)}
+.system-card img{width:100%;height:170px;object-fit:cover;display:block}.system-body{padding:15px}.system-body h3{font-size:16px;color:#10213d}.system-body p{font-size:13px;color:var(--muted);margin:6px 0 12px}.link{color:#087cff;font-size:13px;font-weight:800}
 
 /* PROJECT SLIDER */
 .slider-shell{position:relative}
@@ -243,7 +265,7 @@ footer{background:#031020;color:#cbd7e5;padding:45px 0 20px}.footer-grid{display
 
 <section class="hero" id="home">
   <video autoplay muted loop playsinline poster="proyek-villa.jpg">
-    <source src="hero-villa.mp4" type="video/mp4">
+    <source src="hero-carport.mp4" type="video/mp4">
   </video>
   <div class="container hero-content">
     <span class="badge">SOLUSI ENERGI MASA DEPAN</span>
@@ -335,28 +357,36 @@ footer{background:#031020;color:#cbd7e5;padding:45px 0 20px}.footer-grid{display
 </div>
 </section>
 
-<section class="section" id="produk">
-<div class="container">
-  <div class="section-title"><span class="badge">SOLUSI PLTS</span><h2>Sistem PLTS yang Kami Tawarkan</h2><p>Pilih sistem sesuai kebutuhan energi dan karakter properti Anda.</p></div>
-  <div class="cards4">
-    <article class="system-card">
-      <img src="produk-panel-550.jpg" alt="PLTS On-Grid">
-      <div class="system-body"><h3>ON-GRID</h3><p>Hemat listrik tanpa baterai, tetap terhubung dengan PLN.</p><a class="link" href="#calculator">Selengkapnya →</a></div>
-    </article>
-    <article class="system-card">
-      <img src="produk-inverter-hybrid.jpg" alt="PLTS Hybrid">
-      <div class="system-body"><h3>HYBRID</h3><p>Listrik lebih mandiri dengan baterai dan backup PLN.</p><a class="link" href="#calculator">Selengkapnya →</a></div>
-    </article>
-    <article class="system-card">
-      <img src="produk-baterai-lithium.jpg" alt="PLTS Off-Grid">
-      <div class="system-body"><h3>OFF-GRID</h3><p>Solusi listrik mandiri 100% tanpa terhubung dengan PLN.</p><a class="link" href="#calculator">Selengkapnya →</a></div>
-    </article>
-    <article class="system-card">
-      <img src="produk-ev-charger.jpg" alt="EV Charger">
-      <div class="system-body"><h3>EV CHARGER</h3><p>Charging station modern untuk kendaraan listrik Anda.</p><a class="link" href="#kontak">Selengkapnya →</a></div>
-    </article>
+<!-- SECTION PRODUK DENGAN BACKGROUND VIDEO CARPORT -->
+<section class="systems-video-section" id="produk">
+  <video autoplay muted loop playsinline>
+    <source src="hero-carport.mp4" type="video/mp4">
+  </video>
+  <div class="container">
+    <div class="section-title" style="color: #fff;">
+      <span class="badge" style="background: rgba(255,255,255,0.15); color: #fff; border: 1px solid rgba(255,255,255,0.3);">SOLUSI PLTS</span>
+      <h2 style="color: #fff;">Sistem PLTS yang Kami Tawarkan</h2>
+      <p style="color: #e2e8f0;">Pilih sistem sesuai kebutuhan energi dan karakter properti Anda.</p>
+    </div>
+    <div class="cards4">
+      <article class="system-card">
+        <img src="produk-panel-550.jpg" alt="PLTS On-Grid">
+        <div class="system-body"><h3>ON-GRID</h3><p>Hemat listrik tanpa baterai, tetap terhubung dengan PLN.</p><a class="link" href="#calculator">Selengkapnya →</a></div>
+      </article>
+      <article class="system-card">
+        <img src="produk-inverter-hybrid.jpg" alt="PLTS Hybrid">
+        <div class="system-body"><h3>HYBRID</h3><p>Listrik lebih mandiri dengan baterai dan backup PLN.</p><a class="link" href="#calculator">Selengkapnya →</a></div>
+      </article>
+      <article class="system-card">
+        <img src="produk-baterai-lithium.jpg" alt="PLTS Off-Grid">
+        <div class="system-body"><h3>OFF-GRID</h3><p>Solusi listrik mandiri 100% tanpa terhubung dengan PLN.</p><a class="link" href="#calculator">Selengkapnya →</a></div>
+      </article>
+      <article class="system-card">
+        <img src="produk-ev-charger.jpg" alt="EV Charger">
+        <div class="system-body"><h3>EV CHARGER</h3><p>Charging station modern untuk kendaraan listrik Anda.</p><a class="link" href="#kontak">Selengkapnya →</a></div>
+      </article>
+    </div>
   </div>
-</div>
 </section>
 
 <section class="section" id="proyek">
