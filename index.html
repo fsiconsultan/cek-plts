@@ -363,7 +363,7 @@ footer{background:#031020;color:#cbd7e5;padding:45px 0 20px}.footer-grid{display
       <div class="form-grid" style="grid-template-columns: repeat(3, 1fr);">
         <div class="field">
           <label><i class="fa-solid fa-receipt"></i> Tagihan Listrik / bulan (Rp)</label>
-          <input id="bill" type="number" value="4000000" min="0" step="100000">
+          <input id="bill" type="number" value="3000000" min="0" step="100000">
         </div>
         <div class="field">
           <label><i class="fa-solid fa-tag"></i> Tarif Listrik (per kWh)</label>
@@ -605,13 +605,13 @@ $('#sendWA').addEventListener('click', () => {
     body: JSON.stringify(leadData)
   }).catch(error => console.error('Error!', error.message));
 
-  // Format teks pesan WhatsApp ke admin FSI
-  const text = `Halo French Solar Industry, saya *${name}* (No WA: ${phone}) tertarik memasang PLTS On-Grid dengan rincian:%0A%0A` +
-               `- Tagihan Listrik Awal: Rp ${billVal.toLocaleString('id-ID')} / bulan%0A` +
-               `- Estimasi Kapasitas PLTS: ${kwp}%0A` +
-               `- Estimasi Produksi Energi: ${prod}%0A` +
-               `- Estimasi Penghematan: ${save} / bulan%0A` +
-               `- Estimasi Investasi: ${invest}%0A%0A` +
+  // Format teks pesan WhatsApp ke admin FSI sesuai permintaan Anda
+  const text = `Halo French Solar Industry, saya ${name} tertarik tentang PLTS dengan rincian:%0A%0A` +
+               `Tagihan Listrik Awal: Rp ${billVal.toLocaleString('id-ID')} / bulan%0A` +
+               `Estimasi Kapasitas PLTS: ${kwp}%0A` +
+               `Estimasi Produksi Energi: ${prod}%0A` +
+               `Estimasi Penghematan: ${save} / bulan%0A` +
+               `Estimasi Investasi: ${invest}%0A%0A` +
                `Mohon info lebih lanjut untuk penjadwalan site survey. Terima kasih!`;
 
   window.open(`https://wa.me/6281139410041?text=${text}`, '_blank');
