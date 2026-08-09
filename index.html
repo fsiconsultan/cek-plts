@@ -348,7 +348,7 @@ footer{background:#031020;color:#cbd7e5;padding:45px 0 20px}.footer-grid{display
       <h2 class="calc-title"><i class="fa-solid fa-calculator" style="color:var(--blue)"></i> Hitung Potensi Penghematan PLTS</h2>
       <p class="calc-desc">Masukkan data diri dan tagihan listrik Anda untuk mendapatkan estimasi awal serta terhubung ke WhatsApp kami.</p>
       
-      <!-- Input Nama & WhatsApp Baru -->
+      <!-- Input Nama & WhatsApp -->
       <div class="form-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 15px;">
         <div class="field">
           <label><i class="fa-solid fa-user"></i> Nama Lengkap</label>
@@ -579,7 +579,7 @@ $('#sendWA').addEventListener('click', () => {
     return;
   }
 
-  // Data yang dikirim ke Google Sheets via Apps Script
+  // Data yang dikirim ke Google Sheets via Apps Script (Sesuai 12 Kolom Tab LEADS)
   const leadData = {
     nama: name,
     whatsapp: phone,
@@ -594,8 +594,8 @@ $('#sendWA').addEventListener('click', () => {
     statusLead: "New Inquiry"
   };
 
-  // Ganti URL di bawah ini dengan URL Web App Google Apps Script Anda (berakhiran /exec)
-  const scriptURL = 'MASUKKAN_URL_WEB_APP_ANDA_DISINI';
+  // URL Web App Google Apps Script Anda yang aktif
+  const scriptURL = 'https://script.google.com/macros/s/AKfycby5QLjc_oIPoXgdXt6pyQKYRV_UOhJT18qz9PZG5rqHWn01VVyYqwUCt_a1axpB9RaiFw/exec';
 
   // Kirim data ke Google Sheets secara background
   fetch(scriptURL, {
@@ -616,16 +616,6 @@ $('#sendWA').addEventListener('click', () => {
 
   window.open(`https://wa.me/6281139410041?text=${text}`, '_blank');
 });
-
-/* PROJECT SLIDER */
-const track = $('#projectTrack');
-const nextBtn = $('#next');
-const prevBtn = $('#prev');
-if(nextBtn && prevBtn && track) {
-  nextBtn.addEventListener('click', () => { track.scrollBy({ left: 300, behavior: 'smooth' }); });
-  prevBtn.addEventListener('click', () => { track.scrollBy({ left: -300, behavior: 'smooth' }); });
-}
 </script>
-
 </body>
 </html>
