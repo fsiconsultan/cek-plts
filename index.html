@@ -121,8 +121,6 @@ button,input,select{font:inherit}
 .calc-box{background:#fff;border-radius:20px;box-shadow:var(--shadow);padding:28px;display:grid;grid-template-columns:1fr 1fr;gap:30px}
 .calc-left{border-right:1px solid var(--line);padding-right:30px}
 .calc-title{font-size:23px;margin-bottom:7px}.calc-desc{color:var(--muted);font-size:14px;margin-bottom:20px}
-.tabs{display:grid;grid-template-columns:1fr 1fr;margin-bottom:20px;background:#edf2f7;padding:4px;border-radius:10px}
-.tab{border:0;padding:10px;border-radius:8px;background:transparent;font-weight:800;cursor:pointer}.tab.active{background:var(--blue);color:#fff}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
 .field label{display:block;font-size:12px;font-weight:800;margin-bottom:6px;color:#526174}
 .field input,.field select{
@@ -318,7 +316,7 @@ footer{background:#031020;color:#cbd7e5;padding:45px 0 20px}.footer-grid{display
   <div class="container hero-content">
     <span class="badge"><i class="fa-solid fa-bolt"></i> SOLUSI ENERGI MASA DEPAN</span>
     <h1>Hemat Listrik,<br>Maksimalkan<br><span>Energi Matahari</span></h1>
-    <p>Sistem PLTS On-Grid & Hybrid untuk rumah, villa, bisnis, industri, dan properti komersial.</p>
+    <p>Sistem PLTS On-Grid untuk rumah, villa, bisnis, industri, dan properti komersial.</p>
     <div class="hero-actions">
       <a href="#calculator" class="btn btn-primary"><i class="fa-solid fa-calculator"></i> Hitung Potensi Penghematan ⚡</a>
       <a href="https://wa.me/6281139410041?text=Halo%20FSI%2C%20saya%20ingin%20konsultasi%20PLTS." target="_blank" class="btn btn-light"><i class="fa-brands fa-whatsapp"></i> Konsultasi Sekarang</a>
@@ -346,58 +344,43 @@ footer{background:#031020;color:#cbd7e5;padding:45px 0 20px}.footer-grid{display
 
 <section class="section calc-section" id="calculator">
 <div class="container">
-  <div class="calc-box">
-    <div class="calc-left">
+  <div class="calc-box" style="grid-template-columns: 1fr;">
+    <div>
       <h2 class="calc-title"><i class="fa-solid fa-calculator" style="color:var(--blue)"></i> Hitung Potensi Penghematan PLTS</h2>
-      <p class="calc-desc">Masukkan data tagihan listrik Anda untuk mendapatkan estimasi awal dalam hitungan detik.</p>
-      <div class="tabs">
-        <button class="tab active" data-mode="ongrid"><i class="fa-solid fa-plug"></i> ON-GRID</button>
-        <button class="tab" data-mode="hybrid"><i class="fa-solid fa-battery-full"></i> HYBRID</button>
-      </div>
-      <div class="form-grid">
+      <p class="calc-desc">Masukkan data tagihan listrik Anda dan tentukan target penghematan untuk mendapatkan estimasi awal.</p>
+      
+      <div class="form-grid" style="grid-template-columns: repeat(3, 1fr);">
         <div class="field">
-          <label><i class="fa-solid fa-receipt"></i> Tagihan Listrik / bulan</label>
+          <label><i class="fa-solid fa-receipt"></i> Tagihan Listrik / bulan (Rp)</label>
           <input id="bill" type="number" value="4000000" min="0" step="100000">
         </div>
         <div class="field">
           <label><i class="fa-solid fa-tag"></i> Tarif Listrik (per kWh)</label>
-          <select id="tariff"><option value="1800">Rp 1.800</option><option value="1500">Rp 1.500</option></select>
-        </div>
-        <div class="field">
-          <label><i class="fa-solid fa-bolt-lightning"></i> Daya PLN</label>
-          <select id="power">
-            <option value="2200">2200 VA (1 Phase)</option>
-            <option value="3500">3500 VA (1 Phase)</option>
-            <option value="5500">5500 VA (1 Phase)</option>
-            <option value="6600" selected>6600 VA (3 Phase)</option>
-            <option value="10600">10600 VA (3 Phase)</option>
-            <option value="13800">13800 VA (3 Phase)</option>
-            <option value="23000">23000 VA (3 Phase)</option>
+          <select id="tariff">
+            <option value="1800">Rp 1.800</option>
+            <option value="1500">Rp 1.500</option>
           </select>
         </div>
-        <div class="field" id="nightField" style="opacity: 0.45;">
-          <label><i class="fa-solid fa-moon"></i> Pemakaian Malam (%)</label>
-          <div style="display:grid;grid-template-columns:1fr 65px;gap:7px">
-            <input id="night" type="range" min="0" max="100" value="50" style="padding:0">
-            <input id="nightNum" type="number" min="0" max="100" value="50">
-          </div>
-        </div>
-        <div class="field full">
-          <button class="btn btn-primary calc-button" id="calcBtn"><i class="fa-solid fa-calculator"></i> Hitung Sekarang</button>
+        <div class="field">
+          <label><i class="fa-solid fa-bullseye"></i> Target Penghematan (%)</label>
+          <select id="targetReduce">
+            <option value="0.50">50%</option>
+            <option value="0.60">60%</option>
+            <option value="0.70" selected>70%</option>
+            <option value="0.80">80%</option>
+            <option value="0.90">90%</option>
+            <option value="1.00">100%</option>
+          </select>
         </div>
       </div>
-    </div>
+      <button class="btn btn-primary calc-button" id="calcBtn"><i class="fa-solid fa-calculator"></i> Hitung Sekarang</button>
 
-    <div>
-      <h3 style="margin-bottom:15px"><i class="fa-solid fa-chart-line"></i> ESTIMASI HASIL</h3>
-      <div class="result-grid">
-        <div class="result-card"><small>Kapasitas PLTS</small><strong id="rKwp">15.6 kWp</strong></div>
-        <div class="result-card"><small>Produksi Energi</small><strong id="rProd">1.950 kWh/bln</strong></div>
-        <div class="result-card highlight"><small>Penghematan / bulan</small><strong id="rSave">Rp 3.600.000</strong></div>
-        <div class="result-card"><small>Penghematan</small><strong id="rPct">90%</strong></div>
-        <div class="result-card"><small>Estimasi Investasi</small><strong id="rInvest">Rp 219.000.000</strong></div>
-        <div class="result-card"><small>Payback Period</small><strong id="rPayback">5.1 Tahun</strong></div>
-        <div class="result-card wide"><small>Return on Investment</small><strong id="rRoi">196%</strong></div>
+      <h3 style="margin-top: 30px; margin-bottom:15px"><i class="fa-solid fa-chart-line"></i> ESTIMASI HASIL</h3>
+      <div class="result-grid" style="grid-template-columns: repeat(4, 1fr);">
+        <div class="result-card"><small>Kapasitas PLTS</small><strong id="rKwp">0 kWp</strong></div>
+        <div class="result-card"><small>Produksi Energi</small><strong id="rProd">0 kWh/bln</strong></div>
+        <div class="result-card highlight"><small>Penghematan / bulan</small><strong id="rSave">Rp 0</strong></div>
+        <div class="result-card"><small>Estimasi Investasi</small><strong id="rInvest">Rp 0</strong></div>
       </div>
       <button class="btn whatsapp-result" id="sendWA"><i class="fa-brands fa-whatsapp"></i> Kirim Hasil ke WhatsApp</button>
     </div>
@@ -542,99 +525,39 @@ const $$ = s => document.querySelectorAll(s);
 $('#menuBtn').addEventListener('click',()=>$('#navLinks').classList.toggle('open'));
 $$('#navLinks a').forEach(a=>a.addEventListener('click',()=>$('#navLinks').classList.remove('open')));
 
-/* CALCULATOR */
-let mode='ongrid';
-$$('.tab').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    $$('.tab').forEach(x=>x.classList.remove('active'));
-    btn.classList.add('active');
-    mode=btn.dataset.mode;
-    $('#nightField').style.opacity=mode==='hybrid'?'1':'.45';
-    calculate();
-  });
-});
-$('#night').addEventListener('input',e=>$('#nightNum').value=e.target.value);
-$('#nightNum').addEventListener('input',e=>{
-  let v=Math.max(0,Math.min(100,Number(e.target.value)||0)); e.target.value=v; $('#night').value=v;
-});
-['bill','tariff','power','night'].forEach(id=>$('#'+id).addEventListener('input',calculate));
-
+/* CALCULATOR LOGIC */
 function rupiah(n){
   return 'Rp ' + Math.round(n).toLocaleString('id-ID');
 }
 function calculate(){
-  const bill=Math.max(0,Number($('#bill').value)||0);
-  const tariff=Number($('#tariff').value)||1800;
-  const night=Number($('#nightNum').value)||50;
+  const bill = Math.max(0, Number($('#bill').value) || 0);
+  const tariff = Number($('#tariff').value) || 1800;
+  const target = Number($('#targetReduce').value) || 0.70;
 
-  const monthlyKwh=bill/tariff;
-  const solarShare=mode==='hybrid'
-    ? Math.min(.90, Math.max(.45, .90-(night/100)*.05))
-    : .70;
-  const production=monthlyKwh*solarShare;
-  const kwp=Math.max(1,production/125);
-  const saving=bill*solarShare;
-  const investment=kwp*14000000*(mode==='hybrid'?1.18:1);
-  const payback=investment/Math.max(1,saving*12);
-  const roi=((saving*12*10-investment)/Math.max(1,investment))*100;
+  const monthlyKwh = bill / tariff;
+  const production = monthlyKwh * target;
+  const kwp = Math.max(1, production / 125);
+  const saving = bill * target;
+  const investment = kwp * 14000000;
 
-  $('#rKwp').textContent=kwp.toFixed(1)+' kWp';
-  $('#rProd').textContent=Math.round(production).toLocaleString('id-ID')+' kWh/bln';
-  $('#rSave').textContent=rupiah(saving);
-  $('#rPct').textContent=Math.round(solarShare*100)+'%';
-  $('#rInvest').textContent=rupiah(investment);
-  $('#rPayback').textContent=payback.toFixed(1)+' Tahun';
-  $('#rRoi').textContent=Math.round(roi)+'%';
+  $('#rKwp').textContent = kwp.toFixed(1) + ' kWp';
+  $('#rProd').textContent = Math.round(production).toLocaleString('id-ID') + ' kWh/bln';
+  $('#rSave').textContent = rupiah(saving);
+  $('#rInvest').textContent = rupiah(investment);
 }
-$('#calcBtn').addEventListener('click',calculate);
+
+$('#calcBtn').addEventListener('click', calculate);
+['bill', 'tariff', 'targetReduce'].forEach(id => $('#'+id).addEventListener('input', calculate));
 calculate();
 
-/* SEND RESULT TO WHATSAPP & SPREADSHEET (LEADS) */
-$('#sendWA').addEventListener('click',()=>{
-  const billVal = Number($('#bill').value)||0;
-  const dataPayload = {
-    mode: mode,
-    bill: billVal,
-    kwp: $('#rKwp').textContent,
-    production: $('#rProd').textContent,
-    saving: $('#rSave').textContent,
-    payback: $('#rPayback').textContent
-  };
-
-  const scriptURL = 'PASTE_APPS_SCRIPT_WEB_APP_URL_DISINI';
-  if(scriptURL !== 'PASTE_APPS_SCRIPT_WEB_APP_URL_DISINI') {
-    fetch(scriptURL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(dataPayload)
-    }).catch(err => console.log('Error saving lead:', err));
-  }
-
-  const billStr = rupiah(billVal);
-  const text = `Halo FSI, saya ingin konsultasi PLTS.%0A%0ATipe: ${mode==='hybrid'?'Hybrid':'On-Grid'}%0ATagihan listrik: ${billStr}%0AKapasitas estimasi: ${$('#rKwp').textContent}%0AProduksi: ${$('#rProd').textContent}%0APenghematan: ${$('#rSave').textContent}%0APayback: ${$('#rPayback').textContent}`;
-  window.open('https://wa.me/6281139410041?text='+text,'_blank');
-});
-
 /* PROJECT SLIDER */
-const track=$('#projectTrack');
-$('#next').onclick=()=>track.scrollBy({left:track.clientWidth*.82,behavior:'smooth'});
-$('#prev').onclick=()=>track.scrollBy({left:-track.clientWidth*.82,behavior:'smooth'});
-
-function makeDots(){
-  const dots=$('#dots'); dots.innerHTML='';
-  const pages=Math.max(1,Math.ceil(track.scrollWidth/track.clientWidth));
-  for(let i=0;i<pages;i++){
-    const d=document.createElement('span'); d.className='dot'+(i===0?' active':'');
-    d.onclick=()=>track.scrollTo({left:i*track.clientWidth,behavior:'smooth'}); dots.appendChild(d);
-  }
+const track = $('#projectTrack');
+const nextBtn = $('#next');
+const prevBtn = $('#prev');
+if(nextBtn && prevBtn && track) {
+  nextBtn.addEventListener('click', () => { track.scrollBy({ left: 300, behavior: 'smooth' }); });
+  prevBtn.addEventListener('click', () => { track.scrollBy({ left: -300, behavior: 'smooth' }); });
 }
-makeDots();
-window.addEventListener('resize',makeDots);
-track.addEventListener('scroll',()=>{
-  const i=Math.round(track.scrollLeft/track.clientWidth);
-  $$('.dot').forEach((d,n)=>d.classList.toggle('active',n===i));
-});
 </script>
 
 </body>
