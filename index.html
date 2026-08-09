@@ -7,6 +7,9 @@
 <meta name="description" content="French Solar Industry - Solusi PLTS On-Grid, Hybrid, Off-Grid dan EV Charger untuk rumah, villa, bisnis, industri dan properti komersial.">
 <title>French Solar Industry | Solusi Energi Surya</title>
 
+<!-- Font Awesome untuk Ikon Resmi -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 <style>
 :root{
   --blue:#087cff;
@@ -41,22 +44,44 @@ button,input,select{font:inherit}
   background:#eaf5ff;color:#0870d8;font-weight:700;font-size:13px;margin-bottom:14px
 }
 
-/* NAVBAR */
+/* NAVBAR TRANSPARAN & BERBINGKAI (GLASSMORPHISM) */
 .navbar{
   position:fixed;z-index:1000;top:0;left:0;width:100%;
-  background:rgba(255,255,255,.92);backdrop-filter:blur(14px);
-  border-bottom:1px solid rgba(0,0,0,.06)
+  background:rgba(6, 21, 45, 0.35);backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(255,255,255,.15);
+  transition: background 0.3s ease;
 }
-.nav-inner{height:76px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.nav-inner{height:80px;display:flex;align-items:center;justify-content:space-between;gap:20px}
 .logo{display:flex;align-items:center;gap:10px;font-weight:900}
 .logo img{height:38px;width:auto;display:block}
-.nav-links{display:flex;align-items:center;gap:25px;font-size:14px;font-weight:700}
-.nav-links a:hover{color:var(--blue)}
-.nav-cta{
-  background:linear-gradient(135deg,#087cff,#0758d8);color:#fff;
-  padding:12px 18px;border-radius:10px;box-shadow:0 8px 20px rgba(8,124,255,.25)
+.nav-links{display:flex;align-items:center;gap:12px;font-size:13px;font-weight:700}
+
+/* Teks Menu Berbingkai Kaca */
+.nav-links a {
+  color: #fff;
+  padding: 8px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
 }
-.menu{display:none;border:0;background:none;font-size:25px;cursor:pointer}
+.nav-links a:hover{
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: translateY(-2px);
+}
+.nav-cta{
+  background: #25D366 !important;
+  color:#fff !important;
+  border: 2px solid #25D366 !important;
+  padding: 9px 18px !important;
+  border-radius: 20px !important;
+  box-shadow: 0 4px 15px rgba(37,211,102,.3);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.menu{display:none;border:0;background:none;font-size:25px;cursor:pointer;color:#fff}
 
 /* HERO VIDEO */
 .hero{min-height:780px;position:relative;overflow:hidden;color:#fff;background:#06152d}
@@ -134,9 +159,31 @@ button,input,select{font:inherit}
   position: relative;
   z-index: 2;
 }
+
 .cards4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-.system-card{background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:15px;overflow:hidden;box-shadow:0 8px 25px rgba(20,40,70,.06)}
-.system-card img{width:100%;height:170px;object-fit:cover;display:block}.system-body{padding:15px}.system-body h3{font-size:16px;color:#10213d}.system-body p{font-size:13px;color:var(--muted);margin:6px 0 12px}.link{color:#087cff;font-size:13px;font-weight:800}
+
+/* EFEK MELAYANG (FLOATING & HOVER) PADA KARTU PRODUK & PROYEK */
+.system-card, .project-card {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+.system-card:hover, .project-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(8, 34, 65, 0.25);
+}
+.system-card:active, .project-card:active {
+  transform: translateY(-4px) scale(0.98);
+  box-shadow: 0 10px 20px rgba(8, 34, 65, 0.2);
+}
+.system-card img, .project-card img {
+  transition: transform 0.6s ease;
+}
+.system-card:hover img, .project-card:hover img {
+  transform: scale(1.05);
+}
+
+.system-card{background:rgba(255,255,255,.95);backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:15px;overflow:hidden;box-shadow:0 8px 25px rgba(20,40,70,.06)}
+.system-card img{width:100%;height:170px;object-fit:cover;display:block}.system-body{padding:15px}.system-body h3{font-size:16px;color:#10213d;display:flex;align-items:center;gap:8px}.system-body p{font-size:13px;color:var(--muted);margin:6px 0 12px}.link{color:#087cff;font-size:13px;font-weight:800}
 
 /* PROJECT SLIDER */
 .slider-shell{position:relative}
@@ -152,7 +199,7 @@ button,input,select{font:inherit}
 .dots{text-align:center;margin-top:5px}.dot{display:inline-block;width:8px;height:8px;background:#ccd6e2;border-radius:50%;margin:4px;cursor:pointer}.dot.active{background:#087cff;width:20px;border-radius:8px}
 
 /* WHY */
-.why{background:#fff}.why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}.why-card{text-align:center;padding:22px}.why-icon{width:54px;height:54px;margin:0 auto 12px;border-radius:50%;display:grid;place-items:center;background:#e9f5ff;color:#087cff;font-size:25px}.why-card h3{font-size:15px}.why-card p{font-size:12px;color:var(--muted);margin-top:5px}
+.why{background:#fff}.why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}.why-card{text-align:center;padding:22px}.why-icon{width:54px;height:54px;margin:0 auto 12px;border-radius:50%;display:grid;place-items:center;background:#e9f5ff;color:#087cff;font-size:22px}.why-card h3{font-size:15px}.why-card p{font-size:12px;color:var(--muted);margin-top:5px}
 
 /* SPACE BUSINESS FOOTER SECTION */
 .space-section{
@@ -216,17 +263,18 @@ footer{background:#031020;color:#cbd7e5;padding:45px 0 20px}.footer-grid{display
 
 /* RESPONSIVE */
 @media(max-width:1000px){
-  .nav-links{gap:14px}.stats{grid-template-columns:repeat(3,1fr)}
+  .nav-links{gap:8px}.stats{grid-template-columns:repeat(3,1fr)}
   .cards4{grid-template-columns:repeat(2,1fr)}.project-card{flex-basis:calc(33.33% - 11px)}
   .calc-box{grid-template-columns:1fr}.calc-left{border-right:0;border-bottom:1px solid var(--line);padding:0 0 25px}
   .footer-grid{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:720px){
   .nav-inner{height:66px}.nav-links{
-    display:none;position:absolute;top:66px;left:0;right:0;background:#fff;
-    flex-direction:column;align-items:stretch;padding:15px 5%;box-shadow:0 15px 30px #0001
+    display:none;position:absolute;top:66px;left:0;right:0;background:rgba(6,21,45,0.95);
+    flex-direction:column;align-items:stretch;padding:15px 5%;box-shadow:0 15px 30px #0004
   }
-  .nav-links.open{display:flex}.nav-links a{padding:10px}.nav-cta{display:none}.menu{display:block}
+  .nav-links a {border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.05);text-align:center}
+  .nav-links.open{display:flex}.menu{display:block}
   .hero{min-height:720px}.hero-content{padding-top:130px}.hero h1{font-size:43px}.hero p{font-size:16px}
   .stats{grid-template-columns:repeat(2,1fr);padding:13px}.stat{border:0}
   .section{padding:48px 0}.calc-box{padding:18px}.form-grid{grid-template-columns:1fr}.result-grid{grid-template-columns:1fr}
@@ -248,38 +296,37 @@ footer{background:#031020;color:#cbd7e5;padding:45px 0 20px}.footer-grid{display
       <img src="logo.jpg" alt="French Solar Industry">
     </a>
     <nav class="nav-links" id="navLinks">
-      <a href="#home">Beranda</a>
-      <a href="#tentang">Tentang Kami</a>
-      <a href="#produk">Produk</a>
-      <a href="#calculator">Sistem PLTS</a>
-      <a href="#proyek">Proyek</a>
-      <a href="#faq">FAQ</a>
-      <a href="#kontak">Kontak</a>
+      <a href="#home"><i class="fa-solid fa-house"></i> Beranda</a>
+      <a href="#tentang"><i class="fa-solid fa-circle-info"></i> Tentang</a>
+      <a href="#produk"><i class="fa-solid fa-solar-panel"></i> Produk</a>
+      <a href="#calculator"><i class="fa-solid fa-calculator"></i> Sistem PLTS</a>
+      <a href="#proyek"><i class="fa-solid fa-building-shield"></i> Proyek</a>
+      <a href="#faq"><i class="fa-solid fa-circle-question"></i> FAQ</a>
+      <a href="#kontak"><i class="fa-solid fa-address-book"></i> Kontak</a>
     </nav>
-    <a class="nav-cta" href="https://wa.me/6281234567890?text=Halo%20FSI%2C%20saya%20ingin%20konsultasi%20PLTS." target="_blank">☏ Konsultasi Gratis</a>
-    <button class="menu" id="menuBtn" aria-label="Menu">☰</button>
+    <a class="nav-cta" href="https://wa.me/6281234567890?text=Halo%20FSI%2C%20saya%20ingin%20konsultasi%20PLTS." target="_blank"><i class="fa-brands fa-whatsapp"></i> Konsultasi</a>
+    <button class="menu" id="menuBtn" aria-label="Menu"><i class="fa-solid fa-bars"></i></button>
   </div>
 </header>
 
 <main>
 
-<!-- HERO UTAMA MENGGUNAKAN HERO-VILLA.MP4 -->
 <section class="hero" id="home">
   <video autoplay muted loop playsinline poster="proyek-villa.jpg">
     <source src="hero-villa.mp4" type="video/mp4">
   </video>
   <div class="container hero-content">
-    <span class="badge">SOLUSI ENERGI MASA DEPAN</span>
+    <span class="badge"><i class="fa-solid fa-bolt"></i> SOLUSI ENERGI MASA DEPAN</span>
     <h1>Hemat Listrik,<br>Maksimalkan<br><span>Energi Matahari</span></h1>
     <p>Sistem PLTS On-Grid & Hybrid untuk rumah, villa, bisnis, industri, dan properti komersial.</p>
     <div class="hero-actions">
-      <a href="#calculator" class="btn btn-primary">Hitung Potensi Penghematan ⚡</a>
-      <a href="https://wa.me/6281234567890?text=Halo%20FSI%2C%20saya%20ingin%20konsultasi%20PLTS." target="_blank" class="btn btn-light">🟢 Konsultasi Sekarang</a>
+      <a href="#calculator" class="btn btn-primary"><i class="fa-solid fa-calculator"></i> Hitung Potensi Penghematan ⚡</a>
+      <a href="https://wa.me/6281234567890?text=Halo%20FSI%2C%20saya%20ingin%20konsultasi%20PLTS." target="_blank" class="btn btn-light"><i class="fa-brands fa-whatsapp"></i> Konsultasi Sekarang</a>
     </div>
     <div class="hero-free">
-      <div class="free-item"><span class="free-icon">♧</span><span><b>FREE</b>Konsultasi</span></div>
-      <div class="free-item"><span class="free-icon">⌖</span><span><b>FREE</b>Site Survey</span></div>
-      <div class="free-item"><span class="free-icon">▣</span><span><b>FREE</b>Estimasi Penghematan</span></div>
+      <div class="free-item"><span class="free-icon"><i class="fa-solid fa-headset"></i></span><span><b>FREE</b>Konsultasi</span></div>
+      <div class="free-item"><span class="free-icon"><i class="fa-solid fa-map-location-dot"></i></span><span><b>FREE</b>Site Survey</span></div>
+      <div class="free-item"><span class="free-icon"><i class="fa-solid fa-file-invoice-dollar"></i></span><span><b>FREE</b>Estimasi Penghematan</span></div>
     </div>
   </div>
 </section>
@@ -301,23 +348,23 @@ footer{background:#031020;color:#cbd7e5;padding:45px 0 20px}.footer-grid{display
 <div class="container">
   <div class="calc-box">
     <div class="calc-left">
-      <h2 class="calc-title">Hitung Potensi Penghematan PLTS Anda</h2>
+      <h2 class="calc-title"><i class="fa-solid fa-calculator" style="color:var(--blue)"></i> Hitung Potensi Penghematan PLTS</h2>
       <p class="calc-desc">Masukkan data tagihan listrik Anda untuk mendapatkan estimasi awal dalam hitungan detik.</p>
       <div class="tabs">
-        <button class="tab active" data-mode="ongrid">ON-GRID</button>
-        <button class="tab" data-mode="hybrid">HYBRID</button>
+        <button class="tab active" data-mode="ongrid"><i class="fa-solid fa-plug"></i> ON-GRID</button>
+        <button class="tab" data-mode="hybrid"><i class="fa-solid fa-battery-full"></i> HYBRID</button>
       </div>
       <div class="form-grid">
         <div class="field">
-          <label>Tagihan Listrik / bulan</label>
+          <label><i class="fa-solid fa-receipt"></i> Tagihan Listrik / bulan</label>
           <input id="bill" type="number" value="4000000" min="0" step="100000">
         </div>
         <div class="field">
-          <label>Tarif Listrik (per kWh)</label>
+          <label><i class="fa-solid fa-tag"></i> Tarif Listrik (per kWh)</label>
           <select id="tariff"><option value="1800">Rp 1.800</option><option value="1500">Rp 1.500</option></select>
         </div>
         <div class="field">
-          <label>Daya PLN</label>
+          <label><i class="fa-solid fa-bolt-lightning"></i> Daya PLN</label>
           <select id="power">
             <option value="2200">2200 VA (1 Phase)</option>
             <option value="3500">3500 VA (1 Phase)</option>
@@ -329,20 +376,20 @@ footer{background:#031020;color:#cbd7e5;padding:45px 0 20px}.footer-grid{display
           </select>
         </div>
         <div class="field" id="nightField" style="opacity: 0.45;">
-          <label>Pemakaian Malam (%)</label>
+          <label><i class="fa-solid fa-moon"></i> Pemakaian Malam (%)</label>
           <div style="display:grid;grid-template-columns:1fr 65px;gap:7px">
             <input id="night" type="range" min="0" max="100" value="50" style="padding:0">
             <input id="nightNum" type="number" min="0" max="100" value="50">
           </div>
         </div>
         <div class="field full">
-          <button class="btn btn-primary calc-button" id="calcBtn">Hitung Sekarang ▦</button>
+          <button class="btn btn-primary calc-button" id="calcBtn"><i class="fa-solid fa-calculator"></i> Hitung Sekarang</button>
         </div>
       </div>
     </div>
 
     <div>
-      <h3 style="margin-bottom:15px">ESTIMASI HASIL</h3>
+      <h3 style="margin-bottom:15px"><i class="fa-solid fa-chart-line"></i> ESTIMASI HASIL</h3>
       <div class="result-grid">
         <div class="result-card"><small>Kapasitas PLTS</small><strong id="rKwp">15.6 kWp</strong></div>
         <div class="result-card"><small>Produksi Energi</small><strong id="rProd">1.950 kWh/bln</strong></div>
@@ -352,39 +399,55 @@ footer{background:#031020;color:#cbd7e5;padding:45px 0 20px}.footer-grid{display
         <div class="result-card"><small>Payback Period</small><strong id="rPayback">5.1 Tahun</strong></div>
         <div class="result-card wide"><small>Return on Investment</small><strong id="rRoi">196%</strong></div>
       </div>
-      <button class="btn whatsapp-result" id="sendWA">◉ Kirim Hasil ke WhatsApp</button>
+      <button class="btn whatsapp-result" id="sendWA"><i class="fa-brands fa-whatsapp"></i> Kirim Hasil ke WhatsApp</button>
     </div>
   </div>
 </div>
 </section>
 
-<!-- SECTION PRODUK MENGGUNAKAN BACKGROUND VIDEO HERO-CARPORT.MP4 -->
+<!-- SECTION PRODUK DENGAN BACKGROUND VIDEO HERO-CARPORT.MP4 -->
 <section class="systems-video-section" id="produk">
   <video autoplay muted loop playsinline>
     <source src="hero-carport.mp4" type="video/mp4">
   </video>
   <div class="container">
     <div class="section-title" style="color: #fff;">
-      <span class="badge" style="background: rgba(255,255,255,0.15); color: #fff; border: 1px solid rgba(255,255,255,0.3);">SOLUSI PLTS</span>
+      <span class="badge" style="background: rgba(255,255,255,0.15); color: #fff; border: 1px solid rgba(255,255,255,0.3);"><i class="fa-solid fa-boxes-stacked"></i> SOLUSI PLTS</span>
       <h2 style="color: #fff;">Sistem PLTS yang Kami Tawarkan</h2>
       <p style="color: #e2e8f0;">Pilih sistem sesuai kebutuhan energi dan karakter properti Anda.</p>
     </div>
     <div class="cards4">
       <article class="system-card">
         <img src="produk-panel-550.jpg" alt="PLTS On-Grid">
-        <div class="system-body"><h3>ON-GRID</h3><p>Hemat listrik tanpa baterai, tetap terhubung dengan PLN.</p><a class="link" href="#calculator">Selengkapnya →</a></div>
+        <div class="system-body">
+          <h3><i class="fa-solid fa-solar-panel" style="color:var(--blue)"></i> ON-GRID</h3>
+          <p>Hemat listrik tanpa baterai, tetap terhubung dengan PLN.</p>
+          <a class="link" href="#calculator">Selengkapnya →</a>
+        </div>
       </article>
       <article class="system-card">
         <img src="produk-inverter-hybrid.jpg" alt="PLTS Hybrid">
-        <div class="system-body"><h3>HYBRID</h3><p>Listrik lebih mandiri dengan baterai dan backup PLN.</p><a class="link" href="#calculator">Selengkapnya →</a></div>
+        <div class="system-body">
+          <h3><i class="fa-solid fa-battery-full" style="color:var(--blue)"></i> HYBRID</h3>
+          <p>Listrik lebih mandiri dengan baterai dan backup PLN.</p>
+          <a class="link" href="#calculator">Selengkapnya →</a>
+        </div>
       </article>
       <article class="system-card">
         <img src="produk-baterai-lithium.jpg" alt="PLTS Off-Grid">
-        <div class="system-body"><h3>OFF-GRID</h3><p>Solusi listrik mandiri 100% tanpa terhubung dengan PLN.</p><a class="link" href="#calculator">Selengkapnya →</a></div>
+        <div class="system-body">
+          <h3><i class="fa-solid fa-plug-circle-bolt" style="color:var(--blue)"></i> OFF-GRID</h3>
+          <p>Solusi listrik mandiri 100% tanpa terhubung dengan PLN.</p>
+          <a class="link" href="#calculator">Selengkapnya →</a>
+        </div>
       </article>
       <article class="system-card">
         <img src="produk-ev-charger.jpg" alt="EV Charger">
-        <div class="system-body"><h3>EV CHARGER</h3><p>Charging station modern untuk kendaraan listrik Anda.</p><a class="link" href="#kontak">Selengkapnya →</a></div>
+        <div class="system-body">
+          <h3><i class="fa-solid fa-charging-station" style="color:var(--blue)"></i> EV CHARGER</h3>
+          <p>Charging station modern untuk kendaraan listrik Anda.</p>
+          <a class="link" href="#kontak">Selengkapnya →</a>
+        </div>
       </article>
     </div>
   </div>
@@ -393,16 +456,16 @@ footer{background:#031020;color:#cbd7e5;padding:45px 0 20px}.footer-grid{display
 <section class="section" id="proyek">
 <div class="container">
   <div class="section-title" style="text-align:left;display:flex;align-items:flex-end;justify-content:space-between;gap:15px">
-    <div><span class="badge">PORTFOLIO</span><h2>Proyek Kami</h2><p>Contoh aplikasi PLTS untuk berbagai sektor.</p></div>
+    <div><span class="badge"><i class="fa-solid fa-images"></i> PORTFOLIO</span><h2>Proyek Kami</h2><p>Contoh aplikasi PLTS untuk berbagai sektor.</p></div>
     <a class="link" href="#kontak">Lihat Semua Proyek →</a>
   </div>
   <div class="slider-shell">
     <button class="slide-btn prev" id="prev">‹</button>
     <div class="project-track" id="projectTrack">
-      <article class="project-card"><img src="proyek-villa.jpg" alt="Luxury Villa"><div class="project-body"><span class="project-tag">Villa</span><h3>Luxury Villa - Seminyak, Bali</h3><p>15 kWp &nbsp;|&nbsp; Hemat 85%</p></div></article>
-      <article class="project-card"><img src="proyek-office.jpg" alt="Office Building"><div class="project-body"><span class="project-tag">Office</span><h3>Office Building - Denpasar, Bali</h3><p>45 kWp &nbsp;|&nbsp; Hemat 55%</p></div></article>
-      <article class="project-card"><img src="proyek-pabrik.jpg" alt="Factory"><div class="project-body"><span class="project-tag">Industrial</span><h3>Pabrik - Cikarang, Jawa Barat</h3><p>120 kWp &nbsp;|&nbsp; Hemat 70%</p></div></article>
-      <article class="project-card"><img src="proyek-hotel.jpg" alt="Hotel"><div class="project-body"><span class="project-tag">Hotel</span><h3>Resort & Hotel - Ubud, Bali</h3><p>30 kWp &nbsp;|&nbsp; Hemat 60%</p></div></article>
+      <article class="project-card"><img src="proyek-villa.jpg" alt="Luxury Villa"><div class="project-body"><span class="project-tag"><i class="fa-solid fa-hotel"></i> Villa</span><h3>Luxury Villa - Seminyak, Bali</h3><p>15 kWp &nbsp;|&nbsp; Hemat 85%</p></div></article>
+      <article class="project-card"><img src="proyek-office.jpg" alt="Office Building"><div class="project-body"><span class="project-tag"><i class="fa-solid fa-building"></i> Office</span><h3>Office Building - Denpasar, Bali</h3><p>45 kWp &nbsp;|&nbsp; Hemat 55%</p></div></article>
+      <article class="project-card"><img src="proyek-pabrik.jpg" alt="Factory"><div class="project-body"><span class="project-tag"><i class="fa-solid fa-industry"></i> Industrial</span><h3>Pabrik - Cikarang, Jawa Barat</h3><p>120 kWp &nbsp;|&nbsp; Hemat 70%</p></div></article>
+      <article class="project-card"><img src="proyek-hotel.jpg" alt="Hotel"><div class="project-body"><span class="project-tag"><i class="fa-solid fa-bed"></i> Hotel</span><h3>Resort & Hotel - Ubud, Bali</h3><p>30 kWp &nbsp;|&nbsp; Hemat 60%</p></div></article>
     </div>
     <button class="slide-btn next" id="next">›</button>
   </div>
@@ -412,12 +475,12 @@ footer{background:#031020;color:#cbd7e5;padding:45px 0 20px}.footer-grid{display
 
 <section class="section why">
 <div class="container">
-  <div class="section-title"><span class="badge">WHY FSI</span><h2>Kenapa Memilih French Solar Industry?</h2></div>
+  <div class="section-title"><span class="badge"><i class="fa-solid fa-shield-halved"></i> WHY FSI</span><h2>Kenapa Memilih French Solar Industry?</h2></div>
   <div class="why-grid">
-    <div class="why-card"><div class="why-icon">☀</div><h3>Teknologi Eropa</h3><p>Kualitas premium dengan standar Eropa.</p></div>
-    <div class="why-card"><div class="why-icon">▣</div><h3>Material Premium</h3><p>Komponen berkualitas dengan garansi panjang.</p></div>
-    <div class="why-card"><div class="why-icon">♙</div><h3>Tim Profesional</h3><p>Engineer berpengalaman dan bersertifikasi.</p></div>
-    <div class="why-card"><div class="why-icon">◉</div><h3>Layanan Terpadu</h3><p>Dari konsultasi hingga after sales service.</p></div>
+    <div class="why-card"><div class="why-icon"><i class="fa-solid fa-microchip"></i></div><h3>Teknologi Eropa</h3><p>Kualitas premium dengan standar Eropa.</p></div>
+    <div class="why-card"><div class="why-icon"><i class="fa-solid fa-gem"></i></div><h3>Material Premium</h3><p>Komponen berkualitas dengan garansi panjang.</p></div>
+    <div class="why-card"><div class="why-icon"><i class="fa-solid fa-user-tie"></i></div><h3>Tim Profesional</h3><p>Engineer berpengalaman dan bersertifikasi.</p></div>
+    <div class="why-card"><div class="why-icon"><i class="fa-solid fa-headset"></i></div><h3>Layanan Terpadu</h3><p>Dari konsultasi hingga after sales service.</p></div>
   </div>
 </div>
 </section>
@@ -429,24 +492,24 @@ footer{background:#031020;color:#cbd7e5;padding:45px 0 20px}.footer-grid{display
   <div class="business-silhouette"></div>
   <div class="factory"></div>
   <div class="container space-content">
-    <span class="badge">ENERGY FOR THE FUTURE</span>
+    <span class="badge"><i class="fa-solid fa-globe"></i> ENERGY FOR THE FUTURE</span>
     <h2>Dari <span>Matahari</span><br>untuk Dunia Bisnis Anda.</h2>
     <p>Bangun sistem energi yang lebih efisien, modern, dan siap berkembang. Kami membantu rumah, villa, hotel, office, factory, warehouse hingga properti komersial beralih ke energi surya.</p>
     <div class="space-features">
-      <span class="space-pill">☀ Solar Energy</span>
-      <span class="space-pill">⚡ Smart Energy</span>
-      <span class="space-pill">🏭 Business & Industry</span>
-      <span class="space-pill">🌍 Sustainable Future</span>
+      <span class="space-pill"><i class="fa-solid fa-sun"></i> Solar Energy</span>
+      <span class="space-pill"><i class="fa-solid fa-bolt"></i> Smart Energy</span>
+      <span class="space-pill"><i class="fa-solid fa-industry"></i> Business & Industry</span>
+      <span class="space-pill"><i class="fa-solid fa-seedling"></i> Sustainable Future</span>
     </div>
     <div style="margin-top:28px">
-      <a class="btn btn-primary" href="https://wa.me/6281234567890?text=Halo%20FSI%2C%20saya%20ingin%20konsultasi%20dan%20survey%20PLTS." target="_blank">Konsultasi Gratis via WhatsApp →</a>
+      <a class="btn btn-primary" href="https://wa.me/6281234567890?text=Halo%20FSI%2C%20saya%20ingin%20konsultasi%20dan%20survey%20PLTS." target="_blank"><i class="fa-brands fa-whatsapp"></i> Konsultasi Gratis via WhatsApp →</a>
     </div>
   </div>
 </section>
 
 <section class="section" id="faq" style="background:#f5f8fc">
 <div class="container">
-  <div class="section-title"><span class="badge">FAQ</span><h2>Pertanyaan Umum</h2></div>
+  <div class="section-title"><span class="badge"><i class="fa-solid fa-circle-question"></i> FAQ</span><h2>Pertanyaan Umum</h2></div>
   <div style="max-width:850px;margin:auto;display:grid;gap:10px">
     <details style="background:#fff;border:1px solid var(--line);border-radius:12px;padding:17px"><summary style="font-weight:800;cursor:pointer">Apa bedanya On-Grid dan Hybrid?</summary><p style="padding-top:10px;color:#64748b;font-size:14px">On-Grid menggunakan PLN sebagai sumber pendukung tanpa baterai. Hybrid menggunakan baterai sehingga dapat menyediakan backup energi dan mengatur pemakaian energi lebih fleksibel.</p></details>
     <details style="background:#fff;border:1px solid var(--line);border-radius:12px;padding:17px"><summary style="font-weight:800;cursor:pointer">Apakah bisa dilakukan site survey?</summary><p style="padding-top:10px;color:#64748b;font-size:14px">Bisa. Site survey membantu menentukan kondisi atap, orientasi panel, kapasitas sistem, jalur kabel dan kebutuhan instalasi.</p></details>
@@ -463,13 +526,13 @@ footer{background:#031020;color:#cbd7e5;padding:45px 0 20px}.footer-grid{display
     <div><div class="footer-title">French Solar Industry</div><p>Solusi PLTS On-Grid, Hybrid, Off-Grid dan EV Charger untuk rumah, bisnis dan industri.</p><p>Teknologi energi surya untuk masa depan yang lebih efisien.</p></div>
     <div><div class="footer-title">Menu</div><a href="#home">Beranda</a><a href="#calculator">Kalkulator PLTS</a><a href="#proyek">Proyek</a><a href="#faq">FAQ</a></div>
     <div><div class="footer-title">Layanan</div><a href="#produk">On-Grid</a><a href="#produk">Hybrid</a><a href="#produk">Off-Grid</a><a href="#produk">EV Charger</a></div>
-    <div><div class="footer-title">Kontak</div><p>Bali • Jakarta • Lombok</p><p>Technical Support 7/7</p><a href="https://wa.me/6281234567890" target="_blank">WhatsApp Konsultasi →</a></div>
+    <div><div class="footer-title">Kontak</div><p>Bali • Jakarta • Lombok</p><p>Technical Support 7/7</p><a href="https://wa.me/6281234567890" target="_blank"><i class="fa-brands fa-whatsapp"></i> WhatsApp Konsultasi →</a></div>
   </div>
   <div class="copyright">© 2026 French Solar Industry. All Rights Reserved.</div>
 </div>
 </footer>
 
-<a class="wa-float" href="https://wa.me/6281234567890?text=Halo%20FSI%2C%20saya%20ingin%20konsultasi%20PLTS." target="_blank" aria-label="WhatsApp">◉</a>
+<a class="wa-float" href="https://wa.me/6281234567890?text=Halo%20FSI%2C%20saya%20ingin%20konsultasi%20PLTS." target="_blank" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
 
 <script>
 const $ = s => document.querySelector(s);
