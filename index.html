@@ -550,6 +550,25 @@ $('#calcBtn').addEventListener('click', calculate);
 ['bill', 'tariff', 'targetReduce'].forEach(id => $('#'+id).addEventListener('input', calculate));
 calculate();
 
+/* WHATSAPP RESULT DIRECT SCRIPT */
+$('#sendWA').addEventListener('click', () => {
+  const kwp = $('#rKwp').textContent;
+  const prod = $('#rProd').textContent;
+  const save = $('#rSave').textContent;
+  const invest = $('#rInvest').textContent;
+  const bill = Number($('#bill').value).toLocaleString('id-ID');
+
+  const text = `Halo French Solar Industry, saya tertarik untuk memasang PLTS On-Grid dengan rincian perhitungan dari website sebagai berikut:%0A%0A` +
+               `- Tagihan Listrik Awal: Rp ${bill} / bulan%0A` +
+               `- Estimasi Kapasitas PLTS: ${kwp}%0A` +
+               `- Estimasi Produksi Energi: ${prod}%0A` +
+               `- Estimasi Penghematan: ${save} / bulan%0A` +
+               `- Estimasi Investasi: ${invest}%0A%0A` +
+               `Mohon info lebih lanjut untuk penjadwalan site survey. Terima kasih!`;
+
+  window.open(`https://wa.me/6281139410041?text=${text}`, '_blank');
+});
+
 /* PROJECT SLIDER */
 const track = $('#projectTrack');
 const nextBtn = $('#next');
