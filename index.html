@@ -118,8 +118,7 @@ button,input,select{font:inherit}
 
 /* CALCULATOR */
 .calc-section{padding-top:35px}
-.calc-box{background:#fff;border-radius:20px;box-shadow:var(--shadow);padding:28px;display:grid;grid-template-columns:1fr 1fr;gap:30px}
-.calc-left{border-right:1px solid var(--line);padding-right:30px}
+.calc-box{background:#fff;border-radius:20px;box-shadow:var(--shadow);padding:28px;display:grid;grid-template-columns:1fr;gap:30px}
 .calc-title{font-size:23px;margin-bottom:7px}.calc-desc{color:var(--muted);font-size:14px;margin-bottom:20px}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
 .field label{display:block;font-size:12px;font-weight:800;margin-bottom:6px;color:#526174}
@@ -263,7 +262,7 @@ footer{background:#031020;color:#cbd7e5;padding:45px 0 20px}.footer-grid{display
 @media(max-width:1000px){
   .nav-links{gap:8px}.stats{grid-template-columns:repeat(3,1fr)}
   .cards4{grid-template-columns:repeat(2,1fr)}.project-card{flex-basis:calc(33.33% - 11px)}
-  .calc-box{grid-template-columns:1fr}.calc-left{border-right:0;border-bottom:1px solid var(--line);padding:0 0 25px}
+  .calc-box{grid-template-columns:1fr}
   .footer-grid{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:720px){
@@ -344,11 +343,23 @@ footer{background:#031020;color:#cbd7e5;padding:45px 0 20px}.footer-grid{display
 
 <section class="section calc-section" id="calculator">
 <div class="container">
-  <div class="calc-box" style="grid-template-columns: 1fr;">
+  <div class="calc-box">
     <div>
       <h2 class="calc-title"><i class="fa-solid fa-calculator" style="color:var(--blue)"></i> Hitung Potensi Penghematan PLTS</h2>
-      <p class="calc-desc">Masukkan data tagihan listrik Anda dan tentukan target penghematan untuk mendapatkan estimasi awal.</p>
+      <p class="calc-desc">Masukkan data diri dan tagihan listrik Anda untuk mendapatkan estimasi awal serta terhubung ke WhatsApp kami.</p>
       
+      <!-- Input Nama & WhatsApp Baru -->
+      <div class="form-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 15px;">
+        <div class="field">
+          <label><i class="fa-solid fa-user"></i> Nama Lengkap</label>
+          <input id="custName" type="text" placeholder="Masukkan nama Anda">
+        </div>
+        <div class="field">
+          <label><i class="fa-brands fa-whatsapp"></i> Nomor WhatsApp</label>
+          <input id="custPhone" type="text" placeholder="Contoh: 08123456789">
+        </div>
+      </div>
+
       <div class="form-grid" style="grid-template-columns: repeat(3, 1fr);">
         <div class="field">
           <label><i class="fa-solid fa-receipt"></i> Tagihan Listrik / bulan (Rp)</label>
@@ -550,16 +561,53 @@ $('#calcBtn').addEventListener('click', calculate);
 ['bill', 'tariff', 'targetReduce'].forEach(id => $('#'+id).addEventListener('input', calculate));
 calculate();
 
-/* WHATSAPP RESULT DIRECT SCRIPT */
+/* WHATSAPP & GOOGLE SHEETS DIRECT SCRIPT */
 $('#sendWA').addEventListener('click', () => {
+  const name = $('#custName').value.trim() || "Tanpa Nama";
+  const phone = $('#custPhone').value.trim() || "-";
   const kwp = $('#rKwp').textContent;
   const prod = $('#rProd').textContent;
   const save = $('#rSave').textContent;
   const invest = $('#rInvest').textContent;
-  const bill = Number($('#bill').value).toLocaleString('id-ID');
+  const billVal = Number($('#bill').value) || 0;
+  const targetReduce = $('#targetReduce').value;
 
-  const text = `Halo French Solar Industry, saya tertarik untuk memasang PLTS On-Grid dengan rincian perhitungan dari website sebagai berikut:%0A%0A` +
-               `- Tagihan Listrik Awal: Rp ${bill} / bulan%0A` +
+  // Validasi sederhana agar nama & no WA diisi
+  if(!$('#custName').value.trim() || !$('#custPhone').value.trim()){
+    alert('Mohon isi Nama dan Nomor WhatsApp terlebih dahulu sebelum mengirim ke WhatsApp.');
+    $('#custName').focus();
+    return;
+  }
+
+  // Data yang dikirim ke Google Sheets via Apps Script
+  const leadData = {
+    nama: name,
+    whatsapp: phone,
+    jenisSistem: "On-Grid",
+    tagihan: billVal,
+    reduce: (targetReduce * 100) + "%",
+    hematBulan: save,
+    hematTahun: 'Rp ' + Math.round(billVal * targetReduce * 12).toLocaleString('id-ID'),
+    kwp: kwp,
+    jumlahPanel: Math.round(parseFloat(kwp) * 1000 / 550), 
+    payback: (Number(invest.replace(/[^0-9]/g, '')) / (billVal * targetReduce * 12)).toFixed(1) + " Tahun",
+    statusLead: "New Inquiry"
+  };
+
+  // Ganti URL di bawah ini dengan URL Web App Google Apps Script Anda (berakhiran /exec)
+  const scriptURL = 'MASUKKAN_URL_WEB_APP_ANDA_DISINI';
+
+  // Kirim data ke Google Sheets secara background
+  fetch(scriptURL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(leadData)
+  }).catch(error => console.error('Error!', error.message));
+
+  // Format teks pesan WhatsApp ke admin FSI
+  const text = `Halo French Solar Industry, saya *${name}* (No WA: ${phone}) tertarik memasang PLTS On-Grid dengan rincian:%0A%0A` +
+               `- Tagihan Listrik Awal: Rp ${billVal.toLocaleString('id-ID')} / bulan%0A` +
                `- Estimasi Kapasitas PLTS: ${kwp}%0A` +
                `- Estimasi Produksi Energi: ${prod}%0A` +
                `- Estimasi Penghematan: ${save} / bulan%0A` +
