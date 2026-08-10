@@ -26,7 +26,6 @@
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-
 html { scroll-behavior: smooth; }
 
 body {
@@ -37,10 +36,7 @@ body {
   overflow-x: hidden;
 }
 
-h1, h2, h3, h4, .serif {
-  font-family: 'Playfair Display', serif;
-}
-
+h1, h2, h3, h4, .serif { font-family: 'Playfair Display', serif; }
 a { text-decoration: none; color: inherit; }
 
 /* CONTAINER & UTILITIES */
@@ -270,7 +266,6 @@ header {
 }
 
 .stat-item:last-child { border-right: none; }
-
 .stat-icon { font-size: 28px; color: var(--gold); }
 
 .stat-number {
@@ -286,7 +281,7 @@ header {
   margin-top: 4px;
 }
 
-/* BINGKAI SLIDER TRANSPARAN & MELAYANG (GLASSMORPHISM EFFECT) */
+/* SLIDER BINGKAI TRANSPARAN & MELAYANG (GLASSMORPHISM) */
 .carousel-wrapper {
   position: relative;
   width: 100%;
@@ -294,7 +289,6 @@ header {
   margin: 0 auto;
   border-radius: 20px;
   overflow: hidden;
-  /* Bingkai Transparan & Efek Melayang */
   background: rgba(18, 23, 33, 0.4);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(212, 175, 55, 0.25);
@@ -327,7 +321,6 @@ header {
   object-fit: cover;
 }
 
-/* OVERLAY PADA SLIDE (AGAR TIDAK TERLIHAT RAMAI DAN TEKS TETAP REAADABLE) */
 .slide-overlay {
   position: absolute;
   inset: 0;
@@ -373,7 +366,6 @@ header {
   text-shadow: 0 1px 3px rgba(0,0,0,0.5);
 }
 
-/* TOMBOL OVERLAY KIRI & KANAN MELAYANG */
 .carousel-btn {
   position: absolute;
   top: 50%;
@@ -404,7 +396,6 @@ header {
 .carousel-btn.prev { left: 20px; }
 .carousel-btn.next { right: 20px; }
 
-/* DOTS INDICATOR */
 .carousel-dots {
   position: absolute;
   bottom: 20px;
@@ -436,7 +427,6 @@ header {
   padding: 100px 0;
 }
 
-/* PORTOFOLIO BINGKAI TRANSPARAN PADA SECTION PUTIH */
 .projects-section .carousel-wrapper {
   background: rgba(255, 255, 255, 0.15);
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -613,7 +603,6 @@ header {
 
 .form-control:focus { border-color: var(--gold); }
 
-/* HASIL KALKULASI */
 .calc-results {
   margin-top: 30px;
   padding-top: 24px;
@@ -688,13 +677,6 @@ header {
   line-height: 1.6;
 }
 
-.detail-item ul {
-  margin-left: 20px;
-  font-size: 13px;
-  color: var(--text-muted);
-  margin-top: 6px;
-}
-
 /* FOOTER */
 footer {
   padding: 80px 0 30px 0;
@@ -759,7 +741,7 @@ footer {
       <div class="form-grid">
         <div class="form-group">
           <label>Nama Lengkap <span style="color:var(--gold);">*</span></label>
-          <input type="text" id="custName" class="form-control" placeholder="Contoh: Bpk. Hendra" required>
+          <input type="text" id="custName" class="form-control" placeholder="Contoh: Tes" required>
         </div>
         <div class="form-group">
           <label>No. WhatsApp / HP <span style="color:var(--gold);">*</span></label>
@@ -767,21 +749,21 @@ footer {
         </div>
         <div class="form-group">
           <label>Tagihan/Token Listrik per Bulan (Rp) <span style="color:var(--gold);">*</span></label>
-          <input type="text" id="billInput" class="form-control" placeholder="Contoh: 1.500.000" oninput="formatRupiahInput(this)" required>
+          <input type="text" id="billInput" class="form-control" placeholder="Contoh: 6.000.000" oninput="formatRupiahInput(this)" required>
         </div>
         <div class="form-group">
           <label>Jenis Bangunan <span style="color:var(--gold);">*</span></label>
           <select id="buildingType" class="form-control" style="background:#0a0d12;">
-            <option value="Rumah Tinggal" selected>Rumah Tinggal</option>
+            <option value="Rumah Tinggal">Rumah Tinggal</option>
             <option value="Villa / Resort">Villa / Resort</option>
             <option value="Ruko / Bisnis">Ruko / Bisnis Komersial</option>
-            <option value="Pabrik / Industri">Pabrik / Gudang Industri</option>
+            <option value="Pabrik / Industri" selected>Pabrik / Industri</option>
           </select>
         </div>
       </div>
 
-      <button type="submit" class="btn-calc-white" style="width:100%; justify-content:center; margin-top:20px; font-size:14px; padding:14px;">
-        <i class="fa-solid fa-calculator"></i> Hitung Estimasi & Tampilkan Simulasi
+      <button type="submit" id="submitBtn" class="btn-calc-white" style="width:100%; justify-content:center; margin-top:20px; font-size:14px; padding:14px;">
+        <i class="fa-solid fa-calculator"></i> Hitung Estimasi & Simpan Data
       </button>
     </form>
 
@@ -791,12 +773,12 @@ footer {
           Simulasi Sistem PLTS
         </div>
         <ul>
-          <li>Tagihan/token: <strong id="outBill">Rp1.500.000/bulan</strong></li>
-          <li>Jenis Bangunan: <strong id="outBuilding">Rumah Tinggal</strong></li>
-          <li>Asumsi konsumsi total: <strong id="outKwh">±833 kWh/bulan</strong></li>
+          <li>Tagihan/token: <strong id="outBill">Rp6.000.000/bulan</strong></li>
+          <li>Jenis Bangunan: <strong id="outBuilding">Pabrik / Industri</strong></li>
+          <li>Asumsi konsumsi total: <strong id="outKwh">±3.333 kWh/bulan</strong></li>
           <li>Produksi 1 panel: <strong>2,5 kWh/hari</strong></li>
           <li>Spesifikasi Panel: <strong>550 Wp</strong></li>
-          <li>Kebutuhan dasar: <strong id="outBasePanel">12 panel = 6,6 kWp</strong></li>
+          <li>Kebutuhan dasar: <strong id="outBasePanel">45 panel = 24,8 kWp</strong></li>
         </ul>
       </div>
 
@@ -815,23 +797,23 @@ footer {
         <tbody>
           <tr>
             <td><strong style="color:#4dabf7;">ON-GRID</strong></td>
-            <td id="tbOnPanel">12 × 550 Wp</td>
-            <td id="tbOnInv">±6 kW</td>
+            <td id="tbOnPanel">-</td>
+            <td id="tbOnInv">-</td>
             <td>❌</td>
             <td>Hemat tagihan</td>
           </tr>
           <tr>
             <td><strong style="color:var(--gold);">HYBRID</strong></td>
-            <td id="tbHyPanel">12 × 550 Wp</td>
-            <td id="tbHyInv">±8 kW Hybrid</td>
-            <td id="tbHyBat">15 kWh</td>
+            <td id="tbHyPanel">-</td>
+            <td id="tbHyInv">-</td>
+            <td id="tbHyBat">-</td>
             <td>Hemat + backup</td>
           </tr>
           <tr>
             <td><strong style="color:#ff6b6b;">OFF-GRID</strong></td>
-            <td id="tbOffPanel">±20–24 × 550 Wp</td>
-            <td id="tbOffInv">±10 kW Hybrid/Off-grid</td>
-            <td id="tbOffBat">60–90 kWh</td>
+            <td id="tbOffPanel">-</td>
+            <td id="tbOffInv">-</td>
+            <td id="tbOffBat">-</td>
             <td>Tanpa ketergantungan PLN</td>
           </tr>
         </tbody>
@@ -936,7 +918,7 @@ footer {
   </div>
 </section>
 
-<!-- FEATURED PROJECTS SECTION (SLIDER BINGKAI TRANSPARAN & MELAYANG) -->
+<!-- FEATURED PROJECTS SECTION -->
 <section class="projects-section" id="projects">
   <div class="container">
     <div class="section-header-flex">
@@ -949,13 +931,11 @@ footer {
       </a>
     </div>
 
-    <!-- SLIDER PORTOFOLIO -->
     <div class="carousel-wrapper" id="projectsCarousel">
       <button class="carousel-btn prev" onclick="moveSlide('projectsCarousel', -1)"><i class="fa-solid fa-chevron-left"></i></button>
       <button class="carousel-btn next" onclick="moveSlide('projectsCarousel', 1)"><i class="fa-solid fa-chevron-right"></i></button>
 
       <div class="carousel-track">
-        <!-- ITEM 1 -->
         <div class="carousel-slide">
           <img src="proyek-hotel.jpg" alt="Resort & Hotel Proyek">
           <div class="slide-overlay"></div>
@@ -965,8 +945,6 @@ footer {
             <div class="carousel-desc">Bali — 30 kWp Hybrid System terintegrasi suplai energi tanpa jeda.</div>
           </div>
         </div>
-
-        <!-- ITEM 2 -->
         <div class="carousel-slide">
           <img src="proyek-office.jpg" alt="Commercial HQ Proyek">
           <div class="slide-overlay"></div>
@@ -976,8 +954,6 @@ footer {
             <div class="carousel-desc">Denpasar — 45 kWp On-Grid System efisiensi tinggi hemat operasional kantor.</div>
           </div>
         </div>
-
-        <!-- ITEM 3 -->
         <div class="carousel-slide">
           <img src="proyek-pabrik.jpg" alt="Pabrik Proyek">
           <div class="slide-overlay"></div>
@@ -994,9 +970,8 @@ footer {
   </div>
 </section>
 
-<!-- SERVICES & PRODUCTS SECTION (BACKGROUND VIDEO CARPORT + SLIDER BINGKAI MELAYANG) -->
+<!-- SERVICES & PRODUCTS SECTION -->
 <section class="services-section" id="services">
-  <!-- VIDEO BACKGROUND CARPORT SOLAR -->
   <video class="services-video-bg" autoplay muted loop playsinline poster="proyek-office.jpg">
     <source src="hero-carport.mp4" type="video/mp4">
   </video>
@@ -1008,24 +983,20 @@ footer {
       <h2 class="section-title" style="font-size:32px; color:#fff;">Komponen & Solusi PLTS Standar Eropa</h2>
     </div>
 
-    <!-- SLIDER PRODUK & SOLUSI -->
     <div class="carousel-wrapper" id="servicesCarousel">
       <button class="carousel-btn prev" onclick="moveSlide('servicesCarousel', -1)"><i class="fa-solid fa-chevron-left"></i></button>
       <button class="carousel-btn next" onclick="moveSlide('servicesCarousel', 1)"><i class="fa-solid fa-chevron-right"></i></button>
 
       <div class="carousel-track">
-        <!-- ITEM 1: SOLAR CARPORT CANOPY -->
         <div class="carousel-slide">
           <img src="proyek-office.jpg" alt="Solar Carport Canopy">
           <div class="slide-overlay"></div>
           <div class="carousel-caption">
             <span class="carousel-badge">Solusi Arsitektural</span>
             <div class="carousel-title">Solar Carport Canopy</div>
-            <div class="carousel-desc">Modern EV Canopy & Rooftop System. Kanopi tempat parkir sekaligus pembangkit energi surya terintegrasi pengisian mobil listrik.</div>
+            <div class="carousel-desc">Modern EV Canopy & Rooftop System. Kanopi tempat parkir sekaligus pembangkit energi surya.</div>
           </div>
         </div>
-
-        <!-- ITEM 2 -->
         <div class="carousel-slide">
           <img src="produk-panel-550.jpg" alt="Panel Surya 550Wp">
           <div class="slide-overlay"></div>
@@ -1035,8 +1006,6 @@ footer {
             <div class="carousel-desc">Panel surya berefisiensi sangat tinggi bergaransi performa resmi 30 tahun.</div>
           </div>
         </div>
-
-        <!-- ITEM 3 -->
         <div class="carousel-slide">
           <img src="produk-inverter-hybrid.jpg" alt="Inverter Hybrid">
           <div class="slide-overlay"></div>
@@ -1046,26 +1015,22 @@ footer {
             <div class="carousel-desc">Pengelola arus pintar otomatis membagi daya dari PLN, panel surya, dan baterai cadangan.</div>
           </div>
         </div>
-
-        <!-- ITEM 4 -->
         <div class="carousel-slide">
           <img src="produk-baterai-lithium.jpg" alt="Baterai Lithium">
           <div class="slide-overlay"></div>
           <div class="carousel-caption">
             <span class="carousel-badge">Penyimpanan Daya</span>
             <div class="carousel-title">Baterai Lithium (LiFePO4)</div>
-            <div class="carousel-desc">Sistem penyimpanan daya baterai mandiri aman berkapasitas besar untuk suplai listrik malam hari.</div>
+            <div class="carousel-desc">Sistem penyimpanan daya baterai mandiri aman berkapasitas besar.</div>
           </div>
         </div>
-
-        <!-- ITEM 5 -->
         <div class="carousel-slide">
           <img src="produk-ev-charger.jpg" alt="EV Charger Station">
           <div class="slide-overlay"></div>
           <div class="carousel-caption">
             <span class="carousel-badge">EV Ecosystem</span>
             <div class="carousel-title">EV Fast Charger Station</div>
-            <div class="carousel-desc">Pengisian daya cepat kendaraan listrik ramah lingkungan terintegrasi suplai energi surya.</div>
+            <div class="carousel-desc">Pengisian daya cepat kendaraan listrik ramah lingkungan.</div>
           </div>
         </div>
       </div>
@@ -1153,6 +1118,9 @@ footer {
 </footer>
 
 <script>
+// LINK GOOGLE APPS SCRIPT
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwi2fxK_-k8SquvCdJj8zymHsGrEneCXcwfw_QSbQU58Q30krDzz24CRatuPnqYWfBTIg/exec";
+
 // METODE SLIDER / CAROUSEL INTERAKTIF
 const carousels = {};
 
@@ -1184,23 +1152,17 @@ function initCarousel(id) {
 function updateCarouselUI(id) {
   const c = carousels[id];
   if (!c) return;
-  
   c.track.style.transform = `translateX(-${c.currentIndex * 100}%)`;
   
   const dots = c.dotsContainer.querySelectorAll('.dot');
   dots.forEach((dot, index) => {
-    if (index === c.currentIndex) {
-      dot.classList.add('active');
-    } else {
-      dot.classList.remove('active');
-    }
+    dot.classList.toggle('active', index === c.currentIndex);
   });
 }
 
 function moveSlide(id, direction) {
   const c = carousels[id];
   if (!c) return;
-  
   c.currentIndex = (c.currentIndex + direction + c.totalSlides) % c.totalSlides;
   updateCarouselUI(id);
 }
@@ -1208,7 +1170,6 @@ function moveSlide(id, direction) {
 function goToSlide(id, index) {
   const c = carousels[id];
   if (!c) return;
-  
   c.currentIndex = index;
   updateCarouselUI(id);
 }
@@ -1235,7 +1196,7 @@ function toggleCalcModal(show) {
   }
 }
 
-// KALKULASI DINAMIS PLTS
+// KALKULASI DINAMIS & PROSES KIRIM DATA KE GOOGLE APPS SCRIPT
 function calculatePLTS() {
   const name = document.getElementById('custName').value.trim();
   const phone = document.getElementById('custPhone').value.trim();
@@ -1247,6 +1208,10 @@ function calculatePLTS() {
     alert('Mohon lengkapi Nama, No. WhatsApp, dan Tagihan Listrik.');
     return;
   }
+
+  const submitBtn = document.getElementById('submitBtn');
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Memproses & Menyimpan Data...';
 
   const totalKwh = Math.round(bill / 1800);
   const basePanels = Math.max(4, Math.ceil(totalKwh / 75));
@@ -1263,58 +1228,78 @@ function calculatePLTS() {
   const batteryOffGridMin = Math.round(totalKwh * 0.08 * 30 * 0.3);
   const batteryOffGridMax = Math.round(batteryOffGridMin * 1.5);
 
-  document.getElementById('custHeader').textContent = `Simulasi Sistem PLTS untuk ${name}`;
-  document.getElementById('outBill').textContent = `Rp${bill.toLocaleString('id-ID')}/bulan`;
-  document.getElementById('outBuilding').textContent = buildingType;
-  document.getElementById('outKwh').textContent = `±${totalKwh.toLocaleString('id-ID')} kWh/bulan`;
-  document.getElementById('outBasePanel').textContent = `${basePanels} panel = ${baseKwp} kWp`;
+  // KIRIM DATA KE GOOGLE APPS SCRIPT
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      nama: name,
+      telepon: phone,
+      jenis_bangunan: buildingType,
+      tagihan_listrik: bill,
+      estimasi_kwh: totalKwh,
+      kebutuhan_panel: `${basePanels} Panel (${baseKwp} kWp)`
+    })
+  })
+  .then(() => {
+    console.log("Data berhasil tersimpan ke Google Sheets!");
+  })
+  .catch((error) => {
+    console.error("Gagal mengirim data:", error);
+  })
+  .finally(() => {
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = '<i class="fa-solid fa-calculator"></i> Hitung Estimasi & Simpan Data';
 
-  document.getElementById('tbOnPanel').textContent = `${basePanels} × 550 Wp`;
-  document.getElementById('tbOnInv').textContent = `±${invOnGrid} kW`;
+    // TAMPAKAN HASIL HASIL SIMULASI
+    document.getElementById('custHeader').textContent = `Simulasi Sistem PLTS untuk ${name}`;
+    document.getElementById('outBill').textContent = `Rp${bill.toLocaleString('id-ID')}/bulan`;
+    document.getElementById('outBuilding').textContent = buildingType;
+    document.getElementById('outKwh').textContent = `±${totalKwh.toLocaleString('id-ID')} kWh/bulan`;
+    document.getElementById('outBasePanel').textContent = `${basePanels} panel = ${baseKwp} kWp`;
 
-  document.getElementById('tbHyPanel').textContent = `${basePanels} × 550 Wp`;
-  document.getElementById('tbHyInv').textContent = `±${invHybrid} kW Hybrid`;
-  document.getElementById('tbHyBat').textContent = `${batteryHybrid} kWh`;
+    document.getElementById('tbOnPanel').textContent = `${basePanels} × 550 Wp`;
+    document.getElementById('tbOnInv').textContent = `±${invOnGrid} kW`;
 
-  document.getElementById('tbOffPanel').textContent = `±${offPanelsMin}–${offPanelsMax} × 550 Wp`;
-  document.getElementById('tbOffInv').textContent = `±${Math.ceil(offKwpMax)} kW Hybrid/Off-grid`;
-  document.getElementById('tbOffBat').textContent = `${batteryOffGridMin}–${batteryOffGridMax} kWh`;
+    document.getElementById('tbHyPanel').textContent = `${basePanels} × 550 Wp`;
+    document.getElementById('tbHyInv').textContent = `±${invHybrid} kW Hybrid`;
+    document.getElementById('tbHyBat').textContent = `${batteryHybrid} kWh`;
 
-  const monthlyProd = Math.round(basePanels * 2.5 * 30);
-  document.getElementById('descOnGrid').innerHTML = `
-    <strong>${basePanels} × 550 Wp = ${baseKwp} kWp</strong><br>
-    Produksi: ${basePanels} × 2,5 × 30 = ±${monthlyProd.toLocaleString('id-ID')} kWh/bulan<br>
-    Secara energi, ini mendekati kebutuhan customer ±${totalKwh.toLocaleString('id-ID')} kWh/bulan.<br>
-    Namun karena produksi PLTS dan pemakaian tidak selalu bersamaan, penghematan tagihan aktual tidak otomatis 100%.
-  `;
+    document.getElementById('tbOffPanel').textContent = `±${offPanelsMin}–${offPanelsMax} × 550 Wp`;
+    document.getElementById('tbOffInv').textContent = `±${Math.ceil(offKwpMax)} kW Hybrid/Off-grid`;
+    document.getElementById('tbOffBat').textContent = `${batteryOffGridMin}–${batteryOffGridMax} kWh`;
 
-  document.getElementById('descHybrid').innerHTML = `
-    <strong>${basePanels} × 550 Wp = ${baseKwp} kWp</strong><br>
-    Battery awal: <strong>1 × ${batteryHybrid} kWh</strong><br><br>
-    <strong>Konsepnya:</strong><br>
-    ☀️ PLTS → 🏠 ${buildingType}<br>
-    ☀️ PLTS → 🔋 Battery<br>
-    🔋 Battery → 🏠 ${buildingType} (malam hari)<br><br>
-    Keuntungannya customer mendapatkan penghematan + backup listrik.<br>
-    Kalau target backup malam cukup besar, battery bisa dinaikkan menjadi ${batteryHybrid * 2} kWh.
-  `;
+    const monthlyProd = Math.round(basePanels * 2.5 * 30);
+    document.getElementById('descOnGrid').innerHTML = `
+      <strong>${basePanels} × 550 Wp = ${baseKwp} kWp</strong><br>
+      Produksi: ${basePanels} × 2,5 × 30 = ±${monthlyProd.toLocaleString('id-ID')} kWh/bulan<br>
+      Mendekati estimasi pemakaian ±${totalKwh.toLocaleString('id-ID')} kWh/bulan.
+    `;
 
-  document.getElementById('descOffGridSim').innerHTML = `
-    Saya akan mulai simulasi dari:<br>
-    <strong>${offPanelsMin}–${offPanelsMax} panel × 550 Wp = ${offKwpMin}–${offKwpMax} kWp</strong><br>
-    Battery: <strong>${batteryOffGridMin}–${batteryOffGridMax} kWh</strong>
-  `;
+    document.getElementById('descHybrid').innerHTML = `
+      <strong>${basePanels} × 550 Wp = ${baseKwp} kWp</strong><br>
+      Battery awal: <strong>1 × ${batteryHybrid} kWh</strong><br>
+      Memberikan penghematan maksimal sekaligus sistem cadangan listrik emergency (backup).
+    `;
 
-  document.getElementById('calcResults').style.display = 'block';
+    document.getElementById('descOffGridSim').innerHTML = `
+      <strong>${offPanelsMin}–${offPanelsMax} panel × 550 Wp = ${offKwpMin}–${offKwpMax} kWp</strong><br>
+      Battery: <strong>${batteryOffGridMin}–${batteryOffGridMax} kWh</strong>
+    `;
+
+    document.getElementById('calcResults').style.display = 'block';
+  });
 }
 
+// KIRIM DENGAN TEMPLATE PESAN WHATSAPP PERSIS SESUAI REQUEST
 function sendToWhatsApp() {
-  const name = document.getElementById('custName').value;
-  const phone = document.getElementById('custPhone').value;
+  const name = document.getElementById('custName').value.trim();
   const rawBill = document.getElementById('billInput').value.replace(/\./g, "");
+  const billFormatted = parseInt(rawBill, 10).toLocaleString('id-ID');
   const buildingType = document.getElementById('buildingType').value;
 
-  const text = `Halo French Solar Industry, saya *${name}* (${phone}) telah menghitung kebutuhan di website.\n\nJenis Bangunan: *${buildingType}*\nTagihan listrik: Rp ${parseInt(rawBill).toLocaleString('id-ID')}/bulan.\n\nMohon konsultasi lebih lanjut mengenai sistem PLTS. Terima kasih!`;
+  const text = `Halo RIST, FSI, saya *${name}* telah menghitung kebutuhan di website.\n\nJenis Bangunan: *${buildingType}*\nTagihan listrik: Rp ${billFormatted}/bulan.\n\nMohon konsultasi lebih lanjut mengenai sistem PLTS. Terima kasih!`;
   
   const encodedText = encodeURIComponent(text);
   window.open(`https://wa.me/6281139410041?text=${encodedText}`, '_blank');
