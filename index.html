@@ -71,7 +71,7 @@ a { text-decoration: none; color: inherit; }
   box-shadow: 0 6px 20px rgba(255, 255, 255, 0.25);
 }
 
-/* TOMBOL KHUSUS BERANDA KONTRAST TINGGI (BACKGROUND PUTIH, TEKS HITAM) */
+/* TOMBOL BERANDA KONTRAS TINGGI (BACKGROUND PUTIH, TEKS HITAM) */
 .btn-beranda-white {
   background: #ffffff !important;
   color: #0a0d12 !important;
@@ -745,7 +745,7 @@ footer {
       <div class="form-grid">
         <div class="form-group">
           <label>Nama Lengkap <span style="color:var(--gold);">*</span></label>
-          <input type="text" id="custName" class="form-control" placeholder="Contoh: Tes" required>
+          <input type="text" id="custName" class="form-control" placeholder="Contoh: Budi Santoso" required>
         </div>
         <div class="form-group">
           <label>No. WhatsApp / HP <span style="color:var(--gold);">*</span></label>
@@ -839,7 +839,7 @@ footer {
         </div>
       </div>
 
-      <!-- DUA TOMBOL BERDAMPINGAN: WHATSAPP & LANJUT BERANDA -->
+      <!-- DUA TOMBOL BERDAMPINGAN -->
       <div class="btn-group-responsive" style="display:flex; gap:12px; margin-top:28px; justify-content:center;">
         <button onclick="sendToWhatsApp()" class="btn-gold" style="flex:1; justify-content:center; background:#25D366; color:#fff;">
           Konsultasi WhatsApp <i class="fa-brands fa-whatsapp"></i>
@@ -1129,7 +1129,7 @@ footer {
 
 <script>
 // LINK GOOGLE APPS SCRIPT ANDA
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwi2fxK_-k8SquvCdJj8zymHsGrEneCXcwfw_QSbQU58Q30krDzz24CRatuPnqYWfBTIg/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxZ4LiMNUGBfHXG8A4uxPr3bdfAeWI4LgjoBuznBP8AsHHHh9xUajtel--pPm3wPd8IKw/exec";
 
 // METODE SLIDER / CAROUSEL INTERAKTIF
 const carousels = {};
@@ -1206,7 +1206,7 @@ function toggleCalcModal(show) {
   }
 }
 
-// PROSES KALKULASI & KIRIM DATA OTOMATIS SAAT KLIK HITUNG
+// PROSES KALKULASI & KIRIM DATA OTOMATIS KE TAB LEADS
 function calculatePLTS() {
   const name = document.getElementById('custName').value.trim();
   const phone = document.getElementById('custPhone').value.trim();
@@ -1223,7 +1223,7 @@ function calculatePLTS() {
   submitBtn.disabled = true;
   submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Memproses & Menyimpan Data...';
 
-  // HITUNG ANGKANNYA
+  // HITUNG ANGKA KALKULASI
   const totalKwh = Math.round(bill / 1800);
   const basePanels = Math.max(4, Math.ceil(totalKwh / 75));
   const baseKwp = (basePanels * 0.55).toFixed(1);
@@ -1239,7 +1239,7 @@ function calculatePLTS() {
   const batteryOffGridMin = Math.round(totalKwh * 0.08 * 30 * 0.3);
   const batteryOffGridMax = Math.round(batteryOffGridMin * 1.5);
 
-  // KIRIM DATA CUSTOMER KE SPREADSHEET (APPS SCRIPT) SEBELUM HASIL TAMPIL
+  // KIRIM DATA CUSTOMER KE TAB "LEADS" SPREADSHEET (KOLOM A s/d G)
   fetch(SCRIPT_URL, {
     method: 'POST',
     mode: 'no-cors',
@@ -1254,7 +1254,7 @@ function calculatePLTS() {
     })
   })
   .then(() => {
-    console.log("Data customer berhasil tersimpan di Google Sheets!");
+    console.log("Data customer berhasil tersimpan di sheet LEADS!");
   })
   .catch((error) => {
     console.error("Gagal mengirim data:", error);
@@ -1263,7 +1263,7 @@ function calculatePLTS() {
     submitBtn.disabled = false;
     submitBtn.innerHTML = '<i class="fa-solid fa-calculator"></i> Hitung Estimasi & Simpan Data';
 
-    // TAMPILKAN HASIL KALKULASI DI HALAMAN KALKULATOR
+    // TAMPILKAN HASIL KALKULASI DI WEBSITE
     document.getElementById('custHeader').textContent = `Simulasi Sistem PLTS untuk ${name}`;
     document.getElementById('outBill').textContent = `Rp${bill.toLocaleString('id-ID')}/bulan`;
     document.getElementById('outBuilding').textContent = buildingType;
