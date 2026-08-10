@@ -71,6 +71,29 @@ a { text-decoration: none; color: inherit; }
   box-shadow: 0 6px 20px rgba(255, 255, 255, 0.25);
 }
 
+/* TOMBOL KHUSUS BERANDA KONTRAST TINGGI (BACKGROUND PUTIH, TEKS HITAM) */
+.btn-beranda-white {
+  background: #ffffff !important;
+  color: #0a0d12 !important;
+  border: 1px solid #ffffff !important;
+  padding: 14px 20px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.btn-beranda-white:hover {
+  background: #e0e0e0 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+}
+
 .btn-gold {
   background: var(--gold);
   color: var(--text-dark);
@@ -92,26 +115,6 @@ a { text-decoration: none; color: inherit; }
   background: #e5be3b;
   transform: translateY(-2px);
   box-shadow: 0 10px 25px var(--gold-glow);
-}
-
-.btn-outline {
-  border: 1px solid var(--border);
-  color: var(--text-light);
-  padding: 12px 24px;
-  border-radius: 6px;
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.5px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.btn-outline:hover {
-  border-color: var(--gold);
-  color: var(--gold);
 }
 
 .section-tag {
@@ -187,7 +190,7 @@ header {
 
 .nav-links a:hover { color: var(--gold); }
 
-/* HERO SECTION WITH VIDEO BACKGROUND */
+/* HERO SECTION */
 .hero {
   position: relative;
   min-height: 100vh;
@@ -281,7 +284,7 @@ header {
   margin-top: 4px;
 }
 
-/* SLIDER BINGKAI TRANSPARAN & MELAYANG (GLASSMORPHISM) */
+/* SLIDER */
 .carousel-wrapper {
   position: relative;
   width: 100%;
@@ -420,7 +423,7 @@ header {
   border-radius: 10px;
 }
 
-/* PORTOFOLIO SECTION (PUTIH) */
+/* PORTOFOLIO SECTION */
 .projects-section {
   background-color: var(--bg-light);
   color: var(--text-dark);
@@ -446,7 +449,7 @@ header {
   line-height: 1.2;
 }
 
-/* PRODUK & SOLUSI SECTION DENGAN BACKGROUND VIDEO CARPORT */
+/* PRODUK & SOLUSI SECTION */
 .services-section {
   position: relative;
   padding: 100px 0;
@@ -720,6 +723,7 @@ footer {
   .summary-info-box ul { grid-template-columns: 1fr; }
   .calc-table { display: block; overflow-x: auto; }
   .carousel-slide { height: 380px; }
+  .btn-group-responsive { flex-direction: column; }
 }
 </style>
 </head>
@@ -767,6 +771,7 @@ footer {
       </button>
     </form>
 
+    <!-- HASIL KALKULASI & DUA TOMBOL DI BAWAHNYA -->
     <div class="calc-results" id="calcResults">
       <div class="summary-info-box">
         <div style="font-weight:700; margin-bottom:10px; color:#fff; border-bottom:1px solid var(--border); padding-bottom:6px;" id="custHeader">
@@ -834,9 +839,14 @@ footer {
         </div>
       </div>
 
-      <div style="display:flex; gap:12px; margin-top:28px; justify-content:center;">
-        <button onclick="sendToWhatsApp()" class="btn-gold" style="flex:1; justify-content:center; background:#25D366; color:#fff;">Konsultasi WhatsApp <i class="fa-brands fa-whatsapp"></i></button>
-        <button onclick="toggleCalcModal(false)" class="btn-outline" style="flex:1; justify-content:center;">Lanjut ke Beranda</button>
+      <!-- DUA TOMBOL BERDAMPINGAN: WHATSAPP & LANJUT BERANDA -->
+      <div class="btn-group-responsive" style="display:flex; gap:12px; margin-top:28px; justify-content:center;">
+        <button onclick="sendToWhatsApp()" class="btn-gold" style="flex:1; justify-content:center; background:#25D366; color:#fff;">
+          Konsultasi WhatsApp <i class="fa-brands fa-whatsapp"></i>
+        </button>
+        <button onclick="toggleCalcModal(false)" class="btn-beranda-white" style="flex:1; justify-content:center;">
+          Lanjut ke Beranda <i class="fa-solid fa-arrow-right"></i>
+        </button>
       </div>
     </div>
 
@@ -1118,7 +1128,7 @@ footer {
 </footer>
 
 <script>
-// LINK GOOGLE APPS SCRIPT
+// LINK GOOGLE APPS SCRIPT ANDA
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwi2fxK_-k8SquvCdJj8zymHsGrEneCXcwfw_QSbQU58Q30krDzz24CRatuPnqYWfBTIg/exec";
 
 // METODE SLIDER / CAROUSEL INTERAKTIF
@@ -1196,7 +1206,7 @@ function toggleCalcModal(show) {
   }
 }
 
-// KALKULASI DINAMIS & PROSES KIRIM DATA KE GOOGLE APPS SCRIPT
+// PROSES KALKULASI & KIRIM DATA OTOMATIS SAAT KLIK HITUNG
 function calculatePLTS() {
   const name = document.getElementById('custName').value.trim();
   const phone = document.getElementById('custPhone').value.trim();
@@ -1213,6 +1223,7 @@ function calculatePLTS() {
   submitBtn.disabled = true;
   submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Memproses & Menyimpan Data...';
 
+  // HITUNG ANGKANNYA
   const totalKwh = Math.round(bill / 1800);
   const basePanels = Math.max(4, Math.ceil(totalKwh / 75));
   const baseKwp = (basePanels * 0.55).toFixed(1);
@@ -1228,7 +1239,7 @@ function calculatePLTS() {
   const batteryOffGridMin = Math.round(totalKwh * 0.08 * 30 * 0.3);
   const batteryOffGridMax = Math.round(batteryOffGridMin * 1.5);
 
-  // KIRIM DATA KE GOOGLE APPS SCRIPT
+  // KIRIM DATA CUSTOMER KE SPREADSHEET (APPS SCRIPT) SEBELUM HASIL TAMPIL
   fetch(SCRIPT_URL, {
     method: 'POST',
     mode: 'no-cors',
@@ -1243,7 +1254,7 @@ function calculatePLTS() {
     })
   })
   .then(() => {
-    console.log("Data berhasil tersimpan ke Google Sheets!");
+    console.log("Data customer berhasil tersimpan di Google Sheets!");
   })
   .catch((error) => {
     console.error("Gagal mengirim data:", error);
@@ -1252,7 +1263,7 @@ function calculatePLTS() {
     submitBtn.disabled = false;
     submitBtn.innerHTML = '<i class="fa-solid fa-calculator"></i> Hitung Estimasi & Simpan Data';
 
-    // TAMPAKAN HASIL HASIL SIMULASI
+    // TAMPILKAN HASIL KALKULASI DI HALAMAN KALKULATOR
     document.getElementById('custHeader').textContent = `Simulasi Sistem PLTS untuk ${name}`;
     document.getElementById('outBill').textContent = `Rp${bill.toLocaleString('id-ID')}/bulan`;
     document.getElementById('outBuilding').textContent = buildingType;
@@ -1292,7 +1303,7 @@ function calculatePLTS() {
   });
 }
 
-// KIRIM DENGAN TEMPLATE PESAN WHATSAPP PERSIS SESUAI REQUEST
+// FORMAT PESAN WHATSAPP OTOMATIS
 function sendToWhatsApp() {
   const name = document.getElementById('custName').value.trim();
   const rawBill = document.getElementById('billInput').value.replace(/\./g, "");
