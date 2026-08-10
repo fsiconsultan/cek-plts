@@ -68,7 +68,7 @@ body {
 .logo img { height: 32px; width: auto; display: block; }
 
 .btn-cta-wa {
-  background: var(--green);
+  background: var(--blue);
   color: #fff;
   border-radius: 20px;
   padding: 8px 18px;
@@ -78,7 +78,15 @@ body {
   align-items: center;
   gap: 8px;
   font-size: 13px;
-  box-shadow: 0 4px 15px rgba(22, 167, 101, 0.4);
+  box-shadow: 0 4px 15px var(--blue-glow);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-cta-wa:hover {
+  background: #0052cc;
+  transform: translateY(-2px);
 }
 
 /* 3. BENTO GRID DASHBOARD */
@@ -264,6 +272,7 @@ body {
 
 /* GRIDS & CARDS INSIDE OVERLAY */
 .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
 .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
 
 .content-card {
@@ -354,6 +363,29 @@ body {
 .recom-box h3 { font-size: 16px; margin-bottom: 10px; color: #60a5fa; display: flex; align-items: center; gap: 8px; }
 .recom-box p { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
 
+/* STYLING ALUR KERJA TENTANG KAMI */
+.workflow-step {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.step-num {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--blue);
+  color: #fff;
+  font-weight: 800;
+  font-size: 14px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
 /* RESPONSIVE DESIGN */
 @media (max-width: 900px) {
   .grid-container {
@@ -362,7 +394,7 @@ body {
     overflow-y: auto;
     top: 90px;
   }
-  .grid-2, .grid-4 { grid-template-columns: 1fr; }
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
   .panel-header { flex-direction: column-reverse; gap: 12px; align-items: flex-end; }
   .panel-tabs { width: 100%; overflow-x: auto; justify-content: flex-start; }
   .overlay-panel { top: 70px; width: 96%; }
@@ -383,9 +415,9 @@ body {
   <div class="logo">
     <img src="logo.jpg" alt="French Solar Industry">
   </div>
-  <a class="btn-cta-wa" href="https://wa.me/6281139410041" target="_blank">
-    <i class="fa-brands fa-whatsapp"></i> Konsultasi Gratis
-  </a>
+  <button class="btn-cta-wa" onclick="openModule('proyek')">
+    <i class="fa-solid fa-headset"></i> Hubungi Kami
+  </button>
 </nav>
 
 <!-- 3. BENTO GRID MODULES (DASAR LAYAR UTAMA) -->
@@ -468,7 +500,7 @@ body {
           <input type="text" id="custName" class="form-control" placeholder="Nama Anda">
         </div>
         <div class="form-group">
-          <label>Nomor WhatsApp *</label>
+          <label>Nomor Telepon / Kontak *</label>
           <input type="text" id="custPhone" class="form-control" placeholder="08123456789">
         </div>
       </div>
@@ -553,8 +585,8 @@ body {
           <p id="recOffGridText"></p>
         </div>
 
-        <button class="btn-cta-wa" style="width:100%; justify-content:center; margin-top:20px; padding:14px !important; font-size:15px;" onclick="sendToWA()">
-          <i class="fa-brands fa-whatsapp"></i> Konsultasikan Hasil Ini dengan Engineer Kami
+        <button class="btn-cta-wa" style="width:100%; justify-content:center; margin-top:20px; padding:14px !important; font-size:15px;" onclick="openModule('proyek')">
+          <i class="fa-solid fa-phone"></i> Hubungi Kami untuk Konsultasi Hasil Ini
         </button>
       </div>
     </div>
@@ -562,17 +594,95 @@ body {
     <!-- MODUL 1 CONTENT: TENTANG KAMI -->
     <div id="mod-tentang" class="module-content">
       <div class="section-head">
-        <h2>Tentang French Solar Industry</h2>
-        <p>Penyedia solusi energi surya terpercaya dengan keahlian teknik Eropa.</p>
+        <h2>Tentang French Solar Industry (FSI)</h2>
+        <p>Powering the Future with Clean Energy — Kualitas Standar Eropa di Indonesia.</p>
       </div>
+      
       <p style="color:var(--text-muted); line-height:1.6; margin-bottom:24px;">
-        French Solar Industry merancang dan menginstalasi sistem PLTS berstandar internasional yang disesuaikan khusus dengan karakteristik cuaca dan geografis Indonesia. Kami berkomitmen memberikan efisiensi daya maksimal dengan garansi performa hingga 30 tahun.
+        French Solar Industry (FSI) adalah penyedia solusi energi terbarukan terdepan yang menghadirkan standar kualitas tinggi Eropa ke pasar Indonesia. Kami berkomitmen memberikan solusi energi surya yang cerdas, efisien, dan ramah lingkungan untuk sektor hunian, komersial, hingga industri.
       </p>
+
+      <!-- KEUNGGULAN UTAMA -->
+      <h3 style="font-size:18px; margin-bottom:14px; color:#60a5fa;">Mengapa Memilih FSI?</h3>
+      <div class="grid-2" style="margin-bottom:24px;">
+        <div class="summary-card" style="margin-bottom:0;">
+          <strong style="color:var(--blue); font-size:15px; display:block; margin-bottom:6px;">
+            <i class="fa-solid fa-certificate"></i> Standar Eropa di Indonesia
+          </strong>
+          <span style="font-size:13px; color:var(--text-muted); line-height:1.5;">
+            Semua peralatan memenuhi standar kualitas & keamanan Eropa terbaru (CE, ISO, IEC, TÜV).
+          </span>
+        </div>
+        <div class="summary-card" style="margin-bottom:0;">
+          <strong style="color:var(--blue); font-size:15px; display:block; margin-bottom:6px;">
+            <i class="fa-solid fa-map-location-dot"></i> Kehadiran Lokal Penuh
+          </strong>
+          <span style="font-size:13px; color:var(--text-muted); line-height:1.5;">
+            Kantor desain, logistik, tim penjualan, dan teknis berlokasi penuh di Indonesia untuk respon cepat.
+          </span>
+        </div>
+        <div class="summary-card" style="margin-bottom:0;">
+          <strong style="color:var(--blue); font-size:15px; display:block; margin-bottom:6px;">
+            <i class="fa-solid fa-tag"></i> Harga Transparan & Adil
+          </strong>
+          <span style="font-size:13px; color:var(--text-muted); line-height:1.5;">
+            Menghadirkan produk premium berkinerja tinggi dengan struktur harga yang jujur dan kompetitif.
+          </span>
+        </div>
+        <div class="summary-card" style="margin-bottom:0;">
+          <strong style="color:var(--blue); font-size:15px; display:block; margin-bottom:6px;">
+            <i class="fa-solid fa-shield-halved"></i> Garansi Panjang & Stok Siap
+          </strong>
+          <span style="font-size:13px; color:var(--text-muted); line-height:1.5;">
+            Stok selalu siap di Indonesia dengan jaminan garansi kinerja panjang 10 hingga 30 tahun.
+          </span>
+        </div>
+      </div>
+
+      <!-- ALUR KERJA 5 LANGKAH -->
+      <h3 style="font-size:18px; margin-bottom:14px; color:#60a5fa;">5 Langkah Menuju Energi Hijau bersama FSI</h3>
+      <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:24px;">
+        <div class="workflow-step">
+          <div class="step-num">1</div>
+          <div>
+            <strong style="font-size:14px; display:block;">Audit & Kontak Pertama</strong>
+            <span style="font-size:12px; color:var(--text-muted);">Analisis konsumsi energi harian, inspeksi lokasi, dan studi kelayakan.</span>
+          </div>
+        </div>
+        <div class="workflow-step">
+          <div class="step-num">2</div>
+          <div>
+            <strong style="font-size:14px; display:block;">Desain Sistem Surya</strong>
+            <span style="font-size:12px; color:var(--text-muted);">Perancangan sistem khusus (custom design), kalkulasi ROI, dan estimasi biaya.</span>
+          </div>
+        </div>
+        <div class="workflow-step">
+          <div class="step-num">3</div>
+          <div>
+            <strong style="font-size:14px; display:block;">Produksi & Validasi</strong>
+            <span style="font-size:12px; color:var(--text-muted);">Pemilihan perangkat berkualitas tinggi, validasi teknis, dan jadwal eksekusi.</span>
+          </div>
+        </div>
+        <div class="workflow-step">
+          <div class="step-num">4</div>
+          <div>
+            <strong style="font-size:14px; display:block;">Instalasi Profesional</strong>
+            <span style="font-size:12px; color:var(--text-muted);">Pemasangan panel, inverter, sistem baterai, hingga tahap testing & commissioning.</span>
+          </div>
+        </div>
+        <div class="workflow-step">
+          <div class="step-num">5</div>
+          <div>
+            <strong style="font-size:14px; display:block;">Pemantauan & Support</strong>
+            <span style="font-size:12px; color:var(--text-muted);">Pemantauan sistem secara real-time, pemeliharaan berkala, & dukungan teknis purna jual.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- HIGHLIGHT STATISTIK -->
       <div class="grid-2">
-        <div class="summary-card"><small style="color:var(--text-muted); font-size:11px;">Pengalaman Eropa</small><br><strong style="font-size:20px; color:var(--blue)">20+ Tahun</strong></div>
-        <div class="summary-card"><small style="color:var(--text-muted); font-size:11px;">Pengalaman Indonesia</small><br><strong style="font-size:20px; color:var(--blue)">10+ Tahun</strong></div>
-        <div class="summary-card"><small style="color:var(--text-muted); font-size:11px;">Garansi Performa Panel</small><br><strong style="font-size:20px; color:var(--blue)">30 Tahun</strong></div>
-        <div class="summary-card"><small style="color:var(--text-muted); font-size:11px;">Layanan Purna Jual</small><br><strong style="font-size:20px; color:var(--blue)">24/7 Support</strong></div>
+        <div class="summary-card"><small style="color:var(--text-muted); font-size:11px;">Kualifikasi Sertifikasi</small><br><strong style="font-size:18px; color:var(--blue)">CE, ISO, IEC, TÜV</strong></div>
+        <div class="summary-card"><small style="color:var(--text-muted); font-size:11px;">Garansi Kinerja Panel</small><br><strong style="font-size:18px; color:var(--blue)">Hingga 30 Tahun</strong></div>
       </div>
     </div>
 
@@ -601,7 +711,7 @@ body {
         <div class="content-card">
           <img src="produk-ev-charger.jpg" alt="EV Charger">
           <h4>EV Charger</h4>
-          <p>Stasiun pengisian daya kendaraan listrik cepat (*fast charging*) hemat energi.</p>
+          <p>Stasiun pengisian daya kendaraan listrik cepat (fast charging) hemat energi.</p>
         </div>
       </div>
     </div>
@@ -638,10 +748,11 @@ body {
 
       <div style="text-align:center; background:rgba(255,255,255,0.03); padding:20px; border-radius:16px; border:1px solid var(--border);">
         <h3 style="margin-bottom:6px;">Siap Beralih ke Energi Surya?</h3>
-        <p style="color:var(--text-muted); margin-bottom:16px; font-size:13px;">Kantor Operasional: Bali • Jakarta • Lombok</p>
-        <a class="btn-cta-wa" href="https://wa.me/6281139410041" target="_blank" style="display:inline-flex; padding:12px 24px !important; font-size:14px;">
-          <i class="fa-brands fa-whatsapp"></i> Hubungi Tim Engineer via WhatsApp
-        </a>
+        <p style="color:var(--text-muted); margin-bottom:4px; font-size:13px;">Kantor Operasional: Jl. Dewi Sri II A, Legian, Kec. Kuta, Badung, Bali 80361</p>
+        <p style="color:var(--text-muted); margin-bottom:16px; font-size:13px;">Email: contact@frenchsolarindustry.com | Telepon: +62 811-3941-0041</p>
+        <button class="btn-cta-wa" onclick="alert('Silakan kirimkan email Anda ke contact@frenchsolarindustry.com atau hubungi kami di +62 811-3941-0041')" style="display:inline-flex; padding:12px 24px !important; font-size:14px; margin:0 auto;">
+          <i class="fa-solid fa-headset"></i> Hubungi Tim Engineer Kami
+        </button>
       </div>
     </div>
 
@@ -690,7 +801,7 @@ function calculateSaving() {
   const rateVal = Number($('#tariffRate').value) || 1800;
 
   if (!name || !phone) {
-    alert('Mohon isi Nama dan Nomor WhatsApp Anda terlebih dahulu.');
+    alert('Mohon isi Nama dan Nomor Telepon/Kontak Anda terlebih dahulu.');
     return;
   }
 
@@ -797,17 +908,6 @@ function calculateSaving() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(leadData)
   });
-}
-
-/* 4. SEND DIRECT WHATSAPP */
-function sendToWA() {
-  const name = $('#custName').value;
-  const phone = $('#custPhone').value;
-  const bill = $('#outBill').textContent;
-  const panels = $('#outPanels').textContent;
-
-  const textMsg = `Halo French Solar Industry, Saya ${name} (${phone}) telah menghitung kebutuhan PLTS dengan Tagihan ${bill}. Kebutuhan sistem dasar saya: ${panels}. Mohon informasi penawaran resminya.`;
-  window.open(`https://wa.me/6281139410041?text=${encodeURIComponent(textMsg)}`, '_blank');
 }
 </script>
 
