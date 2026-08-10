@@ -12,21 +12,22 @@
 <style>
 :root {
   --bg-dark: #0a0d12;
-  --bg-card: #121721;
-  --bg-card-hover: #18202d;
-  --bg-light: #f7f6f2;
+  --bg-card: rgba(18, 23, 33, 0.65);
+  --bg-light: #ffffff;
   --text-light: #f7f6f2;
   --text-dark: #0a0d12;
   --text-muted: #9aa4b2;
   --text-muted-dark: #626d7c;
   --gold: #d4af37;
   --gold-glow: rgba(212, 175, 55, 0.25);
-  --border: rgba(255, 255, 255, 0.1);
-  --border-gold: rgba(212, 175, 55, 0.3);
-  --radius: 12px;
+  --border: rgba(255, 255, 255, 0.12);
+  --border-gold: rgba(212, 175, 55, 0.35);
+  --radius: 16px;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
 
 body {
   font-family: 'Inter', sans-serif;
@@ -50,12 +51,36 @@ a { text-decoration: none; color: inherit; }
   z-index: 2;
 }
 
+/* BUTTONS */
+.btn-calc-white {
+  background: #ffffff !important;
+  color: #0a0d12 !important;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #ffffff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.15);
+}
+
+.btn-calc-white:hover {
+  background: #e6e6e6 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 255, 255, 0.25);
+}
+
 .btn-gold {
   background: var(--gold);
   color: var(--text-dark);
   padding: 14px 28px;
-  border-radius: 4px;
-  font-weight: 600;
+  border-radius: 6px;
+  font-weight: 700;
   font-size: 13px;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -77,7 +102,7 @@ a { text-decoration: none; color: inherit; }
   border: 1px solid var(--border);
   color: var(--text-light);
   padding: 12px 24px;
-  border-radius: 4px;
+  border-radius: 6px;
   font-size: 13px;
   font-weight: 500;
   letter-spacing: 0.5px;
@@ -85,6 +110,7 @@ a { text-decoration: none; color: inherit; }
   align-items: center;
   gap: 8px;
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .btn-outline:hover {
@@ -102,14 +128,18 @@ a { text-decoration: none; color: inherit; }
   display: block;
 }
 
-/* NAVBAR */
+/* HEADER NAVBAR */
 header {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 100;
-  padding: 24px 0;
+  z-index: 500;
+  padding: 16px 0;
+  background: rgba(10, 13, 18, 0.75);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.3s ease;
 }
 
 .nav-container {
@@ -118,7 +148,6 @@ header {
   align-items: center;
 }
 
-/* LOGO DI KIRI */
 .logo {
   display: flex;
   align-items: center;
@@ -126,32 +155,38 @@ header {
 }
 
 .logo img {
-  height: 38px;
+  height: 40px;
   width: auto;
   border-radius: 4px;
 }
 
 .logo-text {
   font-family: 'Playfair Display', serif;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
+  white-space: nowrap;
 }
 
 .logo-text span { color: var(--gold); }
 
 .nav-links {
   display: flex;
-  gap: 36px;
+  gap: 32px;
   list-style: none;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 10px 24px;
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .nav-links a {
-  font-size: 13px;
+  font-size: 12px;
+  font-weight: 600;
   letter-spacing: 1px;
   text-transform: uppercase;
   color: #c3c9d2;
-  transition: color 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .nav-links a:hover { color: var(--gold); }
@@ -176,24 +211,22 @@ header {
   height: 100%;
   object-fit: cover;
   z-index: 0;
-  filter: brightness(0.4) saturate(1.1);
+  filter: brightness(0.35) saturate(1.1);
 }
 
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(10, 13, 18, 0.6) 0%, rgba(10, 13, 18, 0.95) 100%);
+  background: linear-gradient(to bottom, rgba(10, 13, 18, 0.5) 0%, rgba(10, 13, 18, 0.95) 100%);
   z-index: 1;
 }
 
-.hero-content {
-  max-width: 680px;
-}
+.hero-content { max-width: 720px; }
 
 .hero-title {
-  font-size: clamp(2.8rem, 5vw, 4.5rem);
+  font-size: clamp(2.4rem, 4.5vw, 4rem);
   font-weight: 500;
-  line-height: 1.15;
+  line-height: 1.2;
   margin-bottom: 24px;
 }
 
@@ -206,12 +239,18 @@ header {
   color: var(--text-muted);
   font-size: 16px;
   margin-bottom: 36px;
-  max-width: 520px;
+  max-width: 620px;
+}
+
+.hero-btn-group {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
 /* STATS BAR */
 .stats-bar {
-  background: rgba(18, 23, 33, 0.85);
+  background: rgba(18, 23, 33, 0.75);
   backdrop-filter: blur(16px);
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -232,10 +271,7 @@ header {
 
 .stat-item:last-child { border-right: none; }
 
-.stat-icon {
-  font-size: 28px;
-  color: var(--gold);
-}
+.stat-icon { font-size: 28px; color: var(--gold); }
 
 .stat-number {
   font-size: 32px;
@@ -250,18 +286,168 @@ header {
   margin-top: 4px;
 }
 
-/* FEATURED PROJECTS SECTION */
+/* BINGKAI SLIDER TRANSPARAN & MELAYANG (GLASSMORPHISM EFFECT) */
+.carousel-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  border-radius: 20px;
+  overflow: hidden;
+  /* Bingkai Transparan & Efek Melayang */
+  background: rgba(18, 23, 33, 0.4);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(212, 175, 55, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.carousel-wrapper:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 25px rgba(212, 175, 55, 0.2);
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  width: 100%;
+}
+
+.carousel-slide {
+  min-width: 100%;
+  height: 480px;
+  position: relative;
+  overflow: hidden;
+}
+
+.carousel-slide img,
+.carousel-slide video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* OVERLAY PADA SLIDE (AGAR TIDAK TERLIHAT RAMAI DAN TEKS TETAP REAADABLE) */
+.slide-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(10, 13, 18, 0.95) 0%, rgba(10, 13, 18, 0.4) 50%, rgba(10, 13, 18, 0.2) 100%);
+  z-index: 1;
+}
+
+.carousel-caption {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  color: #fff;
+}
+
+.carousel-badge {
+  background: var(--gold);
+  color: #000;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 20px;
+  width: fit-content;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.carousel-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.carousel-desc {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.85);
+  max-width: 600px;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+/* TOMBOL OVERLAY KIRI & KANAN MELAYANG */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  background: rgba(10, 13, 18, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.carousel-btn:hover {
+  background: var(--gold);
+  color: #000;
+  border-color: var(--gold);
+  scale: 1.1;
+}
+
+.carousel-btn.prev { left: 20px; }
+.carousel-btn.next { right: 20px; }
+
+/* DOTS INDICATOR */
+.carousel-dots {
+  position: absolute;
+  bottom: 20px;
+  right: 30px;
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dot.active {
+  background: var(--gold);
+  width: 24px;
+  border-radius: 10px;
+}
+
+/* PORTOFOLIO SECTION (PUTIH) */
 .projects-section {
   background-color: var(--bg-light);
   color: var(--text-dark);
   padding: 100px 0;
 }
 
+/* PORTOFOLIO BINGKAI TRANSPARAN PADA SECTION PUTIH */
+.projects-section .carousel-wrapper {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
 .section-header-flex {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: 50px;
+  margin-bottom: 40px;
 }
 
 .section-title {
@@ -270,108 +456,30 @@ header {
   line-height: 1.2;
 }
 
-.projects-grid {
-  display: grid;
-  grid-template-columns: 1.2fr 0.8fr 0.8fr 0.8fr;
-  gap: 20px;
-}
-
-.project-card {
-  position: relative;
-  border-radius: var(--radius);
-  overflow: hidden;
-  height: 380px;
-  cursor: pointer;
-  background: #000;
-}
-
-.project-card img, 
-.project-card video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.6s ease;
-}
-
-.project-card:hover img,
-.project-card:hover video {
-  transform: scale(1.05);
-}
-
-.project-info {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 60%);
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  color: #fff;
-  z-index: 2;
-}
-
-.project-badge {
-  background: var(--gold);
-  color: #000;
-  font-size: 10px;
-  font-weight: 700;
-  padding: 4px 8px;
-  border-radius: 4px;
-  width: fit-content;
-  margin-bottom: 8px;
-  text-transform: uppercase;
-}
-
-.project-title { font-size: 18px; font-weight: 600; }
-.project-loc { font-size: 12px; color: rgba(255,255,255,0.7); margin-top: 4px; }
-
-/* SERVICES & PRODUCTS SECTION */
+/* PRODUK & SOLUSI SECTION DENGAN BACKGROUND VIDEO CARPORT */
 .services-section {
+  position: relative;
   padding: 100px 0;
+  overflow: hidden;
   background-color: var(--bg-dark);
 }
 
-.services-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-}
-
-.service-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 24px;
-  transition: all 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  overflow: hidden;
-}
-
-.service-card img {
+.services-video-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 160px;
+  height: 100%;
   object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 16px;
+  z-index: 0;
+  filter: brightness(0.25) saturate(1.2);
 }
 
-.service-card:hover {
-  border-color: var(--gold);
-  background: var(--bg-card-hover);
-  transform: translateY(-5px);
-}
-
-.service-card h4 {
-  font-size: 18px;
-  margin-bottom: 8px;
-}
-
-.service-card p {
-  font-size: 12px;
-  color: var(--text-muted);
-  line-height: 1.5;
+.services-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(10, 13, 18, 0.85) 0%, rgba(10, 13, 18, 0.6) 50%, rgba(10, 13, 18, 0.9) 100%);
+  z-index: 1;
 }
 
 /* PROCESS SECTION */
@@ -396,7 +504,7 @@ header {
 .step-num {
   width: 36px;
   height: 36px;
-  background: #e8e6df;
+  background: #f0eee6;
   border-radius: 50%;
   display: grid;
   place-items: center;
@@ -417,81 +525,173 @@ header {
   color: var(--text-muted-dark);
 }
 
-/* CALCULATOR SECTION */
-.calc-section {
-  padding: 100px 0;
-  background: linear-gradient(135deg, #0e131d 0%, #05070a 100%);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
+/* OVERLAY MODAL KALKULATOR */
+.calc-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 13, 18, 0.88);
+  backdrop-filter: blur(14px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 1;
+  visibility: visible;
+  transition: all 0.4s ease;
 }
 
-.calc-box {
-  background: var(--bg-card);
+.calc-modal-overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.calc-box-floating {
+  background: rgba(18, 23, 33, 0.95);
   border: 1px solid var(--border-gold);
   border-radius: var(--radius);
-  padding: 40px;
-  max-width: 900px;
-  margin: 0 auto;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  padding: 36px;
+  width: min(900px, 95%);
+  box-shadow: 0 25px 60px rgba(0,0,0,0.8);
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.close-calc-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.close-calc-btn:hover {
+  background: var(--gold);
+  color: #000;
+  border-color: var(--gold);
 }
 
 .form-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-  margin-top: 24px;
+  gap: 16px;
+  margin-top: 20px;
 }
 
 .form-group label {
   display: block;
-  font-size: 12px;
+  font-size: 11px;
   letter-spacing: 1px;
   text-transform: uppercase;
   color: var(--text-muted);
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .form-control {
   width: 100%;
-  height: 48px;
+  height: 44px;
   background: rgba(0,0,0,0.4);
   border: 1px solid var(--border);
   border-radius: 6px;
-  padding: 0 16px;
+  padding: 0 14px;
   color: #fff;
   font-size: 14px;
   outline: none;
 }
 
-.form-control:focus {
-  border-color: var(--gold);
-}
+.form-control:focus { border-color: var(--gold); }
 
+/* HASIL KALKULASI */
 .calc-results {
   margin-top: 30px;
-  padding-top: 30px;
+  padding-top: 24px;
   border-top: 1px dashed var(--border);
   display: none;
 }
 
-.results-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  text-align: center;
+.summary-info-box {
+  background: rgba(212, 175, 55, 0.05);
+  border: 1px solid var(--border-gold);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  font-size: 14px;
 }
 
-.result-card {
-  background: rgba(255,255,255,0.03);
-  padding: 20px;
-  border-radius: 8px;
+.summary-info-box ul {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.summary-info-box li strong { color: var(--gold); }
+
+.calc-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 13px;
+}
+
+.calc-table th {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--gold);
+  text-align: left;
+  padding: 12px;
   border: 1px solid var(--border);
 }
 
-.result-val {
-  font-size: 24px;
-  font-weight: 700;
-  color: var(--gold);
+.calc-table td {
+  padding: 12px;
+  border: 1px solid var(--border);
+}
+
+.calc-table tr:nth-child(even) { background: rgba(255, 255, 255, 0.02); }
+
+.system-details {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 24px;
+  text-align: left;
+}
+
+.detail-item {
+  background: rgba(255,255,255,0.02);
+  border-left: 3px solid var(--gold);
+  padding: 16px 20px;
+  border-radius: 0 8px 8px 0;
+}
+
+.detail-item h4 {
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.detail-item p {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.detail-item ul {
+  margin-left: 20px;
+  font-size: 13px;
+  color: var(--text-muted);
   margin-top: 6px;
 }
 
@@ -510,10 +710,7 @@ footer {
   border-bottom: 1px solid var(--border);
 }
 
-.footer-title {
-  font-size: 32px;
-  margin-bottom: 24px;
-}
+.footer-title { font-size: 32px; margin-bottom: 24px; }
 
 .contact-info {
   list-style: none;
@@ -535,41 +732,157 @@ footer {
 }
 
 @media (max-width: 992px) {
-  .stats-bar, .projects-grid, .services-grid, .process-steps, .footer-top {
-    grid-template-columns: 1fr;
-  }
+  .stats-bar, .process-steps, .footer-top { grid-template-columns: 1fr; }
   .nav-links { display: none; }
   .form-grid { grid-template-columns: 1fr; }
+  .summary-info-box ul { grid-template-columns: 1fr; }
+  .calc-table { display: block; overflow-x: auto; }
+  .carousel-slide { height: 380px; }
 }
 </style>
 </head>
 
 <body>
 
+<!-- OVERLAY MODAL KALKULATOR MELAYANG -->
+<div class="calc-modal-overlay" id="calcModal">
+  <div class="calc-box-floating">
+    <button class="close-calc-btn" onclick="toggleCalcModal(false)" title="Tutup & ke Beranda">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+
+    <span class="section-tag" style="text-align:center;">Kalkulator Cepat PLTS</span>
+    <h2 style="text-align:center; font-size:26px; margin-bottom:6px;">Hitung Estimasi Kebutuhan Anda</h2>
+    <p style="text-align:center; color:var(--text-muted); font-size:13px; margin-bottom:20px;">Lengkapi data di bawah ini untuk mendapatkan simulasi perbandingan On-Grid, Hybrid, dan Off-Grid.</p>
+
+    <form id="pltsForm" onsubmit="event.preventDefault(); calculatePLTS();">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Nama Lengkap <span style="color:var(--gold);">*</span></label>
+          <input type="text" id="custName" class="form-control" placeholder="Contoh: Bpk. Hendra" required>
+        </div>
+        <div class="form-group">
+          <label>No. WhatsApp / HP <span style="color:var(--gold);">*</span></label>
+          <input type="tel" id="custPhone" class="form-control" placeholder="Contoh: 081234567890" required>
+        </div>
+        <div class="form-group">
+          <label>Tagihan/Token Listrik per Bulan (Rp) <span style="color:var(--gold);">*</span></label>
+          <input type="text" id="billInput" class="form-control" placeholder="Contoh: 1.500.000" oninput="formatRupiahInput(this)" required>
+        </div>
+        <div class="form-group">
+          <label>Jenis Bangunan <span style="color:var(--gold);">*</span></label>
+          <select id="buildingType" class="form-control" style="background:#0a0d12;">
+            <option value="Rumah Tinggal" selected>Rumah Tinggal</option>
+            <option value="Villa / Resort">Villa / Resort</option>
+            <option value="Ruko / Bisnis">Ruko / Bisnis Komersial</option>
+            <option value="Pabrik / Industri">Pabrik / Gudang Industri</option>
+          </select>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-calc-white" style="width:100%; justify-content:center; margin-top:20px; font-size:14px; padding:14px;">
+        <i class="fa-solid fa-calculator"></i> Hitung Estimasi & Tampilkan Simulasi
+      </button>
+    </form>
+
+    <div class="calc-results" id="calcResults">
+      <div class="summary-info-box">
+        <div style="font-weight:700; margin-bottom:10px; color:#fff; border-bottom:1px solid var(--border); padding-bottom:6px;" id="custHeader">
+          Simulasi Sistem PLTS
+        </div>
+        <ul>
+          <li>Tagihan/token: <strong id="outBill">Rp1.500.000/bulan</strong></li>
+          <li>Jenis Bangunan: <strong id="outBuilding">Rumah Tinggal</strong></li>
+          <li>Asumsi konsumsi total: <strong id="outKwh">±833 kWh/bulan</strong></li>
+          <li>Produksi 1 panel: <strong>2,5 kWh/hari</strong></li>
+          <li>Spesifikasi Panel: <strong>550 Wp</strong></li>
+          <li>Kebutuhan dasar: <strong id="outBasePanel">12 panel = 6,6 kWp</strong></li>
+        </ul>
+      </div>
+
+      <h3 style="font-size:18px; margin-bottom:12px;">☀️ Perbandingan Sistem PLTS</h3>
+
+      <table class="calc-table">
+        <thead>
+          <tr>
+            <th>Sistem</th>
+            <th>Panel</th>
+            <th>Inverter</th>
+            <th>Battery</th>
+            <th>Cocok untuk</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong style="color:#4dabf7;">ON-GRID</strong></td>
+            <td id="tbOnPanel">12 × 550 Wp</td>
+            <td id="tbOnInv">±6 kW</td>
+            <td>❌</td>
+            <td>Hemat tagihan</td>
+          </tr>
+          <tr>
+            <td><strong style="color:var(--gold);">HYBRID</strong></td>
+            <td id="tbHyPanel">12 × 550 Wp</td>
+            <td id="tbHyInv">±8 kW Hybrid</td>
+            <td id="tbHyBat">15 kWh</td>
+            <td>Hemat + backup</td>
+          </tr>
+          <tr>
+            <td><strong style="color:#ff6b6b;">OFF-GRID</strong></td>
+            <td id="tbOffPanel">±20–24 × 550 Wp</td>
+            <td id="tbOffInv">±10 kW Hybrid/Off-grid</td>
+            <td id="tbOffBat">60–90 kWh</td>
+            <td>Tanpa ketergantungan PLN</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="system-details">
+        <div class="detail-item">
+          <h4>1. ON-GRID — Paling Ekonomis</h4>
+          <p id="descOnGrid"></p>
+        </div>
+        <div class="detail-item" style="border-left-color:#2b8a3e; background:rgba(43, 138, 62, 0.05);">
+          <h4 style="color:#40c057;">2. HYBRID — Paling Saya Rekomendasikan ⭐</h4>
+          <p id="descHybrid"></p>
+        </div>
+        <div class="detail-item" style="border-left-color:#e03131;">
+          <h4 style="color:#ff8787;">3. OFF-GRID — Kebutuhan Jauh Lebih Besar</h4>
+          <p id="descOffGridSim"></p>
+        </div>
+      </div>
+
+      <div style="display:flex; gap:12px; margin-top:28px; justify-content:center;">
+        <button onclick="sendToWhatsApp()" class="btn-gold" style="flex:1; justify-content:center; background:#25D366; color:#fff;">Konsultasi WhatsApp <i class="fa-brands fa-whatsapp"></i></button>
+        <button onclick="toggleCalcModal(false)" class="btn-outline" style="flex:1; justify-content:center;">Lanjut ke Beranda</button>
+      </div>
+    </div>
+
+    <div style="text-align:center; margin-top:20px;">
+      <a href="javascript:void(0)" onclick="toggleCalcModal(false)" style="font-size:12px; color:var(--text-muted); text-decoration:underline;">Lewati kalkulator & masuk ke website utama</a>
+    </div>
+  </div>
+</div>
+
 <!-- HEADER NAVBAR -->
 <header>
   <div class="container nav-container">
-    <!-- LOGO DI POJOK KIRI ATAS -->
     <div class="logo">
-      <img src="logo.jpg" alt="French Solar Logo">
-      <div class="logo-text">FRENCH <span>SOLAR</span></div>
+      <img src="logo.jpg" alt="French Solar Industry Logo">
+      <div class="logo-text">FRENCH <span>SOLAR INDUSTRY</span></div>
     </div>
 
-    <!-- MENU NAVIGASI TENGAH -->
     <ul class="nav-links">
-      <li><a href="#home">Beranda</a></li>
-      <li><a href="#projects">Portofolio</a></li>
-      <li><a href="#services">Produk & Layanan</a></li>
-      <li><a href="#process">Alur Kerja</a></li>
-      <li><a href="#calc">Kalkulator</a></li>
+      <li><a href="#home" onclick="toggleCalcModal(false)">Beranda</a></li>
+      <li><a href="#projects" onclick="toggleCalcModal(false)">Portofolio</a></li>
+      <li><a href="#services" onclick="toggleCalcModal(false)">Produk & Layanan</a></li>
+      <li><a href="#process" onclick="toggleCalcModal(false)">Alur Kerja</a></li>
+      <li><a href="#contact" onclick="toggleCalcModal(false)">Hubungi Kami</a></li>
     </ul>
-
-    <!-- TOMBOL ESTIMASI KANAN -->
-    <a href="#calc" class="btn-outline">Cek Estimasi</a>
   </div>
 </header>
 
-<!-- HERO SECTION (VIDEO VILLA BACKGROUND) -->
+<!-- HERO SECTION -->
 <section class="hero" id="home">
   <video class="hero-video-bg" autoplay muted loop playsinline poster="proyek-hotel.jpg">
     <source src="hero-villa.mp4" type="video/mp4">
@@ -579,9 +892,14 @@ footer {
   <div class="container">
     <div class="hero-content">
       <span class="section-tag">French Solar Industry — Standar Eropa di Indonesia</span>
-      <h1 class="hero-title">Solusi Energi Surya <span>Mewah & Efisien</span> Untuk Proyek Anda.</h1>
-      <p class="hero-desc">Menghadirkan teknologi PLTS On-Grid, Hybrid, dan Off-Grid berstandar Eropa. Potong biaya listrik Anda hingga 80% dengan integrasi estetis tinggi.</p>
-      <a href="#calc" class="btn-gold">Hitung Kebutuhan PLTS <i class="fa-solid fa-arrow-right"></i></a>
+      <h1 class="hero-title">Energi Surya Cerdas. <span>Hemat Sekarang, Siap untuk Masa Depan.</span></h1>
+      <p class="hero-desc">Hemat biaya listrik hingga 90%–100% dengan solusi PLTS On-Grid, Hybrid, dan Off-Grid yang efisien, modern, dan dirancang sesuai kebutuhan Anda.</p>
+      
+      <div class="hero-btn-group">
+        <a href="https://wa.me/6281139410041" target="_blank" class="btn-gold">
+          Hubungi Kami <i class="fa-solid fa-paper-plane"></i>
+        </a>
+      </div>
     </div>
 
     <!-- STATS BAR -->
@@ -610,7 +928,7 @@ footer {
       <div class="stat-item">
         <i class="fa-solid fa-shield-halved stat-icon"></i>
         <div>
-          <div class="stat-number">25 Thn</div>
+          <div class="stat-number">30 Thn</div>
           <div class="stat-label">Garansi Performa Panel</div>
         </div>
       </div>
@@ -618,7 +936,7 @@ footer {
   </div>
 </section>
 
-<!-- FEATURED PROJECTS SECTION (VIDEO CARPORT BACKGROUND) -->
+<!-- FEATURED PROJECTS SECTION (SLIDER BINGKAI TRANSPARAN & MELAYANG) -->
 <section class="projects-section" id="projects">
   <div class="container">
     <div class="section-header-flex">
@@ -626,84 +944,133 @@ footer {
         <span class="section-tag" style="color:#b89018;">Portofolio Unggulan</span>
         <h2 class="section-title">Instalasi PLTS Modern & Presisi</h2>
       </div>
-      <a href="https://wa.me/6281139410041" target="_blank" class="btn-outline" style="border-color:#ccc; color:#000;">Konsultasi Proyek <i class="fa-solid fa-arrow-right"></i></a>
+      <a href="https://wa.me/6281139410041" target="_blank" class="btn-gold">
+        Hubungi Kami <i class="fa-brands fa-whatsapp"></i>
+      </a>
     </div>
 
-    <div class="projects-grid">
-      <!-- VIDEO SOLAR CARPORT -->
-      <div class="project-card">
-        <span class="project-badge" style="position:absolute; top:16px; left:16px; z-index:3;">Video Preview</span>
-        <video autoplay muted loop playsinline poster="proyek-office.jpg">
-          <source src="hero-carport.mp4" type="video/mp4">
-        </video>
-        <div class="project-info">
-          <div class="project-title">Solar Carport Canopy</div>
-          <div class="project-loc">Modern EV Canopy & Rooftop System</div>
+    <!-- SLIDER PORTOFOLIO -->
+    <div class="carousel-wrapper" id="projectsCarousel">
+      <button class="carousel-btn prev" onclick="moveSlide('projectsCarousel', -1)"><i class="fa-solid fa-chevron-left"></i></button>
+      <button class="carousel-btn next" onclick="moveSlide('projectsCarousel', 1)"><i class="fa-solid fa-chevron-right"></i></button>
+
+      <div class="carousel-track">
+        <!-- ITEM 1 -->
+        <div class="carousel-slide">
+          <img src="proyek-hotel.jpg" alt="Resort & Hotel Proyek">
+          <div class="slide-overlay"></div>
+          <div class="carousel-caption">
+            <span class="carousel-badge">Resort & Hotel</span>
+            <div class="carousel-title">Resort & Hotel Luxury</div>
+            <div class="carousel-desc">Bali — 30 kWp Hybrid System terintegrasi suplai energi tanpa jeda.</div>
+          </div>
+        </div>
+
+        <!-- ITEM 2 -->
+        <div class="carousel-slide">
+          <img src="proyek-office.jpg" alt="Commercial HQ Proyek">
+          <div class="slide-overlay"></div>
+          <div class="carousel-caption">
+            <span class="carousel-badge">Commercial</span>
+            <div class="carousel-title">Commercial HQ Headquarters</div>
+            <div class="carousel-desc">Denpasar — 45 kWp On-Grid System efisiensi tinggi hemat operasional kantor.</div>
+          </div>
+        </div>
+
+        <!-- ITEM 3 -->
+        <div class="carousel-slide">
+          <img src="proyek-pabrik.jpg" alt="Pabrik Proyek">
+          <div class="slide-overlay"></div>
+          <div class="carousel-caption">
+            <span class="carousel-badge">Kawasan Industri</span>
+            <div class="carousel-title">Manufaktur & Gudang Industri</div>
+            <div class="carousel-desc">Cikarang — 120 kWp Rooftop System efisiensi tinggi daya besar.</div>
+          </div>
         </div>
       </div>
 
-      <!-- HOTEL -->
-      <div class="project-card">
-        <img src="proyek-hotel.jpg" alt="Hotel Proyek">
-        <div class="project-info">
-          <div class="project-title">Resort & Hotel</div>
-          <div class="project-loc">Bali — 30 kWp Hybrid System</div>
-        </div>
-      </div>
-
-      <!-- OFFICE -->
-      <div class="project-card">
-        <img src="proyek-office.jpg" alt="Office Proyek">
-        <div class="project-info">
-          <div class="project-title">Commercial HQ</div>
-          <div class="project-loc">Denpasar — 45 kWp On-Grid</div>
-        </div>
-      </div>
-
-      <!-- PABRIK -->
-      <div class="project-card">
-        <img src="proyek-pabrik.jpg" alt="Pabrik Proyek">
-        <div class="project-info">
-          <div class="project-title">Kawasan Industri</div>
-          <div class="project-loc">Cikarang — 120 kWp Rooftop</div>
-        </div>
-      </div>
+      <div class="carousel-dots"></div>
     </div>
   </div>
 </section>
 
-<!-- SERVICES & PRODUCTS SECTION -->
+<!-- SERVICES & PRODUCTS SECTION (BACKGROUND VIDEO CARPORT + SLIDER BINGKAI MELAYANG) -->
 <section class="services-section" id="services">
+  <!-- VIDEO BACKGROUND CARPORT SOLAR -->
+  <video class="services-video-bg" autoplay muted loop playsinline poster="proyek-office.jpg">
+    <source src="hero-carport.mp4" type="video/mp4">
+  </video>
+  <div class="services-overlay"></div>
+
   <div class="container">
-    <div style="text-align:center; margin-bottom:50px;">
+    <div style="text-align:center; margin-bottom:40px;">
       <span class="section-tag">Produk & Solusi</span>
-      <h2 class="section-title" style="font-size:32px;">Komponen PLTS Standar Eropa</h2>
+      <h2 class="section-title" style="font-size:32px; color:#fff;">Komponen & Solusi PLTS Standar Eropa</h2>
     </div>
 
-    <div class="services-grid">
-      <div class="service-card">
-        <img src="produk-panel-550.jpg" alt="Panel Surya 550Wp">
-        <h4>Panel Surya 550Wp</h4>
-        <p>Panel Monocrystalline efisiensi tinggi bergaransi performa 25-30 tahun.</p>
+    <!-- SLIDER PRODUK & SOLUSI -->
+    <div class="carousel-wrapper" id="servicesCarousel">
+      <button class="carousel-btn prev" onclick="moveSlide('servicesCarousel', -1)"><i class="fa-solid fa-chevron-left"></i></button>
+      <button class="carousel-btn next" onclick="moveSlide('servicesCarousel', 1)"><i class="fa-solid fa-chevron-right"></i></button>
+
+      <div class="carousel-track">
+        <!-- ITEM 1: SOLAR CARPORT CANOPY -->
+        <div class="carousel-slide">
+          <img src="proyek-office.jpg" alt="Solar Carport Canopy">
+          <div class="slide-overlay"></div>
+          <div class="carousel-caption">
+            <span class="carousel-badge">Solusi Arsitektural</span>
+            <div class="carousel-title">Solar Carport Canopy</div>
+            <div class="carousel-desc">Modern EV Canopy & Rooftop System. Kanopi tempat parkir sekaligus pembangkit energi surya terintegrasi pengisian mobil listrik.</div>
+          </div>
+        </div>
+
+        <!-- ITEM 2 -->
+        <div class="carousel-slide">
+          <img src="produk-panel-550.jpg" alt="Panel Surya 550Wp">
+          <div class="slide-overlay"></div>
+          <div class="carousel-caption">
+            <span class="carousel-badge">Komponen Utama</span>
+            <div class="carousel-title">Panel Surya 550Wp Monocrystalline</div>
+            <div class="carousel-desc">Panel surya berefisiensi sangat tinggi bergaransi performa resmi 30 tahun.</div>
+          </div>
+        </div>
+
+        <!-- ITEM 3 -->
+        <div class="carousel-slide">
+          <img src="produk-inverter-hybrid.jpg" alt="Inverter Hybrid">
+          <div class="slide-overlay"></div>
+          <div class="carousel-caption">
+            <span class="carousel-badge">Inverter Cerdas</span>
+            <div class="carousel-title">Inverter Hybrid Intelligent</div>
+            <div class="carousel-desc">Pengelola arus pintar otomatis membagi daya dari PLN, panel surya, dan baterai cadangan.</div>
+          </div>
+        </div>
+
+        <!-- ITEM 4 -->
+        <div class="carousel-slide">
+          <img src="produk-baterai-lithium.jpg" alt="Baterai Lithium">
+          <div class="slide-overlay"></div>
+          <div class="carousel-caption">
+            <span class="carousel-badge">Penyimpanan Daya</span>
+            <div class="carousel-title">Baterai Lithium (LiFePO4)</div>
+            <div class="carousel-desc">Sistem penyimpanan daya baterai mandiri aman berkapasitas besar untuk suplai listrik malam hari.</div>
+          </div>
+        </div>
+
+        <!-- ITEM 5 -->
+        <div class="carousel-slide">
+          <img src="produk-ev-charger.jpg" alt="EV Charger Station">
+          <div class="slide-overlay"></div>
+          <div class="carousel-caption">
+            <span class="carousel-badge">EV Ecosystem</span>
+            <div class="carousel-title">EV Fast Charger Station</div>
+            <div class="carousel-desc">Pengisian daya cepat kendaraan listrik ramah lingkungan terintegrasi suplai energi surya.</div>
+          </div>
+        </div>
       </div>
 
-      <div class="service-card">
-        <img src="produk-inverter-hybrid.jpg" alt="Inverter Hybrid">
-        <h4>Inverter Hybrid</h4>
-        <p>Inverter cerdas pengelola arus listrik dari PLN, panel, dan baterai cadangan.</p>
-      </div>
-
-      <div class="service-card">
-        <img src="produk-baterai-lithium.jpg" alt="Baterai Lithium">
-        <h4>Baterai Lithium (LiFePO4)</h4>
-        <p>Penyimpanan daya mandiri berkeamanan tinggi untuk suplai listrik malam hari.</p>
-      </div>
-
-      <div class="service-card">
-        <img src="produk-ev-charger.jpg" alt="EV Charger Station">
-        <h4>EV Charger Station</h4>
-        <p>Pengisian daya cepat kendaraan listrik yang terintegrasi energi surya.</p>
-      </div>
+      <div class="carousel-dots"></div>
     </div>
   </div>
 </section>
@@ -716,6 +1083,9 @@ footer {
         <span class="section-tag" style="color:#b89018;">Alur Kerja</span>
         <h2 class="section-title">Tahapan Pemasangan PLTS Anda</h2>
       </div>
+      <a href="https://wa.me/6281139410041" target="_blank" class="btn-gold">
+        Hubungi Kami <i class="fa-solid fa-arrow-right"></i>
+      </a>
     </div>
 
     <div class="process-steps">
@@ -748,59 +1118,15 @@ footer {
   </div>
 </section>
 
-<!-- CALCULATOR SECTION -->
-<section class="calc-section" id="calc">
-  <div class="container">
-    <div class="calc-box">
-      <span class="section-tag" style="text-align:center;">Kalkulator Cepat PLTS</span>
-      <h2 style="text-align:center; font-size:32px; margin-bottom:8px;">Hitung Estimasi Kebutuhan Anda</h2>
-      <p style="text-align:center; color:var(--text-muted); font-size:14px; margin-bottom:30px;">Dapatkan perkiraan kapasitas kWp dan jumlah panel surya secara otomatis.</p>
-
-      <div class="form-grid">
-        <div class="form-group">
-          <label>Tagihan Listrik / Bulan (Rp)</label>
-          <input type="number" id="billInput" class="form-control" placeholder="Contoh: 2000000">
-        </div>
-        <div class="form-group">
-          <label>Kategori Bangunan</label>
-          <select id="typeInput" class="form-control" style="background:#0a0d12;">
-            <option value="1800">Rumah / Residential</option>
-            <option value="1500">Bisnis / Komersial / Industri</option>
-          </select>
-        </div>
-      </div>
-
-      <button onclick="calculatePLTS()" class="btn-gold" style="width:100%; justify-content:center; margin-top:24px;">Hitung Estimasi Sekarang</button>
-
-      <!-- RESULTS -->
-      <div class="calc-results" id="calcResults">
-        <div class="results-grid">
-          <div class="result-card">
-            <span style="font-size:12px; color:var(--text-muted);">Perkiraan Konsumsi</span>
-            <div class="result-val" id="resKwh">0 kWh</div>
-          </div>
-          <div class="result-card">
-            <span style="font-size:12px; color:var(--text-muted);">Kapasitas Terpasang</span>
-            <div class="result-val" id="resKwp">0 kWp</div>
-          </div>
-          <div class="result-card">
-            <span style="font-size:12px; color:var(--text-muted);">Kebutuhan Panel (550Wp)</span>
-            <div class="result-val" id="resPanels">0 Panel</div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
 <!-- FOOTER -->
 <footer id="contact">
   <div class="container">
     <div class="footer-top">
       <div>
         <h2 class="footer-title serif">Mulai Beralih ke Energi Bersih Hari Ini.</h2>
-        <a href="https://wa.me/6281139410041" target="_blank" class="btn-gold">Hubungi Tim Engineer <i class="fa-solid fa-arrow-right"></i></a>
+        <a href="https://wa.me/6281139410041" target="_blank" class="btn-gold">
+          Hubungi Kami <i class="fa-brands fa-whatsapp"></i>
+        </a>
       </div>
       <div>
         <h4 style="font-size:14px; letter-spacing:1px; text-transform:uppercase; margin-bottom:20px; color:var(--gold);">Kantor Operasional</h4>
@@ -827,25 +1153,178 @@ footer {
 </footer>
 
 <script>
-function calculatePLTS() {
-  const bill = parseFloat(document.getElementById('billInput').value);
-  const rate = parseFloat(document.getElementById('typeInput').value);
+// METODE SLIDER / CAROUSEL INTERAKTIF
+const carousels = {};
 
-  if (!bill || bill <= 0) {
-    alert('Masukkan nominal tagihan listrik bulanan yang valid.');
+function initCarousel(id) {
+  const container = document.getElementById(id);
+  if (!container) return;
+  
+  const track = container.querySelector('.carousel-track');
+  const slides = container.querySelectorAll('.carousel-slide');
+  const dotsContainer = container.querySelector('.carousel-dots');
+  
+  carousels[id] = {
+    currentIndex: 0,
+    totalSlides: slides.length,
+    track: track,
+    dotsContainer: dotsContainer
+  };
+
+  dotsContainer.innerHTML = '';
+  slides.forEach((_, index) => {
+    const dot = document.createElement('div');
+    dot.classList.add('dot');
+    if (index === 0) dot.classList.add('active');
+    dot.addEventListener('click', () => goToSlide(id, index));
+    dotsContainer.appendChild(dot);
+  });
+}
+
+function updateCarouselUI(id) {
+  const c = carousels[id];
+  if (!c) return;
+  
+  c.track.style.transform = `translateX(-${c.currentIndex * 100}%)`;
+  
+  const dots = c.dotsContainer.querySelectorAll('.dot');
+  dots.forEach((dot, index) => {
+    if (index === c.currentIndex) {
+      dot.classList.add('active');
+    } else {
+      dot.classList.remove('active');
+    }
+  });
+}
+
+function moveSlide(id, direction) {
+  const c = carousels[id];
+  if (!c) return;
+  
+  c.currentIndex = (c.currentIndex + direction + c.totalSlides) % c.totalSlides;
+  updateCarouselUI(id);
+}
+
+function goToSlide(id, index) {
+  const c = carousels[id];
+  if (!c) return;
+  
+  c.currentIndex = index;
+  updateCarouselUI(id);
+}
+
+// FORMAT PENGETIKAN ANGKA RIBUAN
+function formatRupiahInput(input) {
+  let value = input.value.replace(/\D/g, "");
+  if (value === "") {
+    input.value = "";
+    return;
+  }
+  input.value = parseInt(value, 10).toLocaleString("id-ID");
+}
+
+// OVERLAY MODAL KALKULATOR
+function toggleCalcModal(show) {
+  const modal = document.getElementById('calcModal');
+  if (show) {
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  } else {
+    modal.classList.add('hidden');
+    document.body.style.overflow = 'auto';
+  }
+}
+
+// KALKULASI DINAMIS PLTS
+function calculatePLTS() {
+  const name = document.getElementById('custName').value.trim();
+  const phone = document.getElementById('custPhone').value.trim();
+  const rawBill = document.getElementById('billInput').value.replace(/\./g, "");
+  const bill = parseFloat(rawBill);
+  const buildingType = document.getElementById('buildingType').value;
+
+  if (!name || !phone || isNaN(bill) || bill <= 0) {
+    alert('Mohon lengkapi Nama, No. WhatsApp, dan Tagihan Listrik.');
     return;
   }
 
-  const totalKwh = Math.round(bill / rate);
-  const panels = Math.max(4, Math.ceil(totalKwh / 75));
-  const kwp = (panels * 0.55).toFixed(1);
+  const totalKwh = Math.round(bill / 1800);
+  const basePanels = Math.max(4, Math.ceil(totalKwh / 75));
+  const baseKwp = (basePanels * 0.55).toFixed(1);
 
-  document.getElementById('resKwh').textContent = totalKwh.toLocaleString('id-ID') + ' kWh/bln';
-  document.getElementById('resKwp').textContent = kwp + ' kWp';
-  document.getElementById('resPanels').textContent = panels + ' Panel';
+  const invOnGrid = Math.ceil(baseKwp);
+  const invHybrid = Math.ceil(baseKwp * 1.2);
+  const batteryHybrid = Math.max(15, Math.round(baseKwp * 2.5));
+  
+  const offPanelsMin = Math.ceil(basePanels * 1.8);
+  const offPanelsMax = Math.ceil(basePanels * 2.0);
+  const offKwpMin = (offPanelsMin * 0.55).toFixed(1);
+  const offKwpMax = (offPanelsMax * 0.55).toFixed(1);
+  const batteryOffGridMin = Math.round(totalKwh * 0.08 * 30 * 0.3);
+  const batteryOffGridMax = Math.round(batteryOffGridMin * 1.5);
+
+  document.getElementById('custHeader').textContent = `Simulasi Sistem PLTS untuk ${name}`;
+  document.getElementById('outBill').textContent = `Rp${bill.toLocaleString('id-ID')}/bulan`;
+  document.getElementById('outBuilding').textContent = buildingType;
+  document.getElementById('outKwh').textContent = `±${totalKwh.toLocaleString('id-ID')} kWh/bulan`;
+  document.getElementById('outBasePanel').textContent = `${basePanels} panel = ${baseKwp} kWp`;
+
+  document.getElementById('tbOnPanel').textContent = `${basePanels} × 550 Wp`;
+  document.getElementById('tbOnInv').textContent = `±${invOnGrid} kW`;
+
+  document.getElementById('tbHyPanel').textContent = `${basePanels} × 550 Wp`;
+  document.getElementById('tbHyInv').textContent = `±${invHybrid} kW Hybrid`;
+  document.getElementById('tbHyBat').textContent = `${batteryHybrid} kWh`;
+
+  document.getElementById('tbOffPanel').textContent = `±${offPanelsMin}–${offPanelsMax} × 550 Wp`;
+  document.getElementById('tbOffInv').textContent = `±${Math.ceil(offKwpMax)} kW Hybrid/Off-grid`;
+  document.getElementById('tbOffBat').textContent = `${batteryOffGridMin}–${batteryOffGridMax} kWh`;
+
+  const monthlyProd = Math.round(basePanels * 2.5 * 30);
+  document.getElementById('descOnGrid').innerHTML = `
+    <strong>${basePanels} × 550 Wp = ${baseKwp} kWp</strong><br>
+    Produksi: ${basePanels} × 2,5 × 30 = ±${monthlyProd.toLocaleString('id-ID')} kWh/bulan<br>
+    Secara energi, ini mendekati kebutuhan customer ±${totalKwh.toLocaleString('id-ID')} kWh/bulan.<br>
+    Namun karena produksi PLTS dan pemakaian tidak selalu bersamaan, penghematan tagihan aktual tidak otomatis 100%.
+  `;
+
+  document.getElementById('descHybrid').innerHTML = `
+    <strong>${basePanels} × 550 Wp = ${baseKwp} kWp</strong><br>
+    Battery awal: <strong>1 × ${batteryHybrid} kWh</strong><br><br>
+    <strong>Konsepnya:</strong><br>
+    ☀️ PLTS → 🏠 ${buildingType}<br>
+    ☀️ PLTS → 🔋 Battery<br>
+    🔋 Battery → 🏠 ${buildingType} (malam hari)<br><br>
+    Keuntungannya customer mendapatkan penghematan + backup listrik.<br>
+    Kalau target backup malam cukup besar, battery bisa dinaikkan menjadi ${batteryHybrid * 2} kWh.
+  `;
+
+  document.getElementById('descOffGridSim').innerHTML = `
+    Saya akan mulai simulasi dari:<br>
+    <strong>${offPanelsMin}–${offPanelsMax} panel × 550 Wp = ${offKwpMin}–${offKwpMax} kWp</strong><br>
+    Battery: <strong>${batteryOffGridMin}–${batteryOffGridMax} kWh</strong>
+  `;
 
   document.getElementById('calcResults').style.display = 'block';
 }
+
+function sendToWhatsApp() {
+  const name = document.getElementById('custName').value;
+  const phone = document.getElementById('custPhone').value;
+  const rawBill = document.getElementById('billInput').value.replace(/\./g, "");
+  const buildingType = document.getElementById('buildingType').value;
+
+  const text = `Halo French Solar Industry, saya *${name}* (${phone}) telah menghitung kebutuhan di website.\n\nJenis Bangunan: *${buildingType}*\nTagihan listrik: Rp ${parseInt(rawBill).toLocaleString('id-ID')}/bulan.\n\nMohon konsultasi lebih lanjut mengenai sistem PLTS. Terima kasih!`;
+  
+  const encodedText = encodeURIComponent(text);
+  window.open(`https://wa.me/6281139410041?text=${encodedText}`, '_blank');
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  initCarousel('projectsCarousel');
+  initCarousel('servicesCarousel');
+  toggleCalcModal(true);
+});
 </script>
 
 </body>
