@@ -351,11 +351,11 @@ footer{background:#031020;color:#cbd7e5;padding:45px 0 20px}.footer-grid{display
       <!-- Input Nama & WhatsApp -->
       <div class="form-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 15px;">
         <div class="field">
-          <label><i class="fa-solid fa-user"></i> Nama Lengkap</label>
+          <label><i class="fa-solid fa-user"></i> Nama Lengkap *</label>
           <input id="custName" type="text" placeholder="Masukkan nama Anda">
         </div>
         <div class="field">
-          <label><i class="fa-brands fa-whatsapp"></i> Nomor WhatsApp</label>
+          <label><i class="fa-brands fa-whatsapp"></i> Nomor WhatsApp *</label>
           <input id="custPhone" type="text" placeholder="Contoh: 08123456789">
         </div>
       </div>
@@ -386,14 +386,18 @@ footer{background:#031020;color:#cbd7e5;padding:45px 0 20px}.footer-grid{display
       </div>
       <button class="btn btn-primary calc-button" id="calcBtn"><i class="fa-solid fa-calculator"></i> Hitung Sekarang</button>
 
-      <h3 style="margin-top: 30px; margin-bottom:15px"><i class="fa-solid fa-chart-line"></i> ESTIMASI HASIL</h3>
-      <div class="result-grid" style="grid-template-columns: repeat(4, 1fr);">
-        <div class="result-card"><small>Kapasitas PLTS</small><strong id="rKwp">0 kWp</strong></div>
-        <div class="result-card"><small>Produksi Energi</small><strong id="rProd">0 kWh/bln</strong></div>
-        <div class="result-card highlight"><small>Penghematan / bulan</small><strong id="rSave">Rp 0</strong></div>
-        <div class="result-card"><small>Estimasi Investasi</small><strong id="rInvest">Rp 0</strong></div>
+      <!-- BAGIAN HASIL (Secara default tersembunyi dengan style="display:none;") -->
+      <div id="resultSection" style="display:none; margin-top:20px;">
+        <h3 style="margin-bottom:15px"><i class="fa-solid fa-chart-line"></i> ESTIMASI HASIL</h3>
+        <div class="result-grid" style="grid-template-columns: repeat(4, 1fr);">
+          <div class="result-card"><small>Kapasitas PLTS</small><strong id="rKwp">0 kWp</strong></div>
+          <div class="result-card"><small>Produksi Energi</small><strong id="rProd">0 kWh/bln</strong></div>
+          <div class="result-card highlight"><small>Penghematan / bulan</small><strong id="rSave">Rp 0</strong></div>
+          <div class="result-card"><small>Estimasi Investasi</small><strong id="rInvest">Rp 0</strong></div>
+        </div>
+        <button class="btn whatsapp-result" id="sendWA"><i class="fa-brands fa-whatsapp"></i> Kirim Hasil ke WhatsApp</button>
       </div>
-      <button class="btn whatsapp-result" id="sendWA"><i class="fa-brands fa-whatsapp"></i> Kirim Hasil ke WhatsApp</button>
+
     </div>
   </div>
 </div>
@@ -540,7 +544,19 @@ $$('#navLinks a').forEach(a=>a.addEventListener('click',()=>$('#navLinks').class
 function rupiah(n){
   return 'Rp ' + Math.round(n).toLocaleString('id-ID');
 }
+
 function calculate(){
+  const name = $('#custName').value.trim();
+  const phone = $('#custPhone').value.trim();
+
+  // Validasi: Wajib isi Nama dan No WhatsApp sebelum muncul hasil
+  if (!name || !phone) {
+    alert('Mohon lengkapi Nama Lengkap dan Nomor WhatsApp terlebih dahulu.');
+    if (!name) $('#custName').focus();
+    else $('#custPhone').focus();
+    return;
+  }
+
   const bill = Math.max(0, Number($('#bill').value) || 0);
   const tariff = Number($('#tariff').value) || 1800;
   const target = Number($('#targetReduce').value) || 0.70;
@@ -555,16 +571,21 @@ function calculate(){
   $('#rProd').textContent = Math.round(production).toLocaleString('id-ID') + ' kWh/bln';
   $('#rSave').textContent = rupiah(saving);
   $('#rInvest').textContent = rupiah(investment);
+
+  // Tampilkan section hasil
+  $('#resultSection').style.display = 'block';
+  
+  // Scroll halus ke hasil
+  $('#resultSection').scrollIntoView({ behavior: 'smooth' });
 }
 
+// Hanya berjalan saat tombol Hitung Diklik
 $('#calcBtn').addEventListener('click', calculate);
-['bill', 'tariff', 'targetReduce'].forEach(id => $('#'+id).addEventListener('input', calculate));
-calculate();
 
 /* WHATSAPP & GOOGLE SHEETS DIRECT SCRIPT */
 $('#sendWA').addEventListener('click', () => {
-  const name = $('#custName').value.trim() || "Tanpa Nama";
-  const phone = $('#custPhone').value.trim() || "-";
+  const name = $('#custName').value.trim();
+  const phone = $('#custPhone').value.trim();
   const kwp = $('#rKwp').textContent;
   const prod = $('#rProd').textContent;
   const save = $('#rSave').textContent;
@@ -572,14 +593,11 @@ $('#sendWA').addEventListener('click', () => {
   const billVal = Number($('#bill').value) || 0;
   const targetReduce = $('#targetReduce').value;
 
-  // Validasi sederhana agar nama & no WA diisi
-  if(!$('#custName').value.trim() || !$('#custPhone').value.trim()){
-    alert('Mohon isi Nama dan Nomor WhatsApp terlebih dahulu sebelum mengirim ke WhatsApp.');
-    $('#custName').focus();
+  if(!name || !phone){
+    alert('Mohon isi Nama dan Nomor WhatsApp terlebih dahulu.');
     return;
   }
 
-  // Data yang dikirim ke Google Sheets via Apps Script (Sesuai 12 Kolom Tab LEADS)
   const leadData = {
     nama: name,
     whatsapp: phone,
@@ -594,10 +612,8 @@ $('#sendWA').addEventListener('click', () => {
     statusLead: "New Inquiry"
   };
 
-  // URL Web App Google Apps Script Anda yang aktif
   const scriptURL = 'https://script.google.com/macros/s/AKfycby5QLjc_oIPoXgdXt6pyQKYRV_UOhJT18qz9PZG5rqHWn01VVyYqwUCt_a1axpB9RaiFw/exec';
 
-  // Kirim data ke Google Sheets secara background
   fetch(scriptURL, {
     method: 'POST',
     mode: 'no-cors',
@@ -605,17 +621,36 @@ $('#sendWA').addEventListener('click', () => {
     body: JSON.stringify(leadData)
   }).catch(error => console.error('Error!', error.message));
 
-  // Format teks pesan WhatsApp ke admin FSI sesuai permintaan Anda
-  const text = `Halo French Solar Industry, saya ${name} tertarik tentang PLTS dengan rincian:%0A%0A` +
-               `Tagihan Listrik Awal: Rp ${billVal.toLocaleString('id-ID')} / bulan%0A` +
-               `Estimasi Kapasitas PLTS: ${kwp}%0A` +
-               `Estimasi Produksi Energi: ${prod}%0A` +
-               `Estimasi Penghematan: ${save} / bulan%0A` +
-               `Estimasi Investasi: ${invest}%0A%0A` +
-               `Mohon info lebih lanjut untuk penjadwalan site survey. Terima kasih!`;
+  const textMsg = `Halo French Solar Industry, saya ingin berkonsultasi mengenai rekomendasi PLTS saya:\n\n` +
+                  `*Nama:* ${name}\n` +
+                  `*WhatsApp:* ${phone}\n` +
+                  `*Tagihan PLN:* ${rupiah(billVal)}/bulan\n` +
+                  `*Target Penghematan:* ${targetReduce * 100}%\n\n` +
+                  `*ESTIMASI HASIL:* \n` +
+                  `• Kapasitas PLTS: ${kwp}\n` +
+                  `• Produksi Energi: ${prod}\n` +
+                  `• Penghematan/Bulan: ${save}\n` +
+                  `• Estimasi Investasi: ${invest}\n\n` +
+                  `Mohon info lebih lanjut mengenai jadwal survey lokasi. Terima kasih!`;
 
-  window.open(`https://wa.me/6281139410041?text=${text}`, '_blank');
+  const waUrl = `https://wa.me/6281139410041?text=${encodeURIComponent(textMsg)}`;
+  window.open(waUrl, '_blank');
 });
+
+/* PROJECT SLIDER SCRIPT */
+const track = $('#projectTrack');
+const prevBtn = $('#prev');
+const nextBtn = $('#next');
+
+if (track && prevBtn && nextBtn) {
+  prevBtn.addEventListener('click', () => {
+    track.scrollBy({ left: -300, behavior: 'smooth' });
+  });
+  nextBtn.addEventListener('click', () => {
+    track.scrollBy({ left: 300, behavior: 'smooth' });
+  });
+}
 </script>
+
 </body>
 </html>
