@@ -189,14 +189,15 @@ header {
 
 .logo-text span { color: var(--gold); }
 
+/* BINGKAI/KOTAK DIHILANGKAN (Tampilan Bersih & Minimalis untuk Desktop) */
 .nav-links {
   display: flex;
   gap: 32px;
   list-style: none;
-  background: rgba(255, 255, 255, 0.03);
-  padding: 10px 24px;
-  border-radius: 30px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
 }
 
 .nav-links a {
@@ -210,6 +211,24 @@ header {
 }
 
 .nav-links a:hover { color: var(--gold); }
+
+/* Tombol Hamburger untuk Tampilan HP (Default disembunyikan di Desktop) */
+.hamburger-toggle {
+  display: none;
+  font-size: 22px;
+  color: #fff;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.hamburger-toggle:hover {
+  background: var(--gold);
+  color: #000;
+}
 
 /* HALAMAN UTAMA (HOME) */
 #mainHomeView {
@@ -941,7 +960,33 @@ footer {
 
 @media (max-width: 992px) {
   .stats-bar, .process-steps, .footer-top, .about-grid, .values-grid { grid-template-columns: 1fr; }
-  .nav-links { display: none; }
+  
+  /* Tampilkan tombol hamburger di HP */
+  .hamburger-toggle { display: block; }
+
+  /* Ubah .nav-links menjadi menu dropdown vertikal saat aktif di HP */
+  .nav-links {
+    display: none; 
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: rgba(10, 13, 18, 0.98);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 24px;
+    gap: 16px;
+    text-align: center;
+    border-radius: 0;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.6);
+  }
+
+  /* Kelas untuk memunculkan menu saat hamburger diklik */
+  .nav-links.mobile-active {
+    display: flex;
+  }
+
   .form-grid { grid-template-columns: 1fr; }
   .summary-info-box ul { grid-template-columns: 1fr; }
   .calc-table { display: block; overflow-x: auto; }
@@ -1146,13 +1191,18 @@ footer {
       <div class="logo-text">FRENCH <span>SOLAR INDUSTRY</span></div>
     </div>
 
-    <ul class="nav-links">
-      <li><a onclick="switchPage('home'); toggleCalcModal(false);">Beranda</a></li>
-      <li><a onclick="switchPage('about')">Tentang Kami</a></li>
-      <li><a onclick="switchPage('home'); document.getElementById('projects').scrollIntoView();">Portofolio</a></li>
-      <li><a onclick="switchPage('home'); document.getElementById('services').scrollIntoView();">Produk & Layanan</a></li>
-      <li><a onclick="switchPage('home'); document.getElementById('process').scrollIntoView();">Alur Kerja</a></li>
-      <li><a onclick="switchPage('home'); document.getElementById('contact').scrollIntoView();">Hubungi Kami</a></li>
+    <!-- Tombol Hamburger untuk Tampilan HP -->
+    <div class="hamburger-toggle" onclick="toggleMobileMenu()">
+      <i class="fa-solid fa-bars"></i>
+    </div>
+
+    <ul class="nav-links" id="navLinksMenu">
+      <li><a onclick="switchPage('home'); toggleCalcModal(false); closeMobileMenu();">Beranda</a></li>
+      <li><a onclick="switchPage('about'); closeMobileMenu();">Tentang Kami</a></li>
+      <li><a onclick="switchPage('home'); document.getElementById('projects').scrollIntoView(); closeMobileMenu();">Portofolio</a></li>
+      <li><a onclick="switchPage('home'); document.getElementById('services').scrollIntoView(); closeMobileMenu();">Produk & Layanan</a></li>
+      <li><a onclick="switchPage('home'); document.getElementById('process').scrollIntoView(); closeMobileMenu();">Alur Kerja</a></li>
+      <li><a onclick="switchPage('home'); document.getElementById('contact').scrollIntoView(); closeMobileMenu();">Hubungi Kami</a></li>
     </ul>
   </div>
 </header>
@@ -1613,6 +1663,18 @@ function switchPage(pageName) {
   setTimeout(() => {
     AOS.refresh();
   }, 200);
+}
+
+// Fungsi untuk membuka/menutup menu mobile (Hamburger)
+function toggleMobileMenu() {
+  const menu = document.getElementById('navLinksMenu');
+  menu.classList.toggle('mobile-active');
+}
+
+// Fungsi untuk menutup menu otomatis setelah salah satu menu diklik
+function closeMobileMenu() {
+  const menu = document.getElementById('navLinksMenu');
+  menu.classList.remove('mobile-active');
 }
 
 function formatRupiahInput(input) {
