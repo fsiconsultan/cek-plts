@@ -577,10 +577,10 @@ header {
   opacity: 0 !important;
 }
 
-/* Styling Galeri Foto di Dalam Modal Produk */
+/* Styling Galeri Foto di Dalam Modal Produk (Rasio 16:9 untuk foto utama, 4:3 / 1:1 untuk thumbnail) */
 .main-image-container {
   width: 100%;
-  height: 280px;
+  aspect-ratio: 16 / 9;
   border-radius: 12px;
   overflow: hidden;
   margin-bottom: 14px;
@@ -608,7 +608,7 @@ header {
 
 .thumb-card {
   position: relative;
-  height: 110px;
+  aspect-ratio: 4 / 3;
   border-radius: 8px;
   overflow: hidden;
   border: 1px solid var(--border);
@@ -970,12 +970,12 @@ footer {
       <span class="section-tag" id="modalTag">Kategori Produk</span>
       <h2 style="font-size:26px; margin-bottom:16px;" id="modalTitle">Judul Produk</h2>
       
-      <!-- FOTO UTAMA BESAR -->
+      <!-- FOTO UTAMA BESAR (Rasio 16:9) -->
       <div class="main-image-container">
         <img id="modalMainImage" src="" alt="Foto Utama Produk">
       </div>
 
-      <!-- 2 FOTO PENDUKUNG DI BAWAH (UKURAN SEDANG) -->
+      <!-- 2 FOTO PENDUKUNG DI BAWAH (Rasio 4:3) -->
       <div class="thumbnail-grid">
         <div class="thumb-card" onclick="switchMainImage(0)">
           <img id="thumbImg0" src="" alt="Thumbnail 1">
@@ -1311,7 +1311,7 @@ footer {
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
 <script>
-// INISIALISASI AOS ANIMASI SCROLL
+// INISIALISASI AOS ANIMASI SCROLL (DIPERBARUI AGAR BERANIMASI KEMBALI SAAT SCROLL KE ATAS/BAWAH)
 AOS.init({
   duration: 1000,
   once: false,
@@ -1320,7 +1320,7 @@ AOS.init({
 
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxZ4LiMNUGBfHXG8A4uxPr3bdfAeWI4LgjoBuznBP8AsHHHh9xUajtel--pPm3wPd8IKw/exec";
 
-// DATABASE PRODUK DENGAN 3 FOTO MASING-MASING (SESUAI NAMA FILE UPLOAD TERBARU)
+// DATABASE PRODUK DENGAN 3 FOTO MASING-MASING
 const productData = {
   carport: {
     tag: "Solusi Arsitektural",
