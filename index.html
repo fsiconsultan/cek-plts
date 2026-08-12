@@ -9,6 +9,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 
+<!-- AOS (Animate On Scroll) Library CSS -->
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
 <style>
 :root {
   --bg-dark: #0a0d12;
@@ -71,7 +74,6 @@ a { text-decoration: none; color: inherit; }
   box-shadow: 0 6px 20px rgba(255, 255, 255, 0.25);
 }
 
-/* TOMBOL BERANDA KONTRAS TINGGI (BACKGROUND PUTIH, TEKS HITAM) */
 .btn-beranda-white {
   background: #ffffff !important;
   color: #0a0d12 !important;
@@ -882,7 +884,7 @@ footer {
   <div class="hero-overlay"></div>
 
   <div class="container">
-    <div class="hero-content">
+    <div class="hero-content" data-aos="fade-right" data-aos-duration="1200">
       <span class="section-tag">French Solar Industry — Standar Eropa di Indonesia</span>
       <h1 class="hero-title">Energi Surya Cerdas. <span>Hemat Sekarang, Siap untuk Masa Depan.</span></h1>
       <p class="hero-desc">Hemat biaya listrik hingga 90%–100% dengan solusi PLTS On-Grid, Hybrid, dan Off-Grid yang efisien, modern, dan dirancang sesuai kebutuhan Anda.</p>
@@ -895,7 +897,7 @@ footer {
     </div>
 
     <!-- STATS BAR -->
-    <div class="stats-bar">
+    <div class="stats-bar" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
       <div class="stat-item">
         <i class="fa-solid fa-award stat-icon"></i>
         <div>
@@ -931,7 +933,7 @@ footer {
 <!-- FEATURED PROJECTS SECTION -->
 <section class="projects-section" id="projects">
   <div class="container">
-    <div class="section-header-flex">
+    <div class="section-header-flex" data-aos="fade-down" data-aos-duration="1000">
       <div>
         <span class="section-tag" style="color:#b89018;">Portofolio Unggulan</span>
         <h2 class="section-title">Instalasi PLTS Modern & Presisi</h2>
@@ -941,7 +943,7 @@ footer {
       </a>
     </div>
 
-    <div class="carousel-wrapper" id="projectsCarousel">
+    <div class="carousel-wrapper" id="projectsCarousel" data-aos="zoom-in-up" data-aos-duration="1200">
       <button class="carousel-btn prev" onclick="moveSlide('projectsCarousel', -1)"><i class="fa-solid fa-chevron-left"></i></button>
       <button class="carousel-btn next" onclick="moveSlide('projectsCarousel', 1)"><i class="fa-solid fa-chevron-right"></i></button>
 
@@ -988,12 +990,12 @@ footer {
   <div class="services-overlay"></div>
 
   <div class="container">
-    <div style="text-align:center; margin-bottom:40px;">
+    <div style="text-align:center; margin-bottom:40px;" data-aos="fade-up" data-aos-duration="1000">
       <span class="section-tag">Produk & Solusi</span>
       <h2 class="section-title" style="font-size:32px; color:#fff;">Komponen & Solusi PLTS Standar Eropa</h2>
     </div>
 
-    <div class="carousel-wrapper" id="servicesCarousel">
+    <div class="carousel-wrapper" id="servicesCarousel" data-aos="zoom-in" data-aos-duration="1200">
       <button class="carousel-btn prev" onclick="moveSlide('servicesCarousel', -1)"><i class="fa-solid fa-chevron-left"></i></button>
       <button class="carousel-btn next" onclick="moveSlide('servicesCarousel', 1)"><i class="fa-solid fa-chevron-right"></i></button>
 
@@ -1053,7 +1055,7 @@ footer {
 <!-- PROCESS WORKFLOW SECTION -->
 <section class="process-section" id="process">
   <div class="container">
-    <div class="section-header-flex">
+    <div class="section-header-flex" data-aos="fade-down" data-aos-duration="1000">
       <div>
         <span class="section-tag" style="color:#b89018;">Alur Kerja</span>
         <h2 class="section-title">Tahapan Pemasangan PLTS Anda</h2>
@@ -1064,27 +1066,27 @@ footer {
     </div>
 
     <div class="process-steps">
-      <div class="step-card">
+      <div class="step-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
         <div class="step-num">01</div>
         <div class="step-title">Konsultasi</div>
         <div class="step-desc">Analisis tagihan listrik dan kebutuhan energi tempat Anda.</div>
       </div>
-      <div class="step-card">
+      <div class="step-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
         <div class="step-num">02</div>
         <div class="step-title">Survey Lokasi</div>
         <div class="step-desc">Pemetaan atap, sudut sinar matahari, dan kesiapan struktur.</div>
       </div>
-      <div class="step-card">
+      <div class="step-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
         <div class="step-num">03</div>
         <div class="step-title">Desain Teknik</div>
         <div class="step-desc">Perancangan sistem teknis dan visualisasi 3D secara detail.</div>
       </div>
-      <div class="step-card">
+      <div class="step-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="400">
         <div class="step-num">04</div>
         <div class="step-title">Instalasi</div>
         <div class="step-desc">Pemasangan oleh tim teknisi berpengalaman standar Eropa.</div>
       </div>
-      <div class="step-card">
+      <div class="step-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="500">
         <div class="step-num">05</div>
         <div class="step-title">Monitoring</div>
         <div class="step-desc">Pengujian sistem, aktivasi aplikasi monitoring, & garansi.</div>
@@ -1096,7 +1098,7 @@ footer {
 <!-- FOOTER -->
 <footer id="contact">
   <div class="container">
-    <div class="footer-top">
+    <div class="footer-top" data-aos="fade-up" data-aos-duration="1000">
       <div>
         <h2 class="footer-title serif">Mulai Beralih ke Energi Bersih Hari Ini.</h2>
         <a href="https://wa.me/6281139410041" target="_blank" class="btn-gold">
@@ -1117,7 +1119,7 @@ footer {
       </div>
     </div>
 
-    <div class="footer-bottom">
+    <div class="footer-bottom" data-aos="fade-in" data-aos-duration="1000">
       <div>© 2026 French Solar Industry. Hak Cipta Dilindungi.</div>
       <div style="display:flex; gap:20px;">
         <a href="#">Kebijakan Privasi</a>
@@ -1127,7 +1129,17 @@ footer {
   </div>
 </footer>
 
+<!-- AOS (Animate On Scroll) Library JS -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
 <script>
+// INISIALISASI AOS ANIMASI SCROLL
+AOS.init({
+  duration: 1000, // Kecepatan animasi slow-motion (1 detik)
+  once: false,    // Animasi tetap berjalan berulang kali saat di-scroll ke atas maupun ke bawah
+  mirror: true    // Efek terpicu saat melakukan scroll ke atas
+});
+
 // LINK GOOGLE APPS SCRIPT ANDA
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxZ4LiMNUGBfHXG8A4uxPr3bdfAeWI4LgjoBuznBP8AsHHHh9xUajtel--pPm3wPd8IKw/exec";
 
