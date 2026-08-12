@@ -170,6 +170,7 @@ header {
   display: flex;
   align-items: center;
   gap: 12px;
+  cursor: pointer;
 }
 
 .logo img {
@@ -205,9 +206,128 @@ header {
   text-transform: uppercase;
   color: #c3c9d2;
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .nav-links a:hover { color: var(--gold); }
+
+/* HALAMAN UTAMA (HOME) */
+#mainHomeView {
+  display: block;
+}
+
+#mainHomeView.hidden-view {
+  display: none;
+}
+
+/* HALAMAN ABOUT US (PAGE BARU) */
+#aboutUsPage {
+  display: none;
+  min-height: 100vh;
+  padding-top: 140px;
+  padding-bottom: 100px;
+  background-color: var(--bg-dark);
+}
+
+#aboutUsPage.active-view {
+  display: block;
+}
+
+.about-hero {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 60px auto;
+}
+
+.about-hero h1 {
+  font-size: clamp(2.5rem, 4vw, 3.8rem);
+  margin-bottom: 20px;
+}
+
+.about-hero h1 span {
+  color: var(--gold);
+}
+
+.about-hero p {
+  color: var(--text-muted);
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
+  align-items: center;
+  margin-bottom: 80px;
+}
+
+.about-img-box {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border-gold);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+
+.about-img-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.about-text-content h3 {
+  font-size: 28px;
+  margin-bottom: 16px;
+  color: #fff;
+}
+
+.about-text-content p {
+  color: var(--text-muted);
+  font-size: 15px;
+  margin-bottom: 16px;
+  line-height: 1.7;
+}
+
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 60px;
+}
+
+.value-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 32px;
+  border-radius: var(--radius);
+  backdrop-filter: blur(12px);
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.value-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--gold);
+}
+
+.value-card i {
+  font-size: 32px;
+  color: var(--gold);
+  margin-bottom: 20px;
+}
+
+.value-card h4 {
+  font-size: 18px;
+  margin-bottom: 12px;
+  color: #fff;
+}
+
+.value-card p {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
 
 /* HERO SECTION */
 .hero {
@@ -820,7 +940,7 @@ footer {
 }
 
 @media (max-width: 992px) {
-  .stats-bar, .process-steps, .footer-top { grid-template-columns: 1fr; }
+  .stats-bar, .process-steps, .footer-top, .about-grid, .values-grid { grid-template-columns: 1fr; }
   .nav-links { display: none; }
   .form-grid { grid-template-columns: 1fr; }
   .summary-info-box ul { grid-template-columns: 1fr; }
@@ -1021,257 +1141,319 @@ footer {
 <!-- HEADER NAVBAR -->
 <header>
   <div class="container nav-container">
-    <div class="logo">
+    <div class="logo" onclick="switchPage('home')">
       <img src="logo.jpg" alt="French Solar Industry Logo">
       <div class="logo-text">FRENCH <span>SOLAR INDUSTRY</span></div>
     </div>
 
     <ul class="nav-links">
-      <li><a href="#home" onclick="toggleCalcModal(false)">Beranda</a></li>
-      <li><a href="#projects" onclick="toggleCalcModal(false)">Portofolio</a></li>
-      <li><a href="#services" onclick="toggleCalcModal(false)">Produk & Layanan</a></li>
-      <li><a href="#process" onclick="toggleCalcModal(false)">Alur Kerja</a></li>
-      <li><a href="#contact" onclick="toggleCalcModal(false)">Hubungi Kami</a></li>
+      <li><a onclick="switchPage('home'); toggleCalcModal(false);">Beranda</a></li>
+      <li><a onclick="switchPage('about')">Tentang Kami</a></li>
+      <li><a onclick="switchPage('home'); document.getElementById('projects').scrollIntoView();">Portofolio</a></li>
+      <li><a onclick="switchPage('home'); document.getElementById('services').scrollIntoView();">Produk & Layanan</a></li>
+      <li><a onclick="switchPage('home'); document.getElementById('process').scrollIntoView();">Alur Kerja</a></li>
+      <li><a onclick="switchPage('home'); document.getElementById('contact').scrollIntoView();">Hubungi Kami</a></li>
     </ul>
   </div>
 </header>
 
-<!-- HERO SECTION -->
-<section class="hero" id="home">
-  <video class="hero-video-bg" autoplay muted loop playsinline poster="proyek-hotel.jpg">
-    <source src="hero-villa.mp4" type="video/mp4">
-  </video>
-  <div class="hero-overlay"></div>
+<!-- ================= MAIN HOME VIEW ================= -->
+<div id="mainHomeView">
+  <!-- HERO SECTION -->
+  <section class="hero" id="home">
+    <video class="hero-video-bg" autoplay muted loop playsinline poster="proyek-hotel.jpg">
+      <source src="hero-villa.mp4" type="video/mp4">
+    </video>
+    <div class="hero-overlay"></div>
 
-  <div class="container">
-    <div class="hero-content" data-aos="fade-right" data-aos-duration="1200">
-      <span class="section-tag">French Solar Industry — Standar Eropa di Indonesia</span>
-      <h1 class="hero-title">Energi Surya Cerdas. <span>Hemat Sekarang, Siap untuk Masa Depan.</span></h1>
-      <p class="hero-desc">Hemat biaya listrik hingga 90%–100% dengan solusi PLTS On-Grid, Hybrid, dan Off-Grid yang efisien, modern, dan dirancang sesuai kebutuhan Anda.</p>
-      
-      <div class="hero-btn-group">
+    <div class="container">
+      <div class="hero-content" data-aos="fade-right" data-aos-duration="1200">
+        <span class="section-tag">French Solar Industry — Standar Eropa di Indonesia</span>
+        <h1 class="hero-title">Energi Surya Cerdas. <span>Hemat Sekarang, Siap untuk Masa Depan.</span></h1>
+        <p class="hero-desc">Hemat biaya listrik hingga 90%–100% dengan solusi PLTS On-Grid, Hybrid, dan Off-Grid yang efisien, modern, dan dirancang sesuai kebutuhan Anda.</p>
+        
+        <div class="hero-btn-group">
+          <a href="https://wa.me/6281139410041" target="_blank" class="btn-gold">
+            Hubungi Kami <i class="fa-solid fa-paper-plane"></i>
+          </a>
+          <button onclick="toggleCalcModal(true)" class="btn-calc-white">
+            <i class="fa-solid fa-calculator"></i> Buka Kalkulator PLTS
+          </button>
+        </div>
+      </div>
+
+      <!-- STATS BAR -->
+      <div class="stats-bar" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+        <div class="stat-item">
+          <i class="fa-solid fa-award stat-icon"></i>
+          <div>
+            <div class="stat-number">15+</div>
+            <div class="stat-label">Tahun Pengalaman Eropa</div>
+          </div>
+        </div>
+        <div class="stat-item">
+          <i class="fa-solid fa-solar-panel stat-icon"></i>
+          <div>
+            <div class="stat-number">320+</div>
+            <div class="stat-label">Proyek Terpasang</div>
+          </div>
+        </div>
+        <div class="stat-item">
+          <i class="fa-solid fa-bolt stat-icon"></i>
+          <div>
+            <div class="stat-number">98%</div>
+            <div class="stat-label">Kepuasan Efisiensi Klien</div>
+          </div>
+        </div>
+        <div class="stat-item">
+          <i class="fa-solid fa-shield-halved stat-icon"></i>
+          <div>
+            <div class="stat-number">30 Thn</div>
+            <div class="stat-label">Garansi Performa Panel</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED PROJECTS SECTION -->
+  <section class="projects-section" id="projects">
+    <div class="container">
+      <div class="section-header-flex" data-aos="fade-down" data-aos-duration="1000">
+        <div>
+          <span class="section-tag" style="color:#b89018;">Portofolio Unggulan</span>
+          <h2 class="section-title">Instalasi PLTS Modern & Presisi</h2>
+        </div>
         <a href="https://wa.me/6281139410041" target="_blank" class="btn-gold">
-          Hubungi Kami <i class="fa-solid fa-paper-plane"></i>
+          Hubungi Kami <i class="fa-brands fa-whatsapp"></i>
         </a>
-        <button onclick="toggleCalcModal(true)" class="btn-calc-white">
-          <i class="fa-solid fa-calculator"></i> Buka Kalkulator PLTS
+      </div>
+
+      <div class="carousel-wrapper" id="projectsCarousel" data-aos="zoom-in-up" data-aos-duration="1200">
+        <button class="carousel-btn prev" onclick="moveSlide('projectsCarousel', -1)"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="carousel-btn next" onclick="moveSlide('projectsCarousel', 1)"><i class="fa-solid fa-chevron-right"></i></button>
+
+        <div class="carousel-track">
+          <div class="carousel-slide">
+            <img src="proyek-hotel.jpg" alt="Resort & Hotel Proyek">
+            <div class="slide-overlay"></div>
+            <div class="carousel-caption">
+              <span class="carousel-badge">Resort & Hotel</span>
+              <div class="carousel-title">Resort & Hotel Luxury</div>
+              <div class="carousel-desc">Bali — 30 kWp Hybrid System terintegrasi suplai energi tanpa jeda.</div>
+            </div>
+          </div>
+          <div class="carousel-slide">
+            <img src="proyek-office.jpg" alt="Commercial HQ Proyek">
+            <div class="slide-overlay"></div>
+            <div class="carousel-caption">
+              <span class="carousel-badge">Commercial</span>
+              <div class="carousel-title">Commercial HQ Headquarters</div>
+              <div class="carousel-desc">Denpasar — 45 kWp On-Grid System efisiensi tinggi hemat operasional kantor.</div>
+            </div>
+          </div>
+          <div class="carousel-slide">
+            <img src="proyek-pabrik.jpg" alt="Pabrik Proyek">
+            <div class="slide-overlay"></div>
+            <div class="carousel-caption">
+              <span class="carousel-badge">Kawasan Industri</span>
+              <div class="carousel-title">Manufaktur & Gudang Industri</div>
+              <div class="carousel-desc">Cikarang — 120 kWp Rooftop System efisiensi tinggi daya besar.</div>
+            </div>
+          </div>
+          <div class="carousel-slide">
+            <img src="proyek-villa.jpg" alt="Villa Proyek">
+            <div class="slide-overlay"></div>
+            <div class="carousel-caption">
+              <span class="carousel-badge">Residential Luxury</span>
+              <div class="carousel-title">Private Luxury Villa</div>
+              <div class="carousel-desc">Ubud — 15 kWp Standar Eropa ramah lingkungan dan estetik.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-dots"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES & PRODUCTS SECTION -->
+  <section class="services-section" id="services">
+    <video class="services-video-bg" autoplay muted loop playsinline poster="proyek-office.jpg">
+      <source src="hero-carport.mp4" type="video/mp4">
+    </video>
+    <div class="services-overlay"></div>
+
+    <div class="container">
+      <div style="text-align:center; margin-bottom:40px;" data-aos="fade-up" data-aos-duration="1000">
+        <span class="section-tag">Produk & Solusi</span>
+        <h2 class="section-title" style="font-size:32px; color:#fff;">Komponen & Solusi PLTS Standar Eropa</h2>
+        <p style="color:var(--text-muted); font-size:14px; margin-top:8px;">Klik tombol di setiap produk untuk melihat detail spesifikasi lengkap.</p>
+      </div>
+
+      <div class="carousel-wrapper" id="servicesCarousel" data-aos="zoom-in" data-aos-duration="1200">
+        <button class="carousel-btn prev" onclick="moveSlide('servicesCarousel', -1)"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="carousel-btn next" onclick="moveSlide('servicesCarousel', 1)"><i class="fa-solid fa-chevron-right"></i></button>
+
+        <div class="carousel-track">
+          <div class="carousel-slide">
+            <img src="solar-carport.jpg" alt="Solar Carport Canopy">
+            <div class="slide-overlay"></div>
+            <div class="carousel-caption">
+              <span class="carousel-badge">Solusi Arsitektural</span>
+              <div class="carousel-title">Solar Carport Canopy</div>
+              <div class="carousel-desc">Kanopi tempat parkir modern terintegrasi panel surya berkapasitas tinggi.</div>
+              <button onclick="openProductModal('carport')" class="btn-gold" style="margin-top:14px; width:fit-content;">Lihat Detail Carport</button>
+            </div>
+          </div>
+          <div class="carousel-slide">
+            <img src="panel-surya-1.jpg" alt="Panel Surya 550Wp">
+            <div class="slide-overlay"></div>
+            <div class="carousel-caption">
+              <span class="carousel-badge">Komponen Utama</span>
+              <div class="carousel-title">Panel Surya 550Wp Monocrystalline</div>
+              <div class="carousel-desc">Panel surya berefisiensi tinggi bergaransi performa resmi 30 tahun.</div>
+              <button onclick="openProductModal('panel')" class="btn-gold" style="margin-top:14px; width:fit-content;">Lihat Detail Panel</button>
+            </div>
+          </div>
+          <div class="carousel-slide">
+            <img src="inverter-1.jpg" alt="Inverter Hybrid">
+            <div class="slide-overlay"></div>
+            <div class="carousel-caption">
+              <span class="carousel-badge">Inverter Cerdas</span>
+              <div class="carousel-title">Inverter Hybrid Intelligent</div>
+              <div class="carousel-desc">Pengelola arus pintar otomatis membagi daya dari PLN, panel surya, dan baterai.</div>
+              <button onclick="openProductModal('inverter')" class="btn-gold" style="margin-top:14px; width:fit-content;">Lihat Detail Inverter</button>
+            </div>
+          </div>
+          <div class="carousel-slide">
+            <img src="baterai-1.jpg" alt="Baterai Lithium">
+            <div class="slide-overlay"></div>
+            <div class="carousel-caption">
+              <span class="carousel-badge">Penyimpanan Daya</span>
+              <div class="carousel-title">Baterai Lithium Premium</div>
+              <div class="carousel-desc">Penyimpanan daya cadangan berkapasitas tinggi agar rumah/bisnis tetap menyala.</div>
+              <button onclick="openProductModal('battery')" class="btn-gold" style="margin-top:14px; width:fit-content;">Lihat Detail Baterai</button>
+            </div>
+          </div>
+          <div class="carousel-slide">
+            <img src="wall-charger-1.jpg" alt="EV Charger Station">
+            <div class="slide-overlay"></div>
+            <div class="carousel-caption">
+              <span class="carousel-badge">EV Ecosystem</span>
+              <div class="carousel-title">EV Wall Charger Cepat</div>
+              <div class="carousel-desc">Pengisi daya kendaraan listrik dinding rumahan/komersial yang cepat & aman.</div>
+              <button onclick="openProductModal('wallcharger')" class="btn-gold" style="margin-top:14px; width:fit-content;">Lihat Detail Charger</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-dots"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS WORKFLOW SECTION -->
+  <section class="process-section" id="process">
+    <div class="container">
+      <div class="section-header-flex" data-aos="fade-down" data-aos-duration="1000">
+        <div>
+          <span class="section-tag" style="color:#b89018;">Alur Kerja</span>
+          <h2 class="section-title">Tahapan Pemasangan PLTS Anda</h2>
+        </div>
+        <a href="https://wa.me/6281139410041" target="_blank" class="btn-gold">
+          Hubungi Kami <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+
+      <div class="process-steps">
+        <div class="step-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
+          <div class="step-num">01</div>
+          <div class="step-title">Konsultasi</div>
+          <div class="step-desc">Analisis tagihan listrik dan kebutuhan energi tempat Anda.</div>
+        </div>
+        <div class="step-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+          <div class="step-num">02</div>
+          <div class="step-title">Survey Lokasi</div>
+          <div class="step-desc">Pemetaan atap, sudut sinar matahari, dan kesiapan struktur.</div>
+        </div>
+        <div class="step-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
+          <div class="step-num">03</div>
+          <div class="step-title">Desain Teknik</div>
+          <div class="step-desc">Perancangan sistem teknis dan visualisasi 3D secara detail.</div>
+        </div>
+        <div class="step-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="400">
+          <div class="step-num">04</div>
+          <div class="step-title">Instalasi</div>
+          <div class="step-desc">Pemasangan oleh tim teknisi berpengalaman standar Eropa.</div>
+        </div>
+        <div class="step-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="500">
+          <div class="step-num">05</div>
+          <div class="step-title">Monitoring</div>
+          <div class="step-desc">Pengujian sistem, aktivasi aplikasi monitoring, & garansi.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= PAGE BARU: ABOUT US / TENTANG KAMI ================= -->
+<div id="aboutUsPage">
+  <div class="container">
+    <div class="about-hero" data-aos="fade-down" data-aos-duration="1000">
+      <span class="section-tag">Tentang Perusahaan</span>
+      <h1>Mengenal Lebih Dekat <span>French Solar Industry</span></h1>
+      <p>Penyedia solusi energi surya terkemuka berstandar Eropa yang menghadirkan inovasi, keandalan, dan efisiensi tinggi untuk masa depan Indonesia yang berkelanjutan.</p>
+    </div>
+
+    <!-- Section Visi Misi / Perjalanan -->
+    <div class="about-grid">
+      <div class="about-text-content" data-aos="fade-right" data-aos-duration="1000">
+        <span class="section-tag">Komitmen & Standar Eropa</span>
+        <h3>Standar Kualitas Tertinggi untuk Kemandirian Energi</h3>
+        <p>French Solar Industry hadir dengan pengalaman lebih dari 15 tahun di sektor energi terbarukan. Kami percaya bahwa transisi menuju energi bersih bukan sekadar tren, melainkan investasi jangka panjang yang krusial bagi efisiensi bisnis dan kelestarian lingkungan.</p>
+        <p>Setiap proyek yang kami kerjakan dirancang dengan presisi teknik tingkat tinggi, mulai dari pemilihan modul panel surya kelas dunia, inverter cerdas, hingga instalasi struktur tahan angin yang aman dan estetis.</p>
+        <button onclick="switchPage('home'); document.getElementById('contact').scrollIntoView();" class="btn-gold" style="margin-top: 10px;">
+          Konsultasi Proyek Anda <i class="fa-solid fa-arrow-right"></i>
         </button>
       </div>
-    </div>
-
-    <!-- STATS BAR -->
-    <div class="stats-bar" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
-      <div class="stat-item">
-        <i class="fa-solid fa-award stat-icon"></i>
-        <div>
-          <div class="stat-number">15+</div>
-          <div class="stat-label">Tahun Pengalaman Eropa</div>
-        </div>
-      </div>
-      <div class="stat-item">
-        <i class="fa-solid fa-solar-panel stat-icon"></i>
-        <div>
-          <div class="stat-number">320+</div>
-          <div class="stat-label">Proyek Terpasang</div>
-        </div>
-      </div>
-      <div class="stat-item">
-        <i class="fa-solid fa-bolt stat-icon"></i>
-        <div>
-          <div class="stat-number">98%</div>
-          <div class="stat-label">Kepuasan Efisiensi Klien</div>
-        </div>
-      </div>
-      <div class="stat-item">
-        <i class="fa-solid fa-shield-halved stat-icon"></i>
-        <div>
-          <div class="stat-number">30 Thn</div>
-          <div class="stat-label">Garansi Performa Panel</div>
-        </div>
+      <div class="about-img-box" data-aos="fade-left" data-aos-duration="1000">
+        <img src="proyek-hotel.jpg" alt="Tentang French Solar Industry">
       </div>
     </div>
-  </div>
-</section>
 
-<!-- FEATURED PROJECTS SECTION -->
-<section class="projects-section" id="projects">
-  <div class="container">
-    <div class="section-header-flex" data-aos="fade-down" data-aos-duration="1000">
-      <div>
-        <span class="section-tag" style="color:#b89018;">Portofolio Unggulan</span>
-        <h2 class="section-title">Instalasi PLTS Modern & Presisi</h2>
-      </div>
-      <a href="https://wa.me/6281139410041" target="_blank" class="btn-gold">
-        Hubungi Kami <i class="fa-brands fa-whatsapp"></i>
-      </a>
+    <!-- 3 Core Values Cards -->
+    <div style="text-align:center; margin-bottom:20px; margin-top:80px;" data-aos="fade-up" data-aos-duration="800">
+      <span class="section-tag">Nilai Utama Kami</span>
+      <h3 style="font-size:32px;" class="serif">Mengapa Memilih Kami?</h3>
     </div>
 
-    <div class="carousel-wrapper" id="projectsCarousel" data-aos="zoom-in-up" data-aos-duration="1200">
-      <button class="carousel-btn prev" onclick="moveSlide('projectsCarousel', -1)"><i class="fa-solid fa-chevron-left"></i></button>
-      <button class="carousel-btn next" onclick="moveSlide('projectsCarousel', 1)"><i class="fa-solid fa-chevron-right"></i></button>
-
-      <div class="carousel-track">
-        <div class="carousel-slide">
-          <img src="proyek-hotel.jpg" alt="Resort & Hotel Proyek">
-          <div class="slide-overlay"></div>
-          <div class="carousel-caption">
-            <span class="carousel-badge">Resort & Hotel</span>
-            <div class="carousel-title">Resort & Hotel Luxury</div>
-            <div class="carousel-desc">Bali — 30 kWp Hybrid System terintegrasi suplai energi tanpa jeda.</div>
-          </div>
-        </div>
-        <div class="carousel-slide">
-          <img src="proyek-office.jpg" alt="Commercial HQ Proyek">
-          <div class="slide-overlay"></div>
-          <div class="carousel-caption">
-            <span class="carousel-badge">Commercial</span>
-            <div class="carousel-title">Commercial HQ Headquarters</div>
-            <div class="carousel-desc">Denpasar — 45 kWp On-Grid System efisiensi tinggi hemat operasional kantor.</div>
-          </div>
-        </div>
-        <div class="carousel-slide">
-          <img src="proyek-pabrik.jpg" alt="Pabrik Proyek">
-          <div class="slide-overlay"></div>
-          <div class="carousel-caption">
-            <span class="carousel-badge">Kawasan Industri</span>
-            <div class="carousel-title">Manufaktur & Gudang Industri</div>
-            <div class="carousel-desc">Cikarang — 120 kWp Rooftop System efisiensi tinggi daya besar.</div>
-          </div>
-        </div>
-        <div class="carousel-slide">
-          <img src="proyek-villa.jpg" alt="Villa Proyek">
-          <div class="slide-overlay"></div>
-          <div class="carousel-caption">
-            <span class="carousel-badge">Residential Luxury</span>
-            <div class="carousel-title">Private Luxury Villa</div>
-            <div class="carousel-desc">Ubud — 15 kWp Standar Eropa ramah lingkungan dan estetik.</div>
-          </div>
-        </div>
+    <div class="values-grid">
+      <div class="value-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
+        <i class="fa-solid fa-award"></i>
+        <h4>Standar Eropa</h4>
+        <p>Mengadopsi teknologi dan standar rekayasa teknik dari Eropa yang telah teruji efisiensi dan durabilitasnya di berbagai iklim ekstrem.</p>
       </div>
+      <div class="value-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+        <i class="fa-solid fa-shield-halved"></i>
+        <h4>Garansi Panjang</h4>
+        <p>Kepastian investasi Anda dilindungi dengan garansi performa panel surya resmi hingga 30 tahun serta layanan purnajual terpercaya.</p>
+      </div>
+      <div class="value-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
+        <i class="fa-solid fa-headset"></i>
+        <h4>Dukungan Total</h4>
+        <p>Tim ahli kami mendampingi Anda secara menyeluruh mulai dari konsultasi awal, survey lokasi, simulasi, instalasi, hingga monitoring aplikasi.</p>
+      </div>
+    </div>
 
-      <div class="carousel-dots"></div>
+    <!-- Tombol Kembali ke Beranda -->
+    <div style="text-align:center; margin-top:60px;" data-aos="fade-up" data-aos-duration="800">
+      <button onclick="switchPage('home')" class="btn-beranda-white" style="padding: 14px 32px; font-size:14px;">
+        <i class="fa-solid fa-arrow-left"></i> Kembali ke Beranda Utama
+      </button>
     </div>
   </div>
-</section>
-
-<!-- SERVICES & PRODUCTS SECTION -->
-<section class="services-section" id="services">
-  <video class="services-video-bg" autoplay muted loop playsinline poster="proyek-office.jpg">
-    <source src="hero-carport.mp4" type="video/mp4">
-  </video>
-  <div class="services-overlay"></div>
-
-  <div class="container">
-    <div style="text-align:center; margin-bottom:40px;" data-aos="fade-up" data-aos-duration="1000">
-      <span class="section-tag">Produk & Solusi</span>
-      <h2 class="section-title" style="font-size:32px; color:#fff;">Komponen & Solusi PLTS Standar Eropa</h2>
-      <p style="color:var(--text-muted); font-size:14px; margin-top:8px;">Klik tombol di setiap produk untuk melihat detail spesifikasi lengkap.</p>
-    </div>
-
-    <div class="carousel-wrapper" id="servicesCarousel" data-aos="zoom-in" data-aos-duration="1200">
-      <button class="carousel-btn prev" onclick="moveSlide('servicesCarousel', -1)"><i class="fa-solid fa-chevron-left"></i></button>
-      <button class="carousel-btn next" onclick="moveSlide('servicesCarousel', 1)"><i class="fa-solid fa-chevron-right"></i></button>
-
-      <div class="carousel-track">
-        <div class="carousel-slide">
-          <img src="solar-carport.jpg" alt="Solar Carport Canopy">
-          <div class="slide-overlay"></div>
-          <div class="carousel-caption">
-            <span class="carousel-badge">Solusi Arsitektural</span>
-            <div class="carousel-title">Solar Carport Canopy</div>
-            <div class="carousel-desc">Kanopi tempat parkir modern terintegrasi panel surya berkapasitas tinggi.</div>
-            <button onclick="openProductModal('carport')" class="btn-gold" style="margin-top:14px; width:fit-content;">Lihat Detail Carport</button>
-          </div>
-        </div>
-        <div class="carousel-slide">
-          <img src="panel-surya-1.jpg" alt="Panel Surya 550Wp">
-          <div class="slide-overlay"></div>
-          <div class="carousel-caption">
-            <span class="carousel-badge">Komponen Utama</span>
-            <div class="carousel-title">Panel Surya 550Wp Monocrystalline</div>
-            <div class="carousel-desc">Panel surya berefisiensi tinggi bergaransi performa resmi 30 tahun.</div>
-            <button onclick="openProductModal('panel')" class="btn-gold" style="margin-top:14px; width:fit-content;">Lihat Detail Panel</button>
-          </div>
-        </div>
-        <div class="carousel-slide">
-          <img src="inverter-1.jpg" alt="Inverter Hybrid">
-          <div class="slide-overlay"></div>
-          <div class="carousel-caption">
-            <span class="carousel-badge">Inverter Cerdas</span>
-            <div class="carousel-title">Inverter Hybrid Intelligent</div>
-            <div class="carousel-desc">Pengelola arus pintar otomatis membagi daya dari PLN, panel surya, dan baterai.</div>
-            <button onclick="openProductModal('inverter')" class="btn-gold" style="margin-top:14px; width:fit-content;">Lihat Detail Inverter</button>
-          </div>
-        </div>
-        <div class="carousel-slide">
-          <img src="baterai-1.jpg" alt="Baterai Lithium">
-          <div class="slide-overlay"></div>
-          <div class="carousel-caption">
-            <span class="carousel-badge">Penyimpanan Daya</span>
-            <div class="carousel-title">Baterai Lithium Premium</div>
-            <div class="carousel-desc">Penyimpanan daya cadangan berkapasitas tinggi agar rumah/bisnis tetap menyala.</div>
-            <button onclick="openProductModal('battery')" class="btn-gold" style="margin-top:14px; width:fit-content;">Lihat Detail Baterai</button>
-          </div>
-        </div>
-        <div class="carousel-slide">
-          <img src="wall-charger-1.jpg" alt="EV Charger Station">
-          <div class="slide-overlay"></div>
-          <div class="carousel-caption">
-            <span class="carousel-badge">EV Ecosystem</span>
-            <div class="carousel-title">EV Wall Charger Cepat</div>
-            <div class="carousel-desc">Pengisi daya kendaraan listrik dinding rumahan/komersial yang cepat & aman.</div>
-            <button onclick="openProductModal('wallcharger')" class="btn-gold" style="margin-top:14px; width:fit-content;">Lihat Detail Charger</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="carousel-dots"></div>
-    </div>
-  </div>
-</section>
-
-<!-- PROCESS WORKFLOW SECTION -->
-<section class="process-section" id="process">
-  <div class="container">
-    <div class="section-header-flex" data-aos="fade-down" data-aos-duration="1000">
-      <div>
-        <span class="section-tag" style="color:#b89018;">Alur Kerja</span>
-        <h2 class="section-title">Tahapan Pemasangan PLTS Anda</h2>
-      </div>
-      <a href="https://wa.me/6281139410041" target="_blank" class="btn-gold">
-        Hubungi Kami <i class="fa-solid fa-arrow-right"></i>
-      </a>
-    </div>
-
-    <div class="process-steps">
-      <div class="step-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
-        <div class="step-num">01</div>
-        <div class="step-title">Konsultasi</div>
-        <div class="step-desc">Analisis tagihan listrik dan kebutuhan energi tempat Anda.</div>
-      </div>
-      <div class="step-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
-        <div class="step-num">02</div>
-        <div class="step-title">Survey Lokasi</div>
-        <div class="step-desc">Pemetaan atap, sudut sinar matahari, dan kesiapan struktur.</div>
-      </div>
-      <div class="step-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
-        <div class="step-num">03</div>
-        <div class="step-title">Desain Teknik</div>
-        <div class="step-desc">Perancangan sistem teknis dan visualisasi 3D secara detail.</div>
-      </div>
-      <div class="step-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="400">
-        <div class="step-num">04</div>
-        <div class="step-title">Instalasi</div>
-        <div class="step-desc">Pemasangan oleh tim teknisi berpengalaman standar Eropa.</div>
-      </div>
-      <div class="step-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="500">
-        <div class="step-num">05</div>
-        <div class="step-title">Monitoring</div>
-        <div class="step-desc">Pengujian sistem, aktivasi aplikasi monitoring, & garansi.</div>
-      </div>
-    </div>
-  </div>
-</section>
+</div>
 
 <!-- FOOTER -->
 <footer id="contact">
@@ -1311,7 +1493,7 @@ footer {
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
 <script>
-// INISIALISASI AOS ANIMASI SCROLL (DIPERBARUI AGAR BERANIMASI KEMBALI SAAT SCROLL KE ATAS/BAWAH)
+// INISIALISASI AOS ANIMASI SCROLL
 AOS.init({
   duration: 1000,
   once: false,
@@ -1360,7 +1542,6 @@ const productData = {
 };
 
 let currentActiveProduct = null;
-
 const carousels = {};
 
 function initCarousel(id) {
@@ -1411,6 +1592,27 @@ function goToSlide(id, index) {
   if (!c) return;
   c.currentIndex = index;
   updateCarouselUI(id);
+}
+
+// FUNGSI BERPINDAH HALAMAN (SINGLE PAGE APPLICATION VIEW SWITCHER)
+function switchPage(pageName) {
+  const homeView = document.getElementById('mainHomeView');
+  const aboutPage = document.getElementById('aboutUsPage');
+
+  if (pageName === 'about') {
+    homeView.classList.add('hidden-view');
+    aboutPage.classList.add('active-view');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } else {
+    aboutPage.classList.remove('active-view');
+    homeView.classList.remove('hidden-view');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  
+  // Refresh AOS agar animasi halaman baru berjalan sempurna
+  setTimeout(() => {
+    AOS.refresh();
+  }, 200);
 }
 
 function formatRupiahInput(input) {
