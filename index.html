@@ -61,6 +61,12 @@ h1:hover, h2:hover, h3:hover, h4:hover, .hero-title:hover, .carousel-title:hover
   z-index: 2;
 }
 
+.hidden {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
 /* BUTTONS */
 .btn-calc-white {
   background: #ffffff !important;
@@ -203,7 +209,7 @@ header {
 
 .nav-links a:hover { color: var(--gold); }
 
-/* HERO SECTION (Dibuat Lebih Terang) */
+/* HERO SECTION */
 .hero {
   position: relative;
   min-height: 100vh;
@@ -462,7 +468,7 @@ header {
   line-height: 1.2;
 }
 
-/* PRODUK & SOLUSI SECTION (Dibuat Lebih Terang) */
+/* PRODUK & SOLUSI SECTION */
 .services-section {
   position: relative;
   padding: 100px 0;
@@ -531,8 +537,9 @@ header {
   color: var(--text-muted-dark);
 }
 
-/* OVERLAY MODAL KALKULATOR */
-.calc-modal-overlay {
+/* OVERLAY MODAL KALKULATOR & PRODUK */
+.calc-modal-overlay,
+.product-modal-overlay {
   position: fixed;
   inset: 0;
   background: rgba(10, 13, 18, 0.88);
@@ -547,13 +554,8 @@ header {
   transition: all 0.4s ease;
 }
 
-.calc-modal-overlay.hidden {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-
-.calc-box-floating {
+.calc-box-floating,
+.product-box-floating {
   background: rgba(18, 23, 33, 0.95);
   border: 1px solid var(--border-gold);
   border-radius: var(--radius);
@@ -565,7 +567,93 @@ header {
   overflow-y: auto;
 }
 
-.close-calc-btn {
+/* Transisi halus konten modal produk */
+#modalProductContent {
+  transition: opacity 0.3s ease;
+  opacity: 1;
+}
+
+.fade-out {
+  opacity: 0 !important;
+}
+
+/* Styling Galeri Foto di Dalam Modal Produk */
+.main-image-container {
+  width: 100%;
+  height: 280px;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 14px;
+  border: 1px solid var(--border);
+  transition: opacity 0.3s ease;
+}
+
+.main-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.main-image-container img:hover {
+  transform: scale(1.03);
+}
+
+.thumbnail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.thumb-card {
+  position: relative;
+  height: 110px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.thumb-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.thumb-card:hover img {
+  transform: scale(1.08);
+  border-color: var(--gold);
+}
+
+.thumb-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 13, 18, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.thumb-overlay span {
+  font-size: 11px;
+  font-weight: 600;
+  background: var(--gold);
+  color: #000;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.thumb-card:hover .thumb-overlay {
+  opacity: 1;
+}
+
+.close-calc-btn,
+.close-product-btn {
   position: absolute;
   top: 20px;
   right: 20px;
@@ -581,9 +669,11 @@ header {
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
+  z-index: 10;
 }
 
-.close-calc-btn:hover {
+.close-calc-btn:hover,
+.close-product-btn:hover {
   background: var(--gold);
   color: #000;
   border-color: var(--gold);
@@ -869,6 +959,65 @@ footer {
   </div>
 </div>
 
+<!-- OVERLAY MODAL DETAIL PRODUK (DENGAN 3 FOTO INTERAKTIF) -->
+<div class="product-modal-overlay hidden" id="productModal">
+  <div class="product-box-floating">
+    <button class="close-product-btn" onclick="toggleProductModal(false)" title="Tutup Detail Produk">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+
+    <div id="modalProductContent">
+      <span class="section-tag" id="modalTag">Kategori Produk</span>
+      <h2 style="font-size:26px; margin-bottom:16px;" id="modalTitle">Judul Produk</h2>
+      
+      <!-- FOTO UTAMA BESAR -->
+      <div class="main-image-container">
+        <img id="modalMainImage" src="" alt="Foto Utama Produk">
+      </div>
+
+      <!-- 2 FOTO PENDUKUNG DI BAWAH (UKURAN SEDANG) -->
+      <div class="thumbnail-grid">
+        <div class="thumb-card" onclick="switchMainImage(0)">
+          <img id="thumbImg0" src="" alt="Thumbnail 1">
+          <div class="thumb-overlay"><span>Klik Jadi Utama</span></div>
+        </div>
+        <div class="thumb-card" onclick="switchMainImage(1)">
+          <img id="thumbImg1" src="" alt="Thumbnail 2">
+          <div class="thumb-overlay"><span>Klik Jadi Utama</span></div>
+        </div>
+      </div>
+
+      <p style="color:var(--text-muted); font-size:14px; margin-bottom:20px; line-height:1.6;" id="modalDesc">Deskripsi produk...</p>
+
+      <div style="background:rgba(212,175,55,0.05); border:1px solid var(--border-gold); padding:16px; border-radius:8px; margin-bottom:24px;">
+        <h4 style="font-size:14px; color:var(--gold); margin-bottom:6px;"><i class="fa-solid fa-list-check"></i> Spesifikasi Utama:</h4>
+        <p style="font-size:13px; color:#fff; line-height:1.6;" id="modalSpecs">Spesifikasi...</p>
+      </div>
+
+      <div style="display:flex; gap:12px;">
+        <a href="https://wa.me/6281139410041" target="_blank" class="btn-gold" style="flex:1; justify-content:center; background:#25D366; color:#fff;">
+          Tanya Produk via WhatsApp <i class="fa-brands fa-whatsapp"></i>
+        </a>
+        <button onclick="toggleProductModal(false)" class="btn-beranda-white" style="flex:1; justify-content:center;">
+          Tutup
+        </button>
+      </div>
+    </div>
+
+    <!-- Navigasi Cepat Antar Produk di Dalam Modal -->
+    <div style="margin-top:20px; display:flex; justify-content:space-between; border-top:1px solid var(--border); padding-top:15px; font-size:12px; color:var(--text-muted);">
+      <span>Pilih Produk Lainnya:</span>
+      <div style="display:flex; gap:10px;">
+        <a href="javascript:void(0)" onclick="openProductModal('carport')" style="color:var(--gold);">Carport</a> |
+        <a href="javascript:void(0)" onclick="openProductModal('panel')" style="color:var(--gold);">Panel</a> |
+        <a href="javascript:void(0)" onclick="openProductModal('inverter')" style="color:var(--gold);">Inverter</a> |
+        <a href="javascript:void(0)" onclick="openProductModal('battery')" style="color:var(--gold);">Baterai</a> |
+        <a href="javascript:void(0)" onclick="openProductModal('wallcharger')" style="color:var(--gold);">Wall Charger</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- HEADER NAVBAR -->
 <header>
   <div class="container nav-container">
@@ -904,6 +1053,9 @@ footer {
         <a href="https://wa.me/6281139410041" target="_blank" class="btn-gold">
           Hubungi Kami <i class="fa-solid fa-paper-plane"></i>
         </a>
+        <button onclick="toggleCalcModal(true)" class="btn-calc-white">
+          <i class="fa-solid fa-calculator"></i> Buka Kalkulator PLTS
+        </button>
       </div>
     </div>
 
@@ -1004,6 +1156,7 @@ footer {
     <div style="text-align:center; margin-bottom:40px;" data-aos="fade-up" data-aos-duration="1000">
       <span class="section-tag">Produk & Solusi</span>
       <h2 class="section-title" style="font-size:32px; color:#fff;">Komponen & Solusi PLTS Standar Eropa</h2>
+      <p style="color:var(--text-muted); font-size:14px; margin-top:8px;">Klik tombol di setiap produk untuk melihat detail spesifikasi lengkap.</p>
     </div>
 
     <div class="carousel-wrapper" id="servicesCarousel" data-aos="zoom-in" data-aos-duration="1200">
@@ -1012,12 +1165,13 @@ footer {
 
       <div class="carousel-track">
         <div class="carousel-slide">
-          <img src="proyek-office.jpg" alt="Solar Carport Canopy">
+          <img src="solar-carport.jpg" alt="Solar Carport Canopy">
           <div class="slide-overlay"></div>
           <div class="carousel-caption">
             <span class="carousel-badge">Solusi Arsitektural</span>
             <div class="carousel-title">Solar Carport Canopy</div>
-            <div class="carousel-desc">Modern EV Canopy & Rooftop System. Kanopi tempat parkir sekaligus pembangkit energi surya.</div>
+            <div class="carousel-desc">Kanopi tempat parkir modern terintegrasi panel surya berkapasitas tinggi.</div>
+            <button onclick="openProductModal('carport')" class="btn-gold" style="margin-top:14px; width:fit-content;">Lihat Detail Carport</button>
           </div>
         </div>
         <div class="carousel-slide">
@@ -1026,7 +1180,8 @@ footer {
           <div class="carousel-caption">
             <span class="carousel-badge">Komponen Utama</span>
             <div class="carousel-title">Panel Surya 550Wp Monocrystalline</div>
-            <div class="carousel-desc">Panel surya berefisiensi sangat tinggi bergaransi performa resmi 30 tahun.</div>
+            <div class="carousel-desc">Panel surya berefisiensi tinggi bergaransi performa resmi 30 tahun.</div>
+            <button onclick="openProductModal('panel')" class="btn-gold" style="margin-top:14px; width:fit-content;">Lihat Detail Panel</button>
           </div>
         </div>
         <div class="carousel-slide">
@@ -1035,7 +1190,8 @@ footer {
           <div class="carousel-caption">
             <span class="carousel-badge">Inverter Cerdas</span>
             <div class="carousel-title">Inverter Hybrid Intelligent</div>
-            <div class="carousel-desc">Pengelola arus pintar otomatis membagi daya dari PLN, panel surya, dan baterai cadangan.</div>
+            <div class="carousel-desc">Pengelola arus pintar otomatis membagi daya dari PLN, panel surya, dan baterai.</div>
+            <button onclick="openProductModal('inverter')" class="btn-gold" style="margin-top:14px; width:fit-content;">Lihat Detail Inverter</button>
           </div>
         </div>
         <div class="carousel-slide">
@@ -1043,8 +1199,9 @@ footer {
           <div class="slide-overlay"></div>
           <div class="carousel-caption">
             <span class="carousel-badge">Penyimpanan Daya</span>
-            <div class="carousel-title">Baterai Lithium (LiFePO4)</div>
-            <div class="carousel-desc">Sistem penyimpanan daya baterai mandiri aman berkapasitas besar.</div>
+            <div class="carousel-title">Baterai Lithium Premium</div>
+            <div class="carousel-desc">Penyimpanan daya cadangan berkapasitas tinggi agar rumah/bisnis tetap menyala.</div>
+            <button onclick="openProductModal('battery')" class="btn-gold" style="margin-top:14px; width:fit-content;">Lihat Detail Baterai</button>
           </div>
         </div>
         <div class="carousel-slide">
@@ -1052,8 +1209,9 @@ footer {
           <div class="slide-overlay"></div>
           <div class="carousel-caption">
             <span class="carousel-badge">EV Ecosystem</span>
-            <div class="carousel-title">EV Fast Charger Station</div>
-            <div class="carousel-desc">Pengisian daya cepat kendaraan listrik ramah lingkungan.</div>
+            <div class="carousel-title">EV Wall Charger Cepat</div>
+            <div class="carousel-desc">Pengisi daya kendaraan listrik dinding rumahan/komersial yang cepat & aman.</div>
+            <button onclick="openProductModal('wallcharger')" class="btn-gold" style="margin-top:14px; width:fit-content;">Lihat Detail Charger</button>
           </div>
         </div>
       </div>
@@ -1153,6 +1311,47 @@ AOS.init({
 
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxZ4LiMNUGBfHXG8A4uxPr3bdfAeWI4LgjoBuznBP8AsHHHh9xUajtel--pPm3wPd8IKw/exec";
 
+// DATABASE PRODUK DENGAN 3 FOTO MASING-MASING
+const productData = {
+  carport: {
+    tag: "Solusi Arsitektural",
+    title: "Solar Carport Canopy",
+    images: ["solar-carport.jpg", "proyek-hotel.jpg", "proyek-office.jpg"],
+    desc: "Kanopi tempat parkir modern yang dirancang khusus terintegrasi dengan modul panel surya berkapasitas tinggi. Selain melindungi kendaraan dari panas matahari, struktur ini secara aktif menghasilkan listrik bersih untuk kebutuhan bangunan Anda.",
+    specs: "• Rangka: Baja galvanis anti-karat tahan angin kencang<br>• Kapasitas: Mulai dari 5 kWp hingga skala komersial<br>• Fitur Tambahan: Siap integrasi dengan EV Charger (Pengisian Mobil Listrik)"
+  },
+  panel: {
+    tag: "Komponen Utama",
+    title: "Panel Surya 550Wp Monocrystalline",
+    images: ["produk-panel-550.jpg", "proyek-pabrik.jpg", "proyek-office.jpg"],
+    desc: "Panel surya generasi terbaru berteknologi tinggi dengan tingkat efisiensi konversi cahaya menjadi energi yang sangat optimal.",
+    specs: "• Daya Maksimal: 550 Watt-peak (Wp)<br>• Efisiensi Modul: Hingga 21.5%<br>• Garansi Resmi: 30 Tahun Performa"
+  },
+  inverter: {
+    tag: "Inverter Cerdas",
+    title: "Inverter Hybrid Intelligent",
+    images: ["produk-inverter-hybrid.jpg", "solar-carport.jpg", "produk-baterai-lithium.jpg"],
+    desc: "Otak dari sistem PLTS yang secara otomatis mengatur aliran energi antara panel surya, jaringan PLN, dan baterai tanpa jeda.",
+    specs: "• Tipe: On-Grid / Hybrid / Off-Grid Compatible<br>• Efisiensi: 98.2%<br>• Fitur: Monitoring real-time via aplikasi"
+  },
+  battery: {
+    tag: "Penyimpanan Energi",
+    title: "Baterai Lithium Premium (LiFePO4)",
+    images: ["produk-baterai-lithium.jpg", "produk-inverter-hybrid.jpg", "produk-ev-charger.jpg"],
+    desc: "Baterai penyimpanan daya berkapasitas tinggi untuk menyimpan cadangan listrik dan memastikan rumah/bisnis tetap menyala saat terjadi pemadaman.",
+    specs: "• Kapasitas: 5kWh - 10kWh (Modular)<br>• Siklus Hidup: Hingga 6.000+ siklus<br>• Keamanan: Sistem BMS (Battery Management System) terintegrasi"
+  },
+  wallcharger: {
+    tag: "Kendaraan Listrik (EV)",
+    title: "EV Wall Charger Cepat",
+    images: ["produk-ev-charger.jpg", "solar-carport.jpg", "produk-panel-550.jpg"],
+    desc: "Pengisi daya kendaraan listrik dinding rumahan dan komersial yang aman, cepat, serta terintegrasi langsung dengan sistem energi surya Anda.",
+    specs: "• Daya Output: 7 kW hingga 22 kW<br>• Konektor: Universal Type 2<br>• Fitur: Smart charging & pengamanan beban berlebih"
+  }
+};
+
+let currentActiveProduct = null;
+
 const carousels = {};
 
 function initCarousel(id) {
@@ -1214,15 +1413,91 @@ function formatRupiahInput(input) {
   input.value = parseInt(value, 10).toLocaleString("id-ID");
 }
 
+// TOGGLE MODAL KALKULATOR
 function toggleCalcModal(show) {
   const modal = document.getElementById('calcModal');
   if (show) {
+    toggleProductModal(false); 
     modal.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
   } else {
     modal.classList.add('hidden');
     document.body.style.overflow = 'auto';
   }
+}
+
+// TOGGLE MODAL PRODUK DENGAN ANIMASI FADE
+function toggleProductModal(show) {
+  const prodModal = document.getElementById('productModal');
+  const content = document.getElementById('modalProductContent');
+  
+  if (show) {
+    toggleCalcModal(false); 
+    prodModal.classList.remove('hidden');
+    content.classList.remove('fade-out');
+    document.body.style.overflow = 'hidden';
+  } else {
+    content.classList.add('fade-out');
+    setTimeout(() => {
+      prodModal.classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }, 300);
+  }
+}
+
+// FUNGSI MEMBUKA DETAIL PRODUK
+function openProductModal(productKey) {
+  const data = productData[productKey];
+  if (!data) return;
+
+  currentActiveProduct = data;
+
+  const content = document.getElementById('modalProductContent');
+  const prodModal = document.getElementById('productModal');
+  
+  if (prodModal.classList.contains('hidden')) {
+    toggleCalcModal(false);
+    prodModal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+
+  content.classList.add('fade-out');
+
+  setTimeout(() => {
+    document.getElementById('modalTag').innerText = data.tag;
+    document.getElementById('modalTitle').innerText = data.title;
+    
+    document.getElementById('modalMainImage').src = data.images[0];
+    document.getElementById('thumbImg0').src = data.images[1];
+    document.getElementById('thumbImg1').src = data.images[2];
+
+    document.getElementById('modalDesc').innerText = data.desc;
+    document.getElementById('modalSpecs').innerHTML = data.specs;
+
+    content.classList.remove('fade-out');
+  }, 300);
+}
+
+// FUNGSI BERTUKAR POSISI FOTO SAAT THUMBNAIL DIKLIK
+function switchMainImage(thumbIndex) {
+  if (!currentActiveProduct) return;
+
+  const targetImageIndex = thumbIndex + 1;
+  const mainImgSrc = currentActiveProduct.images[0];
+  const clickedImgSrc = currentActiveProduct.images[targetImageIndex];
+
+  currentActiveProduct.images[0] = clickedImgSrc;
+  currentActiveProduct.images[targetImageIndex] = mainImgSrc;
+
+  const mainImgEl = document.getElementById('modalMainImage');
+  mainImgEl.style.opacity = 0;
+
+  setTimeout(() => {
+    mainImgEl.src = currentActiveProduct.images[0];
+    document.getElementById('thumbImg0').src = currentActiveProduct.images[1];
+    document.getElementById('thumbImg1').src = currentActiveProduct.images[2];
+    mainImgEl.style.opacity = 1;
+  }, 200);
 }
 
 function calculatePLTS() {
@@ -1333,7 +1608,7 @@ function sendToWhatsApp() {
 window.addEventListener('DOMContentLoaded', () => {
   initCarousel('projectsCarousel');
   initCarousel('servicesCarousel');
-  toggleCalcModal(true);
+  toggleCalcModal(true); // Membuka kalkulator otomatis saat pertama dimuat
 });
 </script>
 
