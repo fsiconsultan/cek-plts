@@ -42,6 +42,17 @@ body {
 h1, h2, h3, h4, .serif { font-family: 'Playfair Display', serif; }
 a { text-decoration: none; color: inherit; }
 
+/* EFEK ZOOM HALUS PADA TEKS/JUDUL SAAT DISENTUH */
+h1, h2, h3, h4, .hero-title, .carousel-title, .section-title {
+  transition: transform 0.3s ease, color 0.3s ease;
+  display: inline-block;
+}
+
+h1:hover, h2:hover, h3:hover, h4:hover, .hero-title:hover, .carousel-title:hover, .section-title:hover {
+  transform: scale(1.02);
+  color: var(--gold);
+}
+
 /* CONTAINER & UTILITIES */
 .container {
   width: min(1280px, 92%);
@@ -192,7 +203,7 @@ header {
 
 .nav-links a:hover { color: var(--gold); }
 
-/* HERO SECTION */
+/* HERO SECTION (Dibuat Lebih Terang) */
 .hero {
   position: relative;
   min-height: 100vh;
@@ -212,13 +223,13 @@ header {
   height: 100%;
   object-fit: cover;
   z-index: 0;
-  filter: brightness(0.35) saturate(1.1);
+  filter: brightness(0.7) saturate(1.2);
 }
 
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(10, 13, 18, 0.5) 0%, rgba(10, 13, 18, 0.95) 100%);
+  background: linear-gradient(to bottom, rgba(10, 13, 18, 0.2) 0%, rgba(10, 13, 18, 0.6) 100%);
   z-index: 1;
 }
 
@@ -451,7 +462,7 @@ header {
   line-height: 1.2;
 }
 
-/* PRODUK & SOLUSI SECTION */
+/* PRODUK & SOLUSI SECTION (Dibuat Lebih Terang) */
 .services-section {
   position: relative;
   padding: 100px 0;
@@ -467,13 +478,13 @@ header {
   height: 100%;
   object-fit: cover;
   z-index: 0;
-  filter: brightness(0.25) saturate(1.2);
+  filter: brightness(0.65) saturate(1.2);
 }
 
 .services-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(10, 13, 18, 0.85) 0%, rgba(10, 13, 18, 0.6) 50%, rgba(10, 13, 18, 0.9) 100%);
+  background: linear-gradient(to bottom, rgba(10, 13, 18, 0.4) 0%, rgba(10, 13, 18, 0.3) 50%, rgba(10, 13, 18, 0.6) 100%);
   z-index: 1;
 }
 
@@ -1135,15 +1146,13 @@ footer {
 <script>
 // INISIALISASI AOS ANIMASI SCROLL
 AOS.init({
-  duration: 1000, // Kecepatan animasi slow-motion (1 detik)
-  once: false,    // Animasi tetap berjalan berulang kali saat di-scroll ke atas maupun ke bawah
-  mirror: true    // Efek terpicu saat melakukan scroll ke atas
+  duration: 1000,
+  once: false,
+  mirror: true
 });
 
-// LINK GOOGLE APPS SCRIPT ANDA
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxZ4LiMNUGBfHXG8A4uxPr3bdfAeWI4LgjoBuznBP8AsHHHh9xUajtel--pPm3wPd8IKw/exec";
 
-// METODE SLIDER / CAROUSEL INTERAKTIF
 const carousels = {};
 
 function initCarousel(id) {
@@ -1196,7 +1205,6 @@ function goToSlide(id, index) {
   updateCarouselUI(id);
 }
 
-// FORMAT PENGETIKAN ANGKA RIBUAN
 function formatRupiahInput(input) {
   let value = input.value.replace(/\D/g, "");
   if (value === "") {
@@ -1206,7 +1214,6 @@ function formatRupiahInput(input) {
   input.value = parseInt(value, 10).toLocaleString("id-ID");
 }
 
-// OVERLAY MODAL KALKULATOR
 function toggleCalcModal(show) {
   const modal = document.getElementById('calcModal');
   if (show) {
@@ -1218,7 +1225,6 @@ function toggleCalcModal(show) {
   }
 }
 
-// PROSES KALKULASI & KIRIM DATA OTOMATIS KE TAB LEADS
 function calculatePLTS() {
   const name = document.getElementById('custName').value.trim();
   const phone = document.getElementById('custPhone').value.trim();
@@ -1235,7 +1241,6 @@ function calculatePLTS() {
   submitBtn.disabled = true;
   submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Memproses & Menyimpan Data...';
 
-  // HITUNG ANGKA KALKULASI
   const totalKwh = Math.round(bill / 1800);
   const basePanels = Math.max(4, Math.ceil(totalKwh / 75));
   const baseKwp = (basePanels * 0.55).toFixed(1);
@@ -1251,7 +1256,6 @@ function calculatePLTS() {
   const batteryOffGridMin = Math.round(totalKwh * 0.08 * 30 * 0.3);
   const batteryOffGridMax = Math.round(batteryOffGridMin * 1.5);
 
-  // KIRIM DATA CUSTOMER KE TAB "LEADS" SPREADSHEET (KOLOM A s/d G)
   fetch(SCRIPT_URL, {
     method: 'POST',
     mode: 'no-cors',
@@ -1275,7 +1279,6 @@ function calculatePLTS() {
     submitBtn.disabled = false;
     submitBtn.innerHTML = '<i class="fa-solid fa-calculator"></i> Hitung Estimasi & Simpan Data';
 
-    // TAMPILKAN HASIL KALKULASI DI WEBSITE
     document.getElementById('custHeader').textContent = `Simulasi Sistem PLTS untuk ${name}`;
     document.getElementById('outBill').textContent = `Rp${bill.toLocaleString('id-ID')}/bulan`;
     document.getElementById('outBuilding').textContent = buildingType;
@@ -1315,7 +1318,6 @@ function calculatePLTS() {
   });
 }
 
-// FORMAT PESAN WHATSAPP OTOMATIS
 function sendToWhatsApp() {
   const name = document.getElementById('custName').value.trim();
   const rawBill = document.getElementById('billInput').value.replace(/\./g, "");
