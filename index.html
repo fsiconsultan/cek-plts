@@ -1138,6 +1138,15 @@ footer {
             <div class="carousel-desc">Cikarang — 120 kWp Rooftop System efisiensi tinggi daya besar.</div>
           </div>
         </div>
+        <div class="carousel-slide">
+          <img src="proyek-villa.jpg" alt="Villa Proyek">
+          <div class="slide-overlay"></div>
+          <div class="carousel-caption">
+            <span class="carousel-badge">Residential Luxury</span>
+            <div class="carousel-title">Private Luxury Villa</div>
+            <div class="carousel-desc">Ubud — 15 kWp Standar Eropa ramah lingkungan dan estetik.</div>
+          </div>
+        </div>
       </div>
 
       <div class="carousel-dots"></div>
@@ -1175,7 +1184,7 @@ footer {
           </div>
         </div>
         <div class="carousel-slide">
-          <img src="produk-panel-550.jpg" alt="Panel Surya 550Wp">
+          <img src="panel-surya-1.jpg" alt="Panel Surya 550Wp">
           <div class="slide-overlay"></div>
           <div class="carousel-caption">
             <span class="carousel-badge">Komponen Utama</span>
@@ -1185,7 +1194,7 @@ footer {
           </div>
         </div>
         <div class="carousel-slide">
-          <img src="produk-inverter-hybrid.jpg" alt="Inverter Hybrid">
+          <img src="inverter-1.jpg" alt="Inverter Hybrid">
           <div class="slide-overlay"></div>
           <div class="carousel-caption">
             <span class="carousel-badge">Inverter Cerdas</span>
@@ -1195,7 +1204,7 @@ footer {
           </div>
         </div>
         <div class="carousel-slide">
-          <img src="produk-baterai-lithium.jpg" alt="Baterai Lithium">
+          <img src="baterai-1.jpg" alt="Baterai Lithium">
           <div class="slide-overlay"></div>
           <div class="carousel-caption">
             <span class="carousel-badge">Penyimpanan Daya</span>
@@ -1205,7 +1214,7 @@ footer {
           </div>
         </div>
         <div class="carousel-slide">
-          <img src="produk-ev-charger.jpg" alt="EV Charger Station">
+          <img src="wall-charger-1.jpg" alt="EV Charger Station">
           <div class="slide-overlay"></div>
           <div class="carousel-caption">
             <span class="carousel-badge">EV Ecosystem</span>
@@ -1311,7 +1320,7 @@ AOS.init({
 
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxZ4LiMNUGBfHXG8A4uxPr3bdfAeWI4LgjoBuznBP8AsHHHh9xUajtel--pPm3wPd8IKw/exec";
 
-// DATABASE PRODUK DENGAN 3 FOTO MASING-MASING
+// DATABASE PRODUK DENGAN 3 FOTO MASING-MASING (SESUAI NAMA FILE UPLOAD TERBARU)
 const productData = {
   carport: {
     tag: "Solusi Arsitektural",
@@ -1323,28 +1332,28 @@ const productData = {
   panel: {
     tag: "Komponen Utama",
     title: "Panel Surya 550Wp Monocrystalline",
-    images: ["produk-panel-550.jpg", "proyek-pabrik.jpg", "proyek-office.jpg"],
+    images: ["panel-surya-1.jpg", "panel-surya-2.jpg", "panel-surya-3.jpg"],
     desc: "Panel surya generasi terbaru berteknologi tinggi dengan tingkat efisiensi konversi cahaya menjadi energi yang sangat optimal.",
     specs: "• Daya Maksimal: 550 Watt-peak (Wp)<br>• Efisiensi Modul: Hingga 21.5%<br>• Garansi Resmi: 30 Tahun Performa"
   },
   inverter: {
     tag: "Inverter Cerdas",
     title: "Inverter Hybrid Intelligent",
-    images: ["produk-inverter-hybrid.jpg", "solar-carport.jpg", "produk-baterai-lithium.jpg"],
+    images: ["inverter-1.jpg", "inverter-2.jpg", "inverter-3.jpg"],
     desc: "Otak dari sistem PLTS yang secara otomatis mengatur aliran energi antara panel surya, jaringan PLN, dan baterai tanpa jeda.",
     specs: "• Tipe: On-Grid / Hybrid / Off-Grid Compatible<br>• Efisiensi: 98.2%<br>• Fitur: Monitoring real-time via aplikasi"
   },
   battery: {
     tag: "Penyimpanan Energi",
     title: "Baterai Lithium Premium (LiFePO4)",
-    images: ["produk-baterai-lithium.jpg", "produk-inverter-hybrid.jpg", "produk-ev-charger.jpg"],
+    images: ["baterai-1.jpg", "baterai-2.jpg", "baterai-3.jpg"],
     desc: "Baterai penyimpanan daya berkapasitas tinggi untuk menyimpan cadangan listrik dan memastikan rumah/bisnis tetap menyala saat terjadi pemadaman.",
     specs: "• Kapasitas: 5kWh - 10kWh (Modular)<br>• Siklus Hidup: Hingga 6.000+ siklus<br>• Keamanan: Sistem BMS (Battery Management System) terintegrasi"
   },
   wallcharger: {
     tag: "Kendaraan Listrik (EV)",
     title: "EV Wall Charger Cepat",
-    images: ["produk-ev-charger.jpg", "solar-carport.jpg", "produk-panel-550.jpg"],
+    images: ["wall-charger-1.jpg", "wall-charger-2.jpg", "wall-charger-3.jpg"],
     desc: "Pengisi daya kendaraan listrik dinding rumahan dan komersial yang aman, cepat, serta terintegrasi langsung dengan sistem energi surya Anda.",
     specs: "• Daya Output: 7 kW hingga 22 kW<br>• Konektor: Universal Type 2<br>• Fitur: Smart charging & pengamanan beban berlebih"
   }
@@ -1608,7 +1617,7 @@ function sendToWhatsApp() {
 window.addEventListener('DOMContentLoaded', () => {
   initCarousel('projectsCarousel');
   initCarousel('servicesCarousel');
-  toggleCalcModal(true); // Membuka kalkulator otomatis saat pertama dimuat
+  toggleCalcModal(true);
 });
 </script>
 
